@@ -300,7 +300,10 @@ def cmd_test(args):
             print(f"pp test: C test {name}: skipped (not checked out: {', '.join(missing)})", flush=True)
             continue
         exe = os.path.join(scratch, name.replace(" ", "-").replace("(", "").replace(")", ""))
-        step(f"C test {name}", ["sh", "-c", 'clang -std=c11 -O2 -Wall -Wextra -Werror "$@" && { TMPDIR="$T" "$X" > "$X.log" 2>&1 || { tail -20 "$X.log"; exit 1; }; }', "cc",
+        # ponytail: ASLR off for the test process only. TSan's fixed shadow mapping collides with
+        # randomized PIE/heap addresses (FATAL "unexpected memory mapping", ~85% of runs here).
+        # Upgrade: vm.mmap_rnd_bits if setarch is missing.
+        step(f"C test {name}", ["sh", "-c", 'clang -std=c11 -O2 -Wall -Wextra -Werror "$@" && { TMPDIR="$T" setarch "$(uname -m)" -R "$X" > "$X.log" 2>&1 || { tail -20 "$X.log"; exit 1; }; }', "cc",
                                 "-Iapp/Sources/HostIO/include", "-Iapp/Sources/WineHost/include", *flags, "-o", exe,
                                 *sources], env=dict(os.environ, T=scratch, X=exe))
     step("C test WoW64 window", [sys.executable, os.path.join(REPO, "build/wow64/test.py")])
