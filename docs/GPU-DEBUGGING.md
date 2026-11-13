@@ -44,10 +44,10 @@ the same keys:
 
 | Switch | Key | What it does | Takes effect |
 | --- | --- | --- | --- |
-| GPU capture | `gpuCaptureFrame` (a frame, 0 off) | DXMT or, on Vulkan, KosmicKrisp writes that frame as a Metal `.gputrace` into the game's folder | Playport's next start: Metal allows captures only in a process that starts with `MTL_CAPTURE_ENABLED=1` |
+| GPU capture | `gpuCaptureFrame` (a frame, 0 off) | DXMT or, on Vulkan, KosmicKrisp writes that frame as a Metal `.gputrace` into the game's folder | pcios's next start: Metal allows captures only in a process that starts with `MTL_CAPTURE_ENABLED=1` |
 | GPU time per pass | `passProfile` | winemetal times every encoder of two frames in every 1200 presents (`[pass-prof]` lines; `patches/dxmt` 0008) | the next game |
 | CPU sampling | `cpuProfile` | the busiest threads sampled at about 1 kHz, 3 s in every 15 s (`[wprof]` lines; `patches/madeira-unix` 0028) | the next game |
-| Metal validation | `metalValidation` (`api`, `shaders`, `stop`) | Metal's API validation layer; with `shaders` also shader validation; with `stop` the process ends at the first API error | Playport's next start |
+| Metal validation | `metalValidation` (`api`, `shaders`, `stop`) | Metal's API validation layer; with `shaders` also shader validation; with `stop` the process ends at the first API error | pcios's next start |
 
 Notes:
 - **What a run touches:** `pp gpu` and `pp perf` set these keys in a launch
@@ -221,7 +221,7 @@ Notes:
 it; [0164](decisions/0164-pp-ui-from-the-mac.md) lets `pp ui` drive the phone
 from the Mac. When the person says "we are on a Mac", start
 with [Arrival checks](#arrival-checks), then [Scripted](#scripted-pp-gpu-on-the-mac). The
-questions still to answer on a Mac are in [PLA-457](https://linear.app/playportdev/issue/PLA-457).
+questions still to answer on a Mac are in PLA-457.
 
 ### Scripted: `pp gpu` on the Mac
 
@@ -307,10 +307,10 @@ Apple's command-line tools need macOS 27:
   `which gpucapture gpudebug metalperftrace`).
 - **The phone:** cabled and trusted (`xcrun devicectl list devices`).
   Xcode may mount its own developer disk image; the phone stays on its iOS.
-- **Playport:** the build `pp phone status` reports. `pp ui` drives Play from
+- **pcios:** the build `pp phone status` reports. `pp ui` drives Play from
   the Mac ([0164](decisions/0164-pp-ui-from-the-mac.md)); otherwise the person
   taps Play.
-- **Never Run, Install, Profile-from-scheme or Uninstall Playport from
+- **Never Run, Install, Profile-from-scheme or Uninstall pcios from
   Xcode.** They replace the app or delete its container: the Wine prefix,
   the Steam session and the games. Only attach, record and replay; launches
   stay the app's Play button.
@@ -321,7 +321,7 @@ Apple's command-line tools need macOS 27:
 ### Finding the draw that goes wrong
 
 For correctness, on the Vulkan backend and DXMT:
-1. Start Playport with GPU capture on (any frame: it makes Metal allow
+1. Start pcios with GPU capture on (any frame: it makes Metal allow
    captures) and play to the bad spot.
 2. Capture with Xcode or `gpucapture`.
 3. Step the draws until the picture diverges from the Proton reference.
@@ -348,7 +348,7 @@ Linux say where to look first.
 The first session ([evidence](evidence/2026-10-28-mac-tools-and-w3-frame.md)):
 - **Can the tools attach after the JIT helper's turn?** Xcode's Attach to Process attaches, but the app
   stays stopped until Continue, and Xcode offers no GPU capture there. `xctrace --attach` cannot find the
-  process. `xctrace --all-processes` records Time Profiler and Metal System Trace with Playport's threads
+  process. `xctrace --all-processes` records Time Profiler and Metal System Trace with pcios's threads
   and GPU work: use that, with `--device-name`, not `--device`.
 - **Can `pp ui` drive the phone cabled to the Mac?** Yes, from the Mac
   ([0164](decisions/0164-pp-ui-from-the-mac.md)), with `PLAYPORT_USBMUX_SOCKET=/var/run/usbmuxd` and

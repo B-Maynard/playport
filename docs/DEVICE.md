@@ -77,20 +77,20 @@ mount, or a generic text with the short raw reason. A release log keeps one line
 `jit: check failed [class]: raw reason`, so a report's `playport.log` says which.
 
 For LiveContainer's *Launch with JIT*, assign **universal.js to LiveContainer**
-in StikDebug, then launch Playport with JIT. A plain attach-and-detach leaves
-`CS_DEBUGGED` set but does not prepare the pool. Playport checks for a live
+in StikDebug, then launch pcios with JIT. A plain attach-and-detach leaves
+`CS_DEBUGGED` set but does not prepare the pool. pcios checks for a live
 tracer as well: stale signing status produces a setup message, not a JIT
-breakpoint. Close Playport and relaunch from LiveContainer after fixing the
+breakpoint. Close pcios and relaunch from LiveContainer after fixing the
 script. This check cannot detect a wrong script while its debugger remains
 attached, or prevent a detach racing the breakpoint.
 
 It needs Developer Mode, LocalDevVPN (App Store, takes no slot) with its
-tunnel connected, and an RP pairing file. Playport cannot carry the tunnel
+tunnel connected, and an RP pairing file. pcios cannot carry the tunnel
 itself (a packet tunnel needs the Network Extension entitlement, which a free
 team cannot have), so it turns LocalDevVPN on instead: a Play, the restart
 after a game or Settings' *LocalDevVPN* row (Setup check) that finds no route to
 `10.7.0.1` through a `utun` interface opens `localdevvpn://enable?scheme=playport`,
-and LocalDevVPN connects and opens `playport://`, which brings Playport back
+and LocalDevVPN connects and opens `playport://`, which brings pcios back
 (`app/Sources/S1Probe/LocalDevVPN.swift`, `vpn:` lines in the log). The player
 opens LocalDevVPN once to allow its VPN configuration. On iOS 27, Play and
 the driver's `play:` action both await the root-owned setup flow before the
@@ -122,7 +122,7 @@ a signed-out Steam only shows a line on the launch screen.
 
 On iOS 27, the checklist's pairing step (or a Play with no pairing) opens setup. Setup shows a code,
 the person pairs in iOS Settings, Privacy & Security, Developer Mode, **Pair
-with Playport**, then returns. Playport connects LocalDevVPN, checks readiness,
+with pcios**, then returns. pcios connects LocalDevVPN, checks readiness,
 and saves the record in its this-device-only Keychain item. Settings › Setup
 check's **Pair again** repairs a stale record without deleting the old one first. A driven
 run can open or resume the product flow with `jit:setup`, `jit:pair`,
@@ -142,7 +142,7 @@ socat TCP-LISTEN:19231,bind=127.0.0.1,fork,reuseaddr UNIX:$SOCK &
 ```
 
 - The pairing file is a secret: keep it under `$PLAYPORT_BUILD` and get it to
-  the phone as a player would (AirDrop or Files). Playport keeps it in its
+  the phone as a player would (AirDrop or Files). pcios keeps it in its
   Keychain, so an update or reinstall under the same team finds it again.
 - StikJIT mounts the Developer Disk Image once per boot. **Reset Developer
   Disk Image** in Settings › Setup check clears its cache if mounting keeps failing. If
@@ -150,7 +150,7 @@ socat TCP-LISTEN:19231,bind=127.0.0.1,fork,reuseaddr UNIX:$SOCK &
 - A launch whose JIT step logs `Timed out connecting to 10.7.0.1` has
   LocalDevVPN's tunnel down. Only the person at the phone can bring it up:
   ask them, do not retry (every retry fails the same way).
-- After every game that used the runtime, Playport restarts itself over
+- After every game that used the runtime, pcios restarts itself over
   LocalDevVPN and comes back on Home in a new process (black in between, no
   restart screen; the iOS Home Screen may flash for a frame), so every Play
   takes the JIT in a fresh process ([decision 0029](decisions/0029-restart-after-each-game.md)).
@@ -202,7 +202,7 @@ comes out within a day of it. What a move from 1.6.0 to 1.9.0 costs was measured
    - `Sources/StikJIT.swift`: the public API that
      `app/Sources/PlayportJIT/JITHelper.swift` calls.
    - `Sources/ProcessInfo+TXM.swift`: where TXM reads absent, StikJIT skips
-     the script, and Playport's first `brk #0xf00d` then kills the app.
+     the script, and pcios's first `brk #0xf00d` then kills the app.
    - `idevice/`: `git ls-tree OLD idevice` against `NEW`. If the tree changed,
      move the `idevice` pin to an idevice commit of the new library's date (the
      binary does not record its revision), and update `IDEVICE_LICENSE_SHA256` in `build/stages/stikjit.sh` if its
@@ -333,7 +333,7 @@ not that gameplay appeared: inspect the timeline, log and screenshot.
   the screen (Kingdom Come's Continue above New Game: `--crop 0.70,0.33,0.92,0.80
   --highlight-above "New Game" "New Game"`) before that A.
 - **The in-game menu.** Holding the controller's Home button half a second over
-  a running game, or a three-finger tap on it, opens Playport's menu (`UI/InGameMenuView.swift`): the game is
+  a running game, or a three-finger tap on it, opens pcios's menu (`UI/InGameMenuView.swift`): the game is
   paused behind it (its pads at rest, audio stopped, its threads suspended by
   the session root) until Resume, B or Home. The driver reaches it through
   the same pad handling: after `play:`, `wait:S` and `menu:` actions run while
@@ -434,7 +434,7 @@ not that gameplay appeared: inspect the timeline, log and screenshot.
   Gyro aim page's test dot instead: `pp ui --controls 'app-620:{"gyro":{"output":"mouse"}}'
   --action play:app-620 --action wait:30 --action gyro:yaw=90@500/rest@300`.
 - **A game's web page.** A page the game opens (an Epic game's EOS sign-in) comes up in
-  Playport's panel over the running game (decision [0064](decisions/0064-game-web-sheet.md)),
+  pcios's panel over the running game (decision [0064](decisions/0064-game-web-sheet.md)),
   logged as `url: … open <host><path> (<kind>) for <title>` and `url: … [sheet]` lines. After
   `play:`, `web:wait` waits for it (pressing Open on a confirm card) and its page,
   `web:click:LABEL` clicks the button or link with that text, `web:close` closes it:
@@ -625,7 +625,7 @@ campaign-specific approval; it does not waive required regression smoke gates
     GPU work, invalid counters and unfinished frames are discarded explicitly.
 - **One frame's GPU work**: Settings › Developer's GPU capture (dev builds) has DXMT write
   frame N of the next game as a Metal `.gputrace` into the game's folder. It
-  needs a Playport started with it set (Metal allows a capture only then, and
+  needs a pcios started with it set (Metal allows a capture only then, and
   it costs every frame), so set it in one `pp ui` run and play in the next,
   in one session:
   `./pp phone lock -- sh -c './pp ui --action set:gpuCaptureFrame=600 && ./pp ui --play app-367520 --until first-frame+30'`.

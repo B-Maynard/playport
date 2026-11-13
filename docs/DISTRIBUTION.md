@@ -68,13 +68,13 @@ build's `pins.lock` names, never from a working copy. The packing catalog also
 comes from that build commit (its hash is in the manifest), so a newer or locally
 edited policy cannot change an older build's omissions or completeness status:
 
-- **Git trees**: Playport at the build's commit (the app, the build scripts, every
+- **Git trees**: pcios at the build's commit (the app, the build scripts, every
   patch series, the AIR helper port), and Madeira, Wine, FEX, DXMT, Mesa, DXVK,
   vkd3d-proton, gbe_fork, Abseil, nexus-xgameruntime, nghttp2, FreeType, idevice,
   StikJIT and xtool, each one
   `tar.gz` with its submodules expanded in place. A tag-pinned tree is packed from
   the commit the catalog records for its tag, so a moved tag stops it. The patched
-  trees are these plus the series in the Playport archive. Wine's committed
+  trees are these plus the series in the pcios archive. Wine's committed
   `nls/*.nls` locale/codepage data is included with `tools/make_unicode`; it is
   build/runtime data, not executable code. Objects come from the
   build's own clones and mirrors, else a fetch by commit into
@@ -104,7 +104,7 @@ matches nothing stops the packing, as do a build with local changes, a
 machine path in a generated file. The output appears only once it is complete
 and checked: `SOURCE-MANIFEST.json` (every repository and submodule commit, the
 build and its IPA's sha256), `README.md` and `SHA256SUMS`. `pp release` packs it
-into the draft's `Playport-VERSION-source.tar`.
+into the draft's `pcios-VERSION-source.tar`.
 
 **Complete** ([decision 0042](decisions/0042-the-source-bundle-is-complete.md)): the
 catalog's `missing` list is empty. GStreamer's permissive parts (MoltenVK, the Rust
@@ -139,10 +139,10 @@ build/stages/unix.sh $T clones shims gnutls          # the crypto statics again,
 cd app/.release                                           # the release package pp build made
 export PLAYPORT_VARIANT=release SWIFTPM_CUSTOM_BIN_DIR=$PWD/../../build/ld64
 $XTOOL dev build --ipa < /dev/null
-unzip -p xtool/Playport.ipa Payload/Playport.app/Playport | sha256sum     # before
+unzip -p xtool/pcios.ipa Payload/Playport.app/pcios | sha256sum     # before
 cp $T/mythic/toolchains/gnutls-ios/lib/lib{gnutls,nettle,hogweed,gmp}.a Staged/lib/
 $XTOOL dev build --ipa < /dev/null
-unzip -p xtool/Playport.ipa Payload/Playport.app/Playport | sha256sum     # after: must differ
+unzip -p xtool/pcios.ipa Payload/Playport.app/pcios | sha256sum     # after: must differ
 unset PLAYPORT_VARIANT SWIFTPM_CUSTOM_BIN_DIR
 cd ../..
 python3 build/stages/stage-artifacts.py stage                    # put the recorded libraries back
@@ -226,14 +226,14 @@ env USBMUXD_SOCKET_ADDRESS=$SOCK pymobiledevice3 amfi developer-mode-status   # 
 
 **Build and sign.** Make the change, then `pp build --variant
 release` (or without `--variant` for the dev build, which the workstation
-drivers need). The `app` stage signs `app/.release/xtool/Playport.ipa`
+drivers need). The `app` stage signs `app/.release/xtool/pcios.ipa`
 (dev: `app/xtool/S1Probe.ipa`) with the Apple ID that `xtool auth` holds
 and prefixes the bundle ID with `XTL-<their team>.`. To relink only a
 library, use section 3 and add `--sign`. **Re-sign a received IPA without rebuilding.** The patched xtool's
 `install` command provisions and signs the supplied IPA, including its helper,
 then installs it. This route passed the 0.1.0 reference-phone play
 ([evidence](evidence/2026-10-02-release-010-resign.md)); other re-signers are not
-validated by that test. After the host setup above, close a running Playport
+validated by that test. After the host setup above, close a running pcios
 first, keep the phone unlocked, and run:
 
 ```sh
@@ -253,7 +253,7 @@ re-signer must keep the memory entitlement
 **Install.**
 
 ```sh
-env USBMUXD_SOCKET_ADDRESS=$SOCK pymobiledevice3 apps install app/.release/xtool/Playport.ipa   # needs a free slot of the team's three
+env USBMUXD_SOCKET_ADDRESS=$SOCK pymobiledevice3 apps install app/.release/xtool/pcios.ipa   # needs a free slot of the team's three
 ```
 
 If signing fails with "no current IOS devices", register the phone with the
@@ -267,20 +267,20 @@ Home Screen launch start a staged title, and the app's own helper extension
 does the attach. The dev build's driven launches use the same helper; no
 host provides JIT ([DEVICE.md, "JIT activation"](DEVICE.md#jit-activation)).
 The helper needs no free-team slot, but its App ID counts against the team's
-ten per week. Neither build has another JIT method. Playport plays one game
+ten per week. Neither build has another JIT method. pcios plays one game
 per app process: when a game ends, it restarts itself over LocalDevVPN and
 comes back on the library, and the next game asks for JIT again
 ([decision 0029](decisions/0029-restart-after-each-game.md)). The player
-installs LocalDevVPN and opens it once to allow its VPN; after that Playport
+installs LocalDevVPN and opens it once to allow its VPN; after that pcios
 turns it on by itself when a Play or a restart finds it off (it opens
-LocalDevVPN, which switches back to Playport), and opens its App Store page
+LocalDevVPN, which switches back to pcios), and opens its App Store page
 when it is not installed. If the tunnel still does not come up for the
-restart, Playport says so and the game's page offers Close Playport: connect
+restart, pcios says so and the game's page offers Close pcios: connect
 LocalDevVPN and reopen it from the Home Screen.
 
 ## 6. Signing tools and the memory limit
 
-Playport needs the `com.apple.developer.kernel.increased-memory-limit`
+pcios needs the `com.apple.developer.kernel.increased-memory-limit`
 entitlement. iOS ends a process that passes its memory limit (jetsam), and the
 JIT pool (all of it dirty once blessed), the runtime and the game share
 that one limit. The pool is 512 MB under any limit

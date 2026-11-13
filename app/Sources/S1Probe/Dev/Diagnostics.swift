@@ -132,7 +132,7 @@ enum RuntimeCounters {
     fileprivate static func log(_ log: (String) -> Void) {
         if armedOff { log("diagnostics: runtime counters off (MADEIRA_NO_COUNTERS)") }
         if UserDefaults.standard.bool(forKey: key) != armedOff {
-            log("diagnostics: runtime counters \(armedOff ? "on" : "off") from Playport's next start")
+            log("diagnostics: runtime counters \(armedOff ? "on" : "off") from pcios's next start")
         }
     }
 }

@@ -178,7 +178,7 @@ public actor GalaxyService {
         case .authInfoRequest:
             return try await authInfo(f)
         case .libraryInfoRequest:
-            log.info("galaxy", "LIBRARY_INFO: the SDK asks for GOG's separate peer library, which Playport does not provide")
+            log.info("galaxy", "LIBRARY_INFO: the SDK asks for GOG's separate peer library, which pcios does not provide")
             return [f.reply(type: reply, payload: GalaxyMessages.libraryInfoUnavailable())]
         case .startGameSessionRequest:
             return [f.reply(type: reply)]

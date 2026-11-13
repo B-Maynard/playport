@@ -112,10 +112,10 @@ struct XboxAccountSettings: View {
                    hint: "Sign in") { account.beginSignIn() }
         case .signedIn:
             SettingsInfoRow(id: "xbox:status", title: "Signed in", subtitle: account.error ?? "Microsoft sign-in is kept in the Keychain on this phone only.")
-            PadRow(id: "set:xbox:signout", title: "Sign out", subtitle: "Deletes Playport's Xbox session, not its synthetic Windows device.",
+            PadRow(id: "set:xbox:signout", title: "Sign out", subtitle: "Deletes pcios's Xbox session, not its synthetic Windows device.",
                    destructive: true, hint: "Sign out") {
                 PadModal.shared.picker(title: "Sign out of Xbox?", context: "Settings · Accounts",
-                    note: "Playport deletes its session secrets and stops issuing tickets. A game already signed in can keep its tickets until they expire. To end every session, use your Microsoft account's security page. The synthetic Windows device stays, so signing in again doesn't use another of the 10 Store devices.",
+                    note: "pcios deletes its session secrets and stops issuing tickets. A game already signed in can keep its tickets until they expire. To end every session, use your Microsoft account's security page. The synthetic Windows device stays, so signing in again doesn't use another of the 10 Store devices.",
                     options: [PadOption(id: "keep", label: "Stay signed in"), PadOption(id: "out", label: "Sign out")], selected: "keep") {
                     if $0 == "out" { Task { await account.signOut() } }
                 }

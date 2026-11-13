@@ -58,7 +58,7 @@ final class BattleNetArtTests: XCTestCase {
         let bytes = try await BattleNetClient(transport: good).art(.wowAnniversary, .tile)
         XCTAssertEqual(bytes, jpeg)
         XCTAssertEqual(good.asked.map(\.url), [BattleNetArt.url(.wowAnniversary, .tile)])
-        XCTAssertEqual(good.asked.first?.headers["User-Agent"], "Playport")
+        XCTAssertEqual(good.asked.first?.headers["User-Agent"], "pcios")
 
         let gone = OneAnswer(BattleNetResponse(status: 404, body: Array("Not Found".utf8)))
         do {

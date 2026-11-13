@@ -55,7 +55,7 @@ enum UrlOpenerHost {
     private static let open: @convention(c) (UnsafePointer<CChar>?) -> UInt32 = { raw in
         guard let raw else { return UInt32(PP_URL_INVALID_PARAMETER) }
         guard let request = UrlOpenRequest.classify(String(cString: raw)) else {
-            UrlOpenerHost.log.info("open", "refused: not a page Playport opens")
+            UrlOpenerHost.log.info("open", "refused: not a page pcios opens")
             return UInt32(PP_URL_INVALID_PARAMETER)
         }
         let taken: (Play?, UrlOpenRate.Refusal?) = UrlOpenerHost.lock.withLock {

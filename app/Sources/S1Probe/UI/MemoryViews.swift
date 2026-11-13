@@ -24,13 +24,13 @@ struct MemoryWarning: View {
 
 /// What the player is told about the memory limit.
 enum MemoryNote {
-    static let footer = "The most memory iOS lets Playport use, for a game and Playport's own JIT memory together, "
+    static let footer = "The most memory iOS lets pcios use, for a game and pcios's own JIT memory together, "
         + "which is sized from it. "
-        + "iOS closes a game that goes past it, so Playport does not start a game known to need more, and warns "
+        + "iOS closes a game that goes past it, so pcios does not start a game known to need more, and warns "
         + "when one may. It rises once Game Mode turns on. The Increased Memory Limit entitlement raises it; a copy "
         + "signed without it gets far less."
 
-    static let notEntitled = "This copy of Playport was signed without the Increased Memory Limit entitlement. "
+    static let notEntitled = "This copy of pcios was signed without the Increased Memory Limit entitlement. "
         + "Install one signed with a tool that keeps it: the Setup checklist's Memory step says how."
 
     /// Why a Play was refused (LaunchMessage).
@@ -62,8 +62,8 @@ enum MemoryNote {
     private static var advice: String {
         switch MemoryLimit.entitled {
         case false?: notEntitled
-        case true?: "This phone cannot give Playport more."
-        case nil: "A copy of Playport signed with the Increased Memory Limit entitlement gets more."
+        case true?: "This phone cannot give pcios more."
+        case nil: "A copy of pcios signed with the Increased Memory Limit entitlement gets more."
         }
     }
 }

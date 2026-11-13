@@ -64,7 +64,7 @@ final class CloudTests: XCTestCase {
         XCTAssertEqual(roots.file("save.bin")?.path, dir.appendingPathComponent("GSE Saves/367520/remote/save.bin").path,
                        "no token: the emulator's remote storage")
         XCTAssertEqual(roots.file("%GameInstall%saves/a.sav")?.path, dir.appendingPathComponent("Games/Knight/saves/a.sav").path)
-        XCTAssertNil(roots.file("%LinuxHome%x"), "a root Playport does not map")
+        XCTAssertNil(roots.file("%LinuxHome%x"), "a root pcios does not map")
         XCTAssertNil(roots.file("%WinMyDocuments%../escape"))
         try write(dir.appendingPathComponent("users/playport/AppData/LocalLow/TEAM CHERRY/x.dat"), "a")
         XCTAssertEqual(roots.file("%WinAppDataLocalLow%Team Cherry/x.dat")?.path,
@@ -81,7 +81,7 @@ final class CloudTests: XCTestCase {
         XCTAssertEqual(files.keys.sorted(), ["%GameInstall%portal2/SAVE/42/1791103990.sav", "%GameInstall%portal2/SAVE/42/autosave.sav"],
                        "the token as Steam lists it, not as the rule spells it")
         XCTAssertEqual(Cloud.canonicalRoot("WINAPPDATALOCALLOW"), "WinAppDataLocalLow")
-        XCTAssertEqual(Cloud.canonicalRoot("LinuxHome"), "LinuxHome", "a root Playport does not map stays as given")
+        XCTAssertEqual(Cloud.canonicalRoot("LinuxHome"), "LinuxHome", "a root pcios does not map stays as given")
 
         // A file an earlier sync uploaded under the rule's spelling keeps the name Steam has for it.
         let named = Cloud.named(files, like: ["%gameinstall%portal2/SAVE/42/1791103990.sav", "%GameInstall%portal2/save/42/other.sav"])

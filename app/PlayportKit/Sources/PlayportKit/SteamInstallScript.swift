@@ -146,7 +146,7 @@ public struct SteamPrerequisites: Equatable, Sendable {
         public var line: String { "prerequisite: \(name) (\(key)) skipped: \(reason)" }
     }
 
-    public static let directXSkipReason = "Playport's built-in DirectX libraries cover it"
+    public static let directXSkipReason = "pcios's built-in DirectX libraries cover it"
 
     public var prerequisites: [Prerequisite] = []
     public var skipped: [Skipped] = []

@@ -22,7 +22,7 @@ public struct BattleNetResponse: Sendable, Equatable {
 /// at most `maxConcurrent` requests in flight, and on HTTP 429 a pause of that host for the
 /// `Retry-After` it sends (else a doubling back-off) before asking again, `retries` times.
 public struct BattleNetManners: Sendable {
-    public var userAgent = "Playport"
+    public var userAgent = "pcios"
     public var maxConcurrent = 8
     public var retries = 5
     /// The first pause when a 429 names none; it doubles per retry, up to `maxBackoff`.
@@ -120,7 +120,7 @@ public struct URLSessionTransport: BattleNetTransport {
     public var timeout: TimeInterval = 30
     public var maxBytes: Int
 
-    public init(userAgent: String = "Playport", maxBytes: Int = 512 << 20) {
+    public init(userAgent: String = "pcios", maxBytes: Int = 512 << 20) {
         let config = URLSessionConfiguration.ephemeral
         config.httpCookieStorage = nil
         config.urlCache = nil

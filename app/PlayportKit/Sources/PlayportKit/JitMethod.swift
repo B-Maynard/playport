@@ -54,7 +54,7 @@ public enum JitMethod: String, CaseIterable, Sendable {
     /// The picker's grey text at the row's right.
     public var detail: String {
         switch self {
-        case .builtIn: "Playport's own helper"
+        case .builtIn: "pcios's own helper"
         case .stikDebug: "Play opens StikDebug"
         case .external: "Play waits for it"
         }
@@ -76,10 +76,10 @@ public enum JitMethod: String, CaseIterable, Sendable {
         let why = detached ? "The debugger is no longer attached." : "No live debugger arrived."
         switch self {
         case .builtIn:
-            return why + " Check Built-in JIT in Settings › Setup check, then close Playport and try again."
+            return why + " Check Built-in JIT in Settings › Setup check, then close pcios and try again."
         case .stikDebug, .external:
-            let target = inLiveContainer ? "LiveContainer" : "Playport"
-            let launch = inLiveContainer ? "launch Playport again from LiveContainer with JIT" : "relaunch Playport with JIT"
+            let target = inLiveContainer ? "LiveContainer" : "pcios"
+            let launch = inLiveContainer ? "launch pcios again from LiveContainer with JIT" : "relaunch pcios with JIT"
             return why + " In StikDebug, assign universal.js to \(target), then \(launch). A plain attach-and-detach does not prepare Playport's JIT pool."
         }
     }

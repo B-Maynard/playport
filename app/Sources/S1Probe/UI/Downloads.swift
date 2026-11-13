@@ -441,7 +441,7 @@ final class Downloads: ObservableObject {
 /// What the player is told when a download stops. A release build words it
 /// without internals (decision 0009); the dev build adds the raw error.
 enum InstallCopy {
-    static let afterLaunch = "A game has run in this session. Close Playport and reopen it to continue downloading."
+    static let afterLaunch = "A game has run in this session. Close pcios and reopen it to continue downloading."
     static let launch = "Paused while a game runs."
     static let signOut = "Paused: signed out of Steam."
 
@@ -455,7 +455,7 @@ enum InstallCopy {
         case .transport?, .timeout?, .retriesExhausted?:
             text = "\(store) can't be reached. Check the connection, then resume."
         case .unsafeContent?:
-            text = "Another game's folder is in the way, or the download contains a file Playport refuses."
+            text = "Another game's folder is in the way, or the download contains a file pcios refuses."
         case .verificationFailed?:
             text = "Some files could not be verified. Resume to fetch them again."
         default:

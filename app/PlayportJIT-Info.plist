@@ -8,7 +8,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>CFBundleDisplayName</key>
-	<string>Playport JIT</string>
+	<string>pcios JIT</string>
 	<!-- The JIT helper (Sources/PlayportJIT). A borrowed system extension point
 	     that nothing activates (FALSEPREDICATE): only the app starts it, through
 	     NSExtension (Sources/S1Probe/BuiltInJit.swift). -->

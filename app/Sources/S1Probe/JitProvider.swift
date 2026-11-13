@@ -64,7 +64,7 @@ enum JitProvider {
 
     private static func debuggerFailure(_ rc: Int32, method: JitMethod) -> Failure {
         if rc == -7 {
-            return .debugger("Playport could not confirm a live debugger. Close Playport and relaunch with JIT; no JIT breakpoint was issued at the failed check.")
+            return .debugger("pcios could not confirm a live debugger. Close pcios and relaunch with JIT; no JIT breakpoint was issued at the failed check.")
         }
         return .debugger(method.debuggerFailureMessage(detached: rc == -6, inLiveContainer: inLiveContainer))
     }
@@ -152,7 +152,7 @@ enum JitProvider {
             let active = DispatchQueue.main.sync { UIApplication.shared.applicationState == .active }
             if active { break }
             if !logged {
-                log(String(format: "pool ready at +%.2f s; waiting for Playport to be in front", Date().timeIntervalSince(t0)))
+                log(String(format: "pool ready at +%.2f s; waiting for pcios to be in front", Date().timeIntervalSince(t0)))
                 logged = true
             }
             Thread.sleep(forTimeInterval: 0.1)

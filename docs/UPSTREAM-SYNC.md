@@ -1,9 +1,9 @@
 # Watching Madeira, moving the component pins
 
-The `madeira` pin is frozen at `8c050d0`, and Playport owns that layer
+The `madeira` pin is frozen at `8c050d0`, and pcios owns that layer
 ([decision 0054](decisions/0054-madeira-frozen.md)). Madeira is watched, not
 followed: `pp sync` reports what Madeira did since the pin, a person picks the
-fixes Playport wants, and each is ported by hand as a Playport patch. The
+fixes pcios wants, and each is ported by hand as a pcios patch. The
 other pins (`wine`, `fex`, `dxmt`, `rpmalloc`, `wine-valve`, …) keep moving
 on their own upstreams ([below](#moving-a-component-pin)). Options, output
 files and exit statuses are in `pp sync --help`; this page is the policy.
@@ -17,7 +17,7 @@ files and exit statuses are in `pp sync --help`; this page is the policy.
 
 It never moves a pin, commits or checks anything out in the repository. It
 needs `pins.lock` and `patches/` committed, and writes `WATCH.md` and
-`watch.tsv` (row, commit, date, subject, the files Playport patches, every
+`watch.tsv` (row, commit, date, subject, the files pcios patches, every
 file) to `$PLAYPORT_BUILD/sync/watch-<sha8>/`. It lists, oldest first:
 
 - **Madeira's own commits** past the pin that touch a path the build
@@ -30,8 +30,8 @@ file) to `$PLAYPORT_BUILD/sync/watch-<sha8>/`. It lists, oldest first:
 - **The forks' commits** past the frozen `wine-port`, `fex-port`, `dxmt-port`
   and `rpmalloc-port` rows, up to the gitlinks of the watched commit. Every
   file of a fork is built, so each of these is listed.
-- `*` marks a commit that touches a file one of Playport's series patches:
-  a port of it will meet Playport's own change.
+- `*` marks a commit that touches a file one of pcios's series patches:
+  a port of it will meet pcios's own change.
 - Notes: a moved gitlink, a `.gitmodules` or licence change, a submodule the
   build does not use (`madeira-dock`), a fork branch past Madeira's gitlink.
 
@@ -65,7 +65,7 @@ never one itself.
 
 ## Porting a Madeira fix
 
-A wanted commit becomes a Playport patch on the frozen base, re-exported,
+A wanted commit becomes a pcios patch on the frozen base, re-exported,
 never hand-edited ([0053](decisions/0053-carrying-model.md)):
 
 - In Madeira's own tree (`build/*-unix`, the `*_ios.c` replacements):
@@ -77,7 +77,7 @@ never hand-edited ([0053](decisions/0053-carrying-model.md)):
   `patches/rpmalloc`.
 - The message names the Madeira commit (a `Madeira-commit:` line) and carries
   `Class:`, `Evidence:` and `Offered-upstream:`. Keep the original author.
-- Branch `madeira-main` holds Madeira `bbbf8d0` re-ported onto Playport's
+- Branch `madeira-main` holds Madeira `bbbf8d0` re-ported onto pcios's
   bases (2026-10-06); its patches are often the shortest route. Fastsync came
   that way, as `patches/wine-unix` 0015–0017 and `patches/madeira-unix` 0081
   ([evidence](evidence/2026-10-06-fastsync-on-8c050d0.md)), until ppsync

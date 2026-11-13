@@ -161,7 +161,7 @@ extension XboxBridgeCopy {
         let app = XboxGameManifest.msaAppID(rec.msaAppID)
         guard now.msaAppID?.uppercased() == app?.uppercased(), now.msaFullTrust == fullTrust,
               Set(now.relatedProductIDs.map { $0.uppercased() }) == Set(related.map { $0.uppercased() }) else {
-            throw ClientError.verificationFailed("The game's MicrosoftGame.config is not the one Playport installed. Verify the game.")
+            throw ClientError.verificationFailed("The game's MicrosoftGame.config is not the one pcios installed. Verify the game.")
         }
         self.init(productID: productID, relatedProductIDs: related, msaAppID: app, msaFullTrust: fullTrust)
     }

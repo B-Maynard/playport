@@ -1,13 +1,13 @@
-# Playport
+# pcios
 
-Playport runs x86-64 Windows games, obtained from PC game stores, on an iPhone. This glossary
+pcios runs x86-64 Windows games, obtained from PC game stores, on an iPhone. This glossary
 names where a game comes from, what a player owns, installs and plays, and what may stand
 between the player and Play.
 
 ## Game sources
 
 **Store**:
-Where a player gets games in Playport: Steam, GOG, Epic, Battle.net with a fixed list of
+Where a player gets games in pcios: Steam, GOG, Epic, Battle.net with a fixed list of
 supported products, and Xbox.
 _Avoid_: source (an installed title's origin), platform, storefront, launcher, provider
 
@@ -22,7 +22,7 @@ that region.
 _Avoid_: server, realm, locale
 
 **Store client**:
-Playport's own native client for a store's content network, which installs and updates a game on
+pcios's own native client for a store's content network, which installs and updates a game on
 the phone without that store's Windows program.
 _Avoid_: downloader, store integration, native launcher
 
@@ -58,7 +58,7 @@ The key, delivered with a licence, that decrypts a copy's encrypted files.
 _Avoid_: CIK, game key, decryption key
 
 **Synthetic device**:
-The Windows PC that Playport presents to Microsoft on behalf of one app
+The Windows PC that pcios presents to Microsoft on behalf of one app
 installation, with made-up hardware details and none of the phone's own.
 _Avoid_: fake device, emulated PC, device ID
 
@@ -92,11 +92,11 @@ _Avoid_: sync error, merge
 ## Play gates
 
 **Anti-cheat refusal**:
-Playport declining to install or play a title because its anti-cheat cannot run, or is known to
+pcios declining to install or play a title because its anti-cheat cannot run, or is known to
 reject Wine.
 _Avoid_: blocked, unsupported
 
 **Ban-risk notice**:
-A warning shown before Play for a title whose anti-cheat Playport allows but the publisher does
-not support on Playport.
+A warning shown before Play for a title whose anti-cheat pcios allows but the publisher does
+not support on pcios.
 _Avoid_: anti-cheat warning, disclaimer

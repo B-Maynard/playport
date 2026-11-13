@@ -296,7 +296,7 @@ crates: preservation does not create absent MIT copyright/permission grants,
 identify serde's original revision or establish adequate original notices. No
 copyright year, licence substitution or copied-code provenance is guessed.
 Complete attribution/rights and compiled/linked applicability remain open; this
-catalog covers Playport's locked executable dependencies, **not StikJIT**.
+catalog covers pcios's locked executable dependencies, **not StikJIT**.
 
 ### mingw-w64 source and installed notices
 
@@ -415,7 +415,7 @@ See [the Mesa audit](release-audits/mesa.md) for scope and source-level evidence
 
 | Files in `OUT` | Source tree | Needed for |
 | --- | --- | --- |
-| `Playport-LICENSE.txt`, `Playport-LICENSE-EXCEPTION.md` | this repository | the app's own code |
+| `pcios-LICENSE.txt`, `pcios-LICENSE-EXCEPTION.md` | this repository | the app's own code |
 | `JavaSteam-LICENSE.txt` | `app/SteamClient/LICENSE-JavaSteam.txt` (JavaSteam's MIT licence) | the Steam protocol schema tables in `app/SteamClient` |
 | `Xodus-LICENSE.txt`, `XodusNexus-LICENSE.txt`, `CikExtractor-LICENSE.txt` | `app/XboxClient/LICENSE-*.txt` | Xodus-derived Swift in the dev-only Xbox client (GPL-3.0-only), Nexus's Xodus patches (MIT notice too), and LukeFZ's CLEP licence-block decoding (MIT) |
 | `GPL-2.0.txt`, `LGPL-3.0.txt` | the GMP tarball | the GPL-2.0-or-later and LGPL-3.0-or-later options of GMP, Nettle and FreeType |
@@ -428,7 +428,7 @@ See [the Mesa audit](release-audits/mesa.md) for scope and source-level evidence
 | `DXMT-LICENSE.txt`, `DXMT-COPYING.LIB.txt`, `DXMT-LICENSE.OLD.txt`, `DXMT-LICENSE-MADEIRA.md`, `DXMT-COPYING.GPL-3.0.txt` | DXMT (upstream's LGPL-2.1-or-later licence and its former MIT one, then Madeira's port) | the unix slice and the DXMT PE DLLs |
 | `DXBCParser-header.txt` | DXMT `libs/DXBCParser` (first lines of a source file; the directory has no licence file) | DXBCParser, in the slice and the PE DLLs |
 | `DXBCParser-LICENSE-Microsoft.txt` | `build/notices-extra/D3D12TranslationLayer-LICENSE`: microsoft/D3D12TranslationLayer's MIT `LICENSE` at a recorded commit, where DXBCParser's files come from (DirectX-Headers' is the same text) | the MIT text DXBCParser's headers name |
-| `crate-notice-from-metadata-{ns-keyed-archive,plist-macro,plist_ffi}.txt` | `build/notices-extra/*-NOTICE-from-metadata`, written by Playport from each crate's Cargo.toml (`license`, `authors`), since none has a licence file upstream ([decision 0039](decisions/0039-owners-licensing-review.md)) | the three locked crates' MIT notices, labelled as written from metadata |
+| `crate-notice-from-metadata-{ns-keyed-archive,plist-macro,plist_ffi}.txt` | `build/notices-extra/*-NOTICE-from-metadata`, written by pcios from each crate's Cargo.toml (`license`, `authors`), since none has a licence file upstream ([decision 0039](decisions/0039-owners-licensing-review.md)) | the three locked crates' MIT notices, labelled as written from metadata |
 | `mingw-source-<flattened-source-path>` (12 texts at the current lock) | exact mingw-w64 source revision declared by locked llvm-mingw release script; 15 installed notice copies compared against source | PE runtime/header and library/tool notice superset, not linked-member or binary-build proof |
 | `mingw-directx-headers-COPYING.MinGW-w64.txt` | DXMT `include/native/directx` | the headers compiled into the slice |
 | `LLVM-LICENSE.TXT`, `LLVM-Support-COPYRIGHT.regex.txt`, `LLVM-Support-ConvertUTF-Unicode-notice.txt` | LLVM 15.0.7 | the LLVM libraries in the executable, and the regex and Unicode code the link keeps |
@@ -450,7 +450,7 @@ See [the Mesa audit](release-audits/mesa.md) for scope and source-level evidence
 | `nghttp2-COPYING.txt`, `nghttp2-sfparse-header.txt` | nghttp2 at tag `v1.70.0` (`COPYING`, MIT) and the first 26 lines of `lib/sfparse.c` (its own holders) | `libnghttp2.dll` in `Runtime/arm64ec-windows/`. Like every PE file built with llvm-mingw, both Xbox DLLs are also in the scope of the mingw-w64 and LLVM runtime collections |
 | `StikJIT-LICENSE.txt` | StikJIT at tag `1.9.0` (`LICENSE`, MPL-2.0) | the StikJIT framework in the JIT helper extension; its source location is in [LICENSING.md](LICENSING.md#stikjit). It is also the MPL-2.0 text for `Runtime/certs/cacert.pem`, Mozilla's root store as published in curl's CA extract (the pins.lock `ca-bundle` date), shipped unmodified with its own header |
 | `winemono-source-<flattened-source-path>` (113 at the current pin), `winemono-provenance.json` | Wine Mono's source release `wine-mono-<pin>-src.tar.xz`, checked against `build/stages/wine-mono.sh`'s `SRC_SHA256` (`build/notices-wine-mono.py`; input `WINE_MONO_SOURCE`, default the stage's cache) | `Runtime/mono` (decision [0077](decisions/0077-ship-wine-mono.md)): every licence, copying, notice, patents and third-party file of the release (Mono and its external libraries, FNA and its libraries, SDL3, winforms, wpf, monoDX, System.Speech), and the SharpZipLib README its `COPYING` points to; outside the llvm-mingw toolchain directory the release builds with. A superset, carried whole; the manifest is the collection record |
-| `idevice-LICENSE.txt` | jkcoxson/idevice at commit `d32c8189c51c2789496b0768039419c3705498c3` (`LICENSE.txt`, MIT) | verified notice bytes for Playport's pinned executable input; donor bytes only for StikJIT, whose embedded revision/dependencies remain unverified |
+| `idevice-LICENSE.txt` | jkcoxson/idevice at commit `d32c8189c51c2789496b0768039419c3705498c3` (`LICENSE.txt`, MIT) | verified notice bytes for pcios's pinned executable input; donor bytes only for StikJIT, whose embedded revision/dependencies remain unverified |
 | `rust-crates.tsv`, `rust-<crate>-<version>-<flattened-path>` for recursive notice candidates, direct declared `license-file` payloads and the focused attribution evidence catalog, `rust-crates-without-licence-files.txt` | `build/stages/idevice.sh`'s normal-dependency inventory, regenerated offline from pinned source; registry bytes verified against committed `Cargo.lock` archive hashes | idevice's normal target dependencies; not an exact linked-member inventory ([LICENSING.md, "idevice in the executable"](LICENSING.md#idevice-in-the-executable)) |
 | `rust-source-<flattened-source-path>` for every recursive notice-file candidate | locked published `rust-src` archive, rechecked before copying | source notice superset (including root copyright, compiler-builtins, libunwind and vendored crates); applicability/header coverage still needs review |
 | `rust-COPYRIGHT-library.html`, `rust-licenses-<licence>.txt` for every supplied text | installed `share/doc/rust`, verified against locked `rustc` release archive; installed iOS stdlib verified against locked `rust-std` archive | standard-library copyright inventory plus a release licence-text superset (including unlinked compiler/docs material); generic texts alone do not replace crate attribution |
@@ -520,7 +520,7 @@ which both variants ship at the app root, and its `verify` compares the IPA's
 
 Settings › About › Licences (`app/Sources/S1Probe/UI/LicencesView.swift`, both
 variants; pages in place of the About section, every row and paragraph on the
-controller's ring, B back a page) shows Playport's copyright, licence and warranty notice and where its
+controller's ring, B back a page) shows pcios's copyright, licence and warranty notice and where its
 source is, then reads `Licenses/components.json` through PlayportKit's
 `Licences`: each component with its licence and files, each file's text, the
 credit lines, and while the selection is unreviewed its status and open
@@ -538,7 +538,7 @@ component).
   The exact-source LLVM runtime/header-credit superset is now collected in a
   separately verified `llvm-runtime/` directory, but exhaustive attribution,
   applicability and binary derivation remain open
-  ([LICENSING.md, "Licence readings"](LICENSING.md#licence-readings); [PLA-725](https://linear.app/playportdev/issue/PLA-725)).
+  ([LICENSING.md, "Licence readings"](LICENSING.md#licence-readings); PLA-725).
 - Mesa's licence texts are collected whole; which of them the files compiled
   into KosmicKrisp and the Zink frameworks carry has not been read file by file. DXVK/vkd3d-proton's
   seven Khronos header checkouts now supply root notices and licence-text

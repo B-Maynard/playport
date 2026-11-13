@@ -189,7 +189,7 @@ private struct GameDetailPage: View {
                 VStack(spacing: 8) {
                     Text("Not installed").font(PP.display(28)).foregroundStyle(PP.text)
                     #if PLAYPORT_RELEASE
-                    Text("This game is no longer in Playport.").foregroundStyle(PP.muted)
+                    Text("This game is no longer in pcios.").foregroundStyle(PP.muted)
                     #else
                     Text("This game's folder is no longer in C:\\Games.").foregroundStyle(PP.muted)
                     #endif
@@ -408,7 +408,7 @@ private struct GameDetailPage: View {
         if let job {
             jobControls(job)
         } else if launch.spent {
-            SecondaryButton(id: "game:close", systemImage: "xmark.circle", title: "Close Playport", hint: "Close") { exit(0) }
+            SecondaryButton(id: "game:close", systemImage: "xmark.circle", title: "Close pcios", hint: "Close") { exit(0) }
         } else {
             PrimaryButton(id: "game:play", title: library.preparing[t.id] ?? "Play",
                           enabled: canPlay(t) && library.preparing[t.id] == nil, hint: "Play") { start(t) }
@@ -591,13 +591,13 @@ private struct GameDetailPage: View {
                 Text(why).foregroundStyle(.orange)
             } else if let job {
                 if case let .paused(reason?) = job.phase { Text(reason).foregroundStyle(.orange) }
-                if job.isRunning { Text("Keep Playport open: the download pauses when it leaves the screen.") }
+                if job.isRunning { Text("Keep pcios open: the download pauses when it leaves the screen.") }
             } else if let package = xbox.package(copy.id) {
                 let parts = ["Download \(ByteCount.format(package.downloadSize))", "needs \(ByteCount.format(package.neededBytes))"]
                     + [library.freeBytes.map { "\(ByteCount.format($0)) free" }].compactMap { $0 }
-                Text(parts.joined(separator: " · ") + " · keep Playport open while it downloads")
+                Text(parts.joined(separator: " · ") + " · keep pcios open while it downloads")
             } else {
-                Text("Microsoft lists no Windows package for this game that Playport can install.").foregroundStyle(.orange)
+                Text("Microsoft lists no Windows package for this game that pcios can install.").foregroundStyle(.orange)
             }
         }
         #endif
@@ -621,7 +621,7 @@ private struct GameDetailPage: View {
             } catch {
                 #if PLAYPORT_RELEASE
                 LibraryModel.log("play \(t.id) refused: \(error)")
-                playError = "Playport could not prepare this game's launch."
+                playError = "pcios could not prepare this game's launch."
                 #else
                 playError = "\(error)"
                 #endif
@@ -666,15 +666,15 @@ private struct GameDetailPage: View {
             if let t {
                 if launch.spent {
                     Text(JitProvider.inLiveContainer
-                         ? "Playport cannot start another game in this session. Close it and launch it again from LiveContainer with JIT to play again."
-                         : "Playport cannot start another game in this session. Close it and reopen it from the Home Screen to play again.")
+                         ? "pcios cannot start another game in this session. Close it and launch it again from LiveContainer with JIT to play again."
+                         : "pcios cannot start another game in this session. Close it and reopen it from the Home Screen to play again.")
                 } else if !t.canPlay {
                     Text("No Windows executable in this folder.").foregroundStyle(.orange)
                 } else if let job {
                     if case let .paused(reason?) = job.phase { Text(reason).foregroundStyle(.orange) }
                     // An update Playport queued by itself holds Play too: say how to play now.
                     Text(job.kind == .repair ? "Play is available once the repair finishes, or after Cancel."
-                         : job.record.automatic ? "Playport queued this update by itself. Play is available once it finishes, or after Cancel: it waits for Steam's next version then."
+                         : job.record.automatic ? "pcios queued this update by itself. Play is available once it finishes, or after Cancel: it waits for Steam's next version then."
                          : "Play is available once the update finishes, or after Cancel.")
                 } else {
                     #if !PLAYPORT_RELEASE
@@ -685,7 +685,7 @@ private struct GameDetailPage: View {
                     }
                     #endif
                     MemoryWarning(need: MemoryNeed.of(t, cohort: LibraryModel.cohort))
-                    if installs.isBusy { Text("Starting a game pauses the download. It goes on when Playport reopens after the game.") }
+                    if installs.isBusy { Text("Starting a game pauses the download. It goes on when pcios reopens after the game.") }
                     controllerLine
                 }
                 riskNotice(t)
@@ -736,12 +736,12 @@ private struct GameDetailPage: View {
             Text("Sign in to Steam to download.")
         } else if let job {
             if case let .paused(reason?) = job.phase { Text(reason).foregroundStyle(.orange) }
-            if job.isRunning { Text("Keep Playport open: the download pauses when it leaves the screen.") }
+            if job.isRunning { Text("Keep pcios open: the download pauses when it leaves the screen.") }
         } else {
             let need = g.info.installSize(branch: selectedBranch).map { "Needs \(ByteCount.format($0))" }
             let free = library.freeBytes.map { "\(ByteCount.format($0)) free" }
             let parts = [need, free].compactMap { $0 }
-            if !parts.isEmpty { Text(parts.joined(separator: " · ") + " · keep Playport open while it downloads") }
+            if !parts.isEmpty { Text(parts.joined(separator: " · ") + " · keep pcios open while it downloads") }
         }
     }
 
@@ -751,7 +751,7 @@ private struct GameDetailPage: View {
             Text(InstallCopy.afterLaunch)
         } else if let job {
             if case let .paused(reason?) = job.phase { Text(reason).foregroundStyle(.orange) }
-            if job.isRunning { Text("Keep Playport open: the download pauses when it leaves the screen.") }
+            if job.isRunning { Text("Keep pcios open: the download pauses when it leaves the screen.") }
             Text("Play is available once the download finishes.")
         } else {
             if let why = bnet.refusals[p] ?? bnet.spaceRefusal(p) { Text(why).foregroundStyle(.orange) }
@@ -762,7 +762,7 @@ private struct GameDetailPage: View {
                 let need = bnet.needed(p).map { "Needs \(ByteCount.format($0))" }
                 let free = library.freeBytes.map { "\(ByteCount.format($0)) free" }
                 let parts = [need, free].compactMap { $0 }
-                if !parts.isEmpty { Text(parts.joined(separator: " · ") + " · keep Playport open while it downloads") }
+                if !parts.isEmpty { Text(parts.joined(separator: " · ") + " · keep pcios open while it downloads") }
             }
             Text("No Battle.net account is needed to install. World of Warcraft asks you to sign in when it starts.")
         }
@@ -1130,7 +1130,7 @@ private struct GameDetailPage: View {
             guard !found.isEmpty else { return }
             PadModal.shared.picker(
                 title: "Executable", context: "\(context) · Game",
-                note: "What Play starts. The first is Playport's own pick; installers, tools and crash reporters are last.",
+                note: "What Play starts. The first is pcios's own pick; installers, tools and crash reporters are last.",
                 options: [PadOption(id: "", label: "Default", detail: found.first.map { "\($0), Playport's pick" })]
                     + found.map { PadOption(id: $0, label: $0) },
                 selected: t.chosenExecutable ?? "") { library.setExecutable(t.id, $0.isEmpty ? nil : $0) }
@@ -1208,9 +1208,9 @@ private struct GameDetailPage: View {
             guard !removing, !launch.running, !library.verifying.contains(t.id), !downloading else { return }
             let again = t.source == .installed
                 ? "You can install it again from the Library."
-                : "To play it again, copy it into Playport again."
+                : "To play it again, copy it into pcios again."
             let frees = t.sizeBytes.map { "Frees \(ByteCount.format($0))" }
-            var note = "Saves the game keeps in its own folder are deleted with it; saves in Playport's Windows user folder stay. " + again
+            var note = "Saves the game keeps in its own folder are deleted with it; saves in pcios's Windows user folder stay. " + again
             var options = [PadOption(id: "keep", label: "Keep it"), PadOption(id: "uninstall", label: "Uninstall", detail: frees)]
             #if !PLAYPORT_RELEASE
             if t.store == .xbox {
@@ -1386,7 +1386,7 @@ private struct GameDetailPage: View {
                    reset: steamAPI.changed ? { settings.wrappedValue.steamAPI = nil } : nil) {
                 PadModal.shared.picker(
                     title: "Steam API", context: "\(context) · Steam",
-                    note: "The game's own Steam API needs Steam running: with Playport's Steam client it finds one that "
+                    note: "The game's own Steam API needs Steam running: with pcios's Steam client it finds one that "
                         + "answers for this game only; alone, games that check for Steam will not start. "
                         + "Changes apply from the game's next launch.",
                     options: [PadOption(id: "", label: "Default",
@@ -1454,8 +1454,8 @@ private struct GameDetailPage: View {
 
     private static func steamAPIModeText(_ m: SteamAPISwap.Mode) -> String {
         switch m {
-        case .emulated: "Playport's emulator"
-        case .client: "Playport's Steam client"
+        case .emulated: "pcios's emulator"
+        case .client: "pcios's Steam client"
         case .original: "The game's own"
         }
     }
@@ -1470,7 +1470,7 @@ private struct GameDetailPage: View {
         switch s {
         case .none: "No steam_api"
         case .original: "The game's own"
-        case .emulated: "Playport's emulator"
+        case .emulated: "pcios's emulator"
         case .mixed: "Partly swapped"
         }
     }
@@ -1501,7 +1501,7 @@ private struct GameDetailPage: View {
                             achievementRow(sorted[i], s, id: "ach:\(i)")
                         }
                         if !(s?.schema.achievements.isEmpty ?? true) {
-                            Text("From Steam. What a play unlocks goes to Steam when Playport next opens.")
+                            Text("From Steam. What a play unlocks goes to Steam when pcios next opens.")
                                 .font(.system(size: 12)).foregroundStyle(PP.muted)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal, 14).padding(.top, 8)
@@ -1756,10 +1756,10 @@ enum ProblemReport {
 
 /// What the player is told about JIT before and during a launch (JitProvider).
 enum JitNote {
-    static let beforePlay = "JIT comes from Playport's own helper over LocalDevVPN, which Play turns on when it is off."
-    static let waiting = "Playport's JIT helper is attaching. Keep Playport open."
-    static let waitingForStikDebug = "Waiting for StikDebug to enable JIT. It comes back to Playport when it is done."
-    static let waitingForAnotherApp = "Waiting for JIT from another app. Enable JIT for Playport there now, with the universal.js script."
+    static let beforePlay = "JIT comes from pcios's own helper over LocalDevVPN, which Play turns on when it is off."
+    static let waiting = "pcios's JIT helper is attaching. Keep pcios open."
+    static let waitingForStikDebug = "Waiting for StikDebug to enable JIT. It comes back to pcios when it is done."
+    static let waitingForAnotherApp = "Waiting for JIT from another app. Enable JIT for pcios there now, with the universal.js script."
 
     /// Why a game ended on running out of its JIT pool (LaunchMessage). Every Play
     /// gets the same pool (JitPool.sizeMB, decision 0036); only a dev build's simulated
@@ -1767,18 +1767,18 @@ enum JitNote {
     /// Why a game ended on FEX's host band filling (LaunchMessage, decision 0120): its size is
     /// fixed, so there is nothing to set; what fills it is the game's threads, with its launcher's.
     static let outOfEmulatorMemory = "The x86 emulator keeps a fixed amount of memory for every thread "
-        + "the game and its launcher run, and their threads filled it. This game runs more threads than Playport can hold."
+        + "the game and its launcher run, and their threads filled it. This game runs more threads than pcios can hold."
 
     static func outOfMemory(_ part: JitPool.Exhaustion, poolMB: Int) -> String {
         let what = switch part {
         case .head: "the game's program files"
-        case .tail: "the code Playport translated for it"
+        case .tail: "the code pcios translated for it"
         case .alias: "the code the game compiled as it ran"
         }
         let size = poolMB > 0 ? "\(MemoryNeed.format(mb: poolMB)) of " : ""
         let more = poolMB > 0 && poolMB < JitPool.minimumMB
             ? "Less than usual was set aside: Settings › Developer's Simulated JIT memory makes it smaller."
-            : "This game needs more than Playport sets aside."
+            : "This game needs more than pcios sets aside."
         return "Playport set aside \(size)JIT memory for the game, and \(what) filled it. \(more)"
     }
 }

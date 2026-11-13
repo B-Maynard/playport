@@ -61,7 +61,7 @@ public enum XboxLicenceProblem: Error, Sendable, Equatable, CustomStringConverti
         case .network: "Microsoft's licensing service couldn't be reached. Check your connection and try again."
         case .service(let status): "Microsoft's licensing service is unavailable (HTTP \(status)). Try again later."
         case .rejected(let status): "Microsoft's licensing service rejected the request (HTTP \(status)). Try again later."
-        case .invalidResponse: "Microsoft's licensing service returned a response Playport doesn't recognise."
+        case .invalidResponse: "Microsoft's licensing service returned a response pcios doesn't recognise."
         case .session(let error): error.description
         case .connectionNeeded(let why): why.description
         }

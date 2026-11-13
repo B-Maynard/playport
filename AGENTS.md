@@ -1,4 +1,4 @@
-# Playport
+# pcios
 
 An iOS app that runs x86-64 Windows games on a non-jailbroken iPhone, built on
 [willfaust/Madeira](https://github.com/willfaust/Madeira): Wine (ARM64EC), FEX-Emu
@@ -47,9 +47,9 @@ below.
   to its series by content, so an edited patch reapplies next build.
 - **Name gate:** `pp names` must stay clean (also run by `pp test` and CI) — name no project
   as provenance except willfaust/Madeira.
-- **Pins.** Madeira is frozen at `8c050d0` and Playport owns that layer (decision 0054):
+- **Pins.** Madeira is frozen at `8c050d0` and pcios owns that layer (decision 0054):
   `pp sync` only reports new upstream commits and moves none, and a wanted fix is hand-ported
-  as a Playport patch ([UPSTREAM-SYNC.md](docs/UPSTREAM-SYNC.md)). The `wine`, `dxmt`, `fex`,
+  as a pcios patch ([UPSTREAM-SYNC.md](docs/UPSTREAM-SYNC.md)). The `wine`, `dxmt`, `fex`,
   `rpmalloc` pins and their `patches/*-port` series (for Wine also the `madeira-port` patches
   `patches/madeira-unix`, and `patches/wine-valve` with its pin) move only by a manual rebase or pick
   **plus a Hollow Knight play on the phone** (decisions 0007, 0008, 0013, 0018). `pp rebase`
@@ -140,7 +140,7 @@ The lock is released between commands, so a sequence that must not be split runs
 
 **UI sessions.** Prepare explicit `pp ui` actions on the workstation, announce the start,
 then run one short, focused batch. Finish or cancel every queued input, release the lock and
-announce completion before doing offline analysis. Keep Playport visible throughout UI work;
+announce completion before doing offline analysis. Keep pcios visible throughout UI work;
 no black-screen interludes followed by more input. App navigation and settings use semantic
 `pp ui` paths: add a missing path first, rather than improvising taps, pad scrolling or direct
 input scripts. If the owner reclaims the phone or another app takes foreground, stop input;
@@ -183,11 +183,11 @@ or outlive/kill unrelated jobs.
   Compatibility; one issue per title, `Name (Steam appID)`, with **Status:** Works,
   Playable with issues or Broken and **Best known:**, the IPA and the run directory). Search
   first and update the existing issue, then its status in `site/compatibility/games.json`
-  (playport.dev/compatibility; it shows Works and Playable with issues as `runs`, Broken as
+  (site/compatibility/index.html; it shows Works and Playable with issues as `runs`, Broken as
   `broken`). A failure outside your task is filed there, not fixed in
   passing; a subagent lists its games for the supervisor to file.
 - When a question is quicker to answer on this workstation than on the phone (what a game waits
-  for, Playport or the game, its network, a file's format, a binary), answer it under desktop
+  for, pcios or the game, its network, a file's format, a binary), answer it under desktop
   Wine/Proton here first, then fix and confirm on the phone:
   [HOST-DEBUGGING.md](docs/HOST-DEBUGGING.md) (the setup in the build area; sway display only,
   never the owner's niri session or browser). A game alive with no first frame is often behind a

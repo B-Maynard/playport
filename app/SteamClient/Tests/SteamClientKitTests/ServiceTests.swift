@@ -431,7 +431,7 @@ final class PairingTests: XCTestCase {
     func testIntroCopyAndCountdown() {
         var m = PairingModel()
         XCTAssertEqual(m.phase, .intro)
-        XCTAssertEqual(m.message, "Open the Steam app on another phone or tablet signed in to your account, and scan this code. Keep Playport open until it confirms.")
+        XCTAssertEqual(m.message, "Open the Steam app on another phone or tablet signed in to your account, and scan this code. Keep pcios open until it confirms.")
         XCTAssertEqual(PairingModel.Copy.warning, "Don't switch to Steam on this phone; the sign-in will expire.")
         XCTAssertTrue(m.showsWarning)
         XCTAssertEqual(m.actionTitle, "Show code")

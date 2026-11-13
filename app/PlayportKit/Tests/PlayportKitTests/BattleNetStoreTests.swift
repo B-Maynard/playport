@@ -292,11 +292,11 @@ final class BattleNetStoreTests: XCTestCase {
         XCTAssertEqual(BattleNet.reason(BattleNetError.refused(status: 403, "data from level3.blizzard.com")),
                        "Blizzard's servers refused the download (HTTP 403). Try again later.")
         XCTAssertEqual(BattleNet.reason(BattleNetError.refused(status: 429, "data from level3.blizzard.com")),
-                       "Blizzard's servers are asking Playport to slow down (HTTP 429). Try again later.")
+                       "Blizzard's servers are asking pcios to slow down (HTTP 429). Try again later.")
         XCTAssertEqual(BattleNet.reason(BattleNetError.damaged("install manifest: bad magic")),
                        "Blizzard's servers sent damaged data. Try again later.")
         XCTAssertEqual(BattleNet.reason(BattleNetError.missingKey("FA505078126ACB3E")),
-                       "Playport can't read this build yet.")
+                       "pcios can't read this build yet.")
         XCTAssertEqual(BattleNet.reason(BattleNetError.outdated(installed: "12.0.1.1", current: "12.0.1.2")),
                        "The game is on 12.0.1.1 and its region on 12.0.1.2: update it first, then try again.")
         XCTAssertNil(BattleNet.reason(ClientError.insufficientSpace(needed: 1, available: 0)), "not Blizzard's: the store-neutral wording")

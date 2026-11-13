@@ -1,8 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Getting started
-    url: https://github.com/playportdev/playport#install
+    url: https://github.com/B-Maynard/pcios#install
     about: Sideloading, pairing, JIT and your first game.
-  - name: Game compatibility list
-    url: https://playport.dev/compatibility/
-    about: Which games run, and how well, before you report one.

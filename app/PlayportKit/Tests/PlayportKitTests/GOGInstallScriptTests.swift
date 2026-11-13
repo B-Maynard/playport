@@ -368,7 +368,7 @@ final class GOGInstallScriptTests: XCTestCase {
         XCTAssertEqual(try one(#""root":"HKLM","subkey":"System\\X","valueName":"v","valueData":"a""#).registry.count, 1,
                        "outside Software, one view")
         XCTAssertEqual(try one(#""root":"HKLM","subkey":"Software\\X","valueName":"v","valueData":"{userdocs}/Saves""#).registry, [],
-                       "a folder Playport does not map is left out")
+                       "a folder pcios does not map is left out")
         XCTAssertEqual(try one(#""root":"HKLM","subkey":"Software\\X","valueName":"v","valueData":"ab","valueType":"dword""#).registry, [])
         XCTAssertEqual(try one(#""root":"HKLM","subkey":"Software\\X","valueName":"v","valueData":"ab","valueType":"binary""#).registry, [])
         XCTAssertEqual(try one(#""root":"HKEY_CLASSES_ROOT","subkey":"X","valueName":"v","valueData":"a""#).registry, [])

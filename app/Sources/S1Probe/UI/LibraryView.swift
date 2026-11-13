@@ -501,7 +501,7 @@ private struct LibraryGridView: View {
         case .all:
             return model.gamesError ?? "Your installed games and games from connected stores appear here. Sign in to Steam or add a game from Files to get started."
         case .steam:
-            if needsSignIn { return model.state == .expired ? AccountCopy.status(.expired) : "Pair Playport with your Steam account to see your games." }
+            if needsSignIn { return model.state == .expired ? AccountCopy.status(.expired) : "Pair pcios with your Steam account to see your games." }
             return model.gamesError ?? "Your Steam account owns no games."
         case .gog, .epic:
             return "Games from \(grid.filter.label) appear here."

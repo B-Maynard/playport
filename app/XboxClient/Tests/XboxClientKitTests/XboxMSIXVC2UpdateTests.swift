@@ -118,7 +118,7 @@ final class XboxMSIXVC2UpdateTests: XCTestCase, @unchecked Sendable {
                        shared, "an unchanged file is not rewritten")
         let rec = r.installed
         XCTAssertEqual(rec.version, "1.2.4.0")
-        XCTAssertEqual(rec.packageName, "Playport.TestGame_1.2.4.0_x64__test")
+        XCTAssertEqual(rec.packageName, "pcios.TestGame_1.2.4.0_x64__test")
         XCTAssertEqual(rec.executable, "Game.exe")
         XCTAssertEqual(rec.scid, "00000000-0000-0000-0000-00001234abcd")
         XCTAssertEqual(rec.encrypted, [])

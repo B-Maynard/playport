@@ -170,7 +170,7 @@ final class XboxGameAddOns: ObservableObject {
             case .available: detail = "Install · " + ByteCount.format(a.package?.downloadSize ?? 0)
             case .licenceOnly: detail = "Nothing to install: the game checks its licence"
             case .bundle: detail = "A pack: its add-ons are listed on their own"
-            case .unsupported: detail = "No Windows package Playport can install"
+            case .unsupported: detail = "No Windows package pcios can install"
             case .unlicensed: detail = "Not licensed to this account"
             }
             options.append(PadOption(id: (a.status == .available ? "install:" : "info:") + a.id, label: a.title,

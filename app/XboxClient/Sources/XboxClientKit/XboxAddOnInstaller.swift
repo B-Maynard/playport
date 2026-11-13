@@ -32,8 +32,8 @@ public enum XboxAddOnRefusal: Error, Sendable, Equatable, CustomStringConvertibl
     public var description: String {
         switch self {
         case .gameNotInstalled: "Install the game first: its add-ons go into its folder."
-        case .notForThisGame: "Microsoft's package for this add-on is not for this game, so Playport did not install it."
-        case .keptEncrypted: "This add-on's package keeps files encrypted, which Playport supports for games only."
+        case .notForThisGame: "Microsoft's package for this add-on is not for this game, so pcios did not install it."
+        case .keptEncrypted: "This add-on's package keeps files encrypted, which pcios supports for games only."
         }
     }
 }

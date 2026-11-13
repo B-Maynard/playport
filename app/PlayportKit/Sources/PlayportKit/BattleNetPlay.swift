@@ -129,7 +129,7 @@ public enum BattleNetPlay {
     /// unchanged on disk and in memory.
     public static func notice(_ product: BattleNetProduct) -> (title: String, text: String) {
         ("Before you play \(product.name)",
-         "Blizzard does not support Playport. Blizzard may take action against your Battle.net account for playing "
+         "Blizzard does not support pcios. Blizzard may take action against your Battle.net account for playing "
          + "\(product.name) here, up to a suspension or a ban. Playport changes none of the game's files and none of its "
          + "code in memory: it runs Blizzard's x64 Windows client through an x86-64 translator (FEX), as Windows on ARM "
          + "PCs do. You sign in inside \(product.name) itself: Playport stores no Battle.net email, password or session.")

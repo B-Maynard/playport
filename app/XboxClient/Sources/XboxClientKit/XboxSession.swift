@@ -22,7 +22,7 @@ public enum XboxSessionError: Error, Sendable, Equatable, CustomStringConvertibl
         switch self {
         case .signInRequired: "Microsoft couldn't renew your Xbox sign-in. Sign in again in Settings › Accounts › Xbox."
         case .deviceRejected: "Microsoft rejected the Xbox device. Try signing in again."
-        case .titleApprovalRequired: "Microsoft asks for an approval for this game's Xbox sign-in, which Playport can't show."
+        case .titleApprovalRequired: "Microsoft asks for an approval for this game's Xbox sign-in, which pcios can't show."
         }
     }
 }

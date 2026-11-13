@@ -17,7 +17,7 @@ final class XboxMSIXVC2InstallTests: XCTestCase, @unchecked Sendable {
         var licenceResult: XboxLicenceResult
         init(_ cdn: XboxTestCDN, size: Int, key: [UInt8] = XboxMSIXVC2Fixture.key) {
             location = XboxPackageLocation(contentID: XboxMSIXVC2Fixture.contentID, version: "1.2.3.0",
-                                           fileName: "Playport.TestGame_1.2.3.0_x64__test.msixvc2", size: UInt64(size), urls: [cdn.url])
+                                           fileName: "pcios.TestGame_1.2.3.0_x64__test.msixvc2", size: UInt64(size), urls: [cdn.url])
             licenceResult = .licensed(XboxLicence(contentID: XboxMSIXVC2Fixture.contentID,
                                                   keys: [XboxContentKey(id: XboxMSIXVC2Fixture.keyID, key: Secret(key))],
                                                   expiresAt: .distantFuture, offlineLease: nil, source: .microsoft))
@@ -65,7 +65,7 @@ final class XboxMSIXVC2InstallTests: XCTestCase, @unchecked Sendable {
         XCTAssertEqual(rec.encrypted, [])
         XCTAssertEqual(rec.contentID, XboxMSIXVC2Fixture.contentID)
         XCTAssertEqual(rec.version, "1.2.3.0")
-        XCTAssertEqual(rec.packageName, "Playport.TestGame_1.2.3.0_x64__test")
+        XCTAssertEqual(rec.packageName, "pcios.TestGame_1.2.3.0_x64__test")
         XCTAssertEqual(rec.executable, "Game.exe")
         XCTAssertEqual(rec.titleID, "1234ABCD")
         XCTAssertEqual(rec.msaAppID, "0000000012345678")

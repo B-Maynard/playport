@@ -22,7 +22,7 @@ final class XboxAddOnInstallTests: XCTestCase, @unchecked Sendable {
 
     /// The add-on's MicrosoftGame.config, as a GDK DLC declares it: no executables, its
     /// game's identity as main package, its game's Store ID allowed.
-    static func addOnConfig(store: String = "9TESTADDON01", main: String = "Playport.TestGame", allowed: String = "9TESTGAME001") -> [UInt8] {
+    static func addOnConfig(store: String = "9TESTADDON01", main: String = "pcios.TestGame", allowed: String = "9TESTGAME001") -> [UInt8] {
         Array(("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Game configVersion=\"1\">\n"
             + "  <Identity Name=\"Playport.TestAddOn\" Publisher=\"CN=Playport\" Version=\"1.0.4.0\" />\n"
             + "  <StoreId>\(store)</StoreId>\n"

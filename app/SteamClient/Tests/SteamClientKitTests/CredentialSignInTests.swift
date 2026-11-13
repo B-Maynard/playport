@@ -28,11 +28,11 @@ final class CredentialSignInTests: XCTestCase {
     }
 
     func testBeginAuthSessionViaCredentialsRequestFields() throws {
-        let req = BeginAuthSessionViaCredentialsRequest(deviceFriendlyName: "Playport iOS", accountName: "someone",
+        let req = BeginAuthSessionViaCredentialsRequest(deviceFriendlyName: "pcios iOS", accountName: "someone",
                                                         encryptedPassword: Secret("QUJD"), encryptionTimestamp: 42,
                                                         platformType: .steamClient)
         let f = try ProtoFields(req.encode(), message: "CAuthentication_BeginAuthSessionViaCredentials_Request")
-        XCTAssertEqual(try f.string(1), "Playport iOS")
+        XCTAssertEqual(try f.string(1), "pcios iOS")
         XCTAssertEqual(try f.string(2), "someone")
         XCTAssertEqual(try f.string(3), "QUJD")
         XCTAssertEqual(try f.uint64(4), 42)
@@ -41,7 +41,7 @@ final class CredentialSignInTests: XCTestCase {
         XCTAssertEqual(try f.uint32(7), 1, "k_ESessionPersistence_Persistent")
         XCTAssertEqual(try f.string(8), "Client")
         let d = try XCTUnwrap(f.message(9, as: "CAuthentication_DeviceDetails"))
-        XCTAssertEqual(try d.string(1), "Playport iOS")
+        XCTAssertEqual(try d.string(1), "pcios iOS")
         XCTAssertEqual(try d.uint32(2), 1)
         XCTAssertFalse(f.has(10), "no guard data unless given")
         XCTAssertFalse(String(describing: req).contains("QUJD"), "the encrypted password prints redacted")
@@ -284,7 +284,7 @@ final class CredentialSignInTests: XCTestCase {
         XCTAssertEqual(C([AuthConfirmation(type: .deviceCode), AuthConfirmation(type: .emailCode)]), C(code: .app),
                        "the app's code before an e-mailed one")
         XCTAssertEqual(C([AuthConfirmation(type: .none)])?.none, true)
-        XCTAssertNil(C([AuthConfirmation(type: .machineToken)]), "nothing Playport can do")
+        XCTAssertNil(C([AuthConfirmation(type: .machineToken)]), "nothing pcios can do")
         XCTAssertNil(C([]))
         var m = CredentialSignInModel()
         m.setAccountName("someone")

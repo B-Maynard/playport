@@ -417,7 +417,7 @@ struct XboxMSIXVC2Keys: Sendable {
             guard let plain = try? Inflate.decompress(bytes[0..<s.compressedLength], limit: s.length), plain.count == s.length else { return nil }
             bytes = plain
         case XboxMSIXVC2.Algorithm.brotli:
-            throw ClientError.unsupported("Xbox package uses Brotli compression, which Playport can't read yet")
+            throw ClientError.unsupported("Xbox package uses Brotli compression, which pcios can't read yet")
         default:
             bytes.removeLast(bytes.count - s.length)
         }

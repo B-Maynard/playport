@@ -109,7 +109,7 @@ final class GameImports: ObservableObject, DownloadDriver {
         } else if ext == "zip" {
             source = .zip(url)
         } else if ext == "exe" {
-            return "Playport doesn't run installers. Pick the installed game's folder, or a .zip of it."
+            return "pcios doesn't run installers. Pick the installed game's folder, or a .zip of it."
         } else {
             return "Pick a game's folder or a .zip of it."
         }

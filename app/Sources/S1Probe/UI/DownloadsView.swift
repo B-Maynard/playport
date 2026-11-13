@@ -85,7 +85,7 @@ struct DownloadsPage: View {
     private var whileYouWait: some View {
         VStack(alignment: .leading, spacing: 8) {
             SmallCaps("While you wait")
-            Text("Downloads need Playport open. After a minute the screen dims to save power; plug in for big games.")
+            Text("Downloads need pcios open. After a minute the screen dims to save power; plug in for big games.")
                 .font(.system(size: 13)).foregroundStyle(PP.soft).lineSpacing(2)
                 .fixedSize(horizontal: false, vertical: true)
             HStack(spacing: 8) {

@@ -30,7 +30,7 @@ public enum ActionPickerTab: String, CaseIterable, Sendable {
         case .keyboard: "Keyboard"
         case .mouse: "Mouse"
         case .controller: "Controller"
-        case .playport: "Playport"
+        case .playport: "pcios"
         }
     }
 }
@@ -358,7 +358,7 @@ public enum ActionText {
         case .key(let vk, let m)?: KeyModifiers.names.filter { m.contains($0.0) }.map { modifier($0.0) + "+" }.joined() + key(vk)
         case .mouse(let m)?: mouse(m)
         case .pad(let c)?: "Pad " + pad(c)
-        case .playport(.menu)?: "Playport menu"
+        case .playport(.menu)?: "pcios menu"
         case .playport(.keyboard)?: "Touch keyboard"
         }
     }

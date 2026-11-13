@@ -45,12 +45,12 @@ struct DeveloperSettings: View {
     @ViewBuilder private var diagnostics: some View {
         PadSectionHeader(text: "Diagnostics").id("diagnostics")
         SettingsSwitchRow(id: "dev:metalHUD", title: "Metal HUD",
-                          subtitle: "Apple's HUD over a game, its figures in the log; from Playport's next start",
+                          subtitle: "Apple's HUD over a game, its figures in the log; from pcios's next start",
                           on: $metalHUD)
         choice("dev:gpuCapture", "GPU capture", subtitle: "A frame as a Metal .gputrace in the game's folder",
                value: frame == 0 ? "Off" : "Frame \(frame)",
                options: [PadOption(id: "0", label: "Off")] + GPUCapture.frames.map { PadOption(id: "\($0)", label: "Frame \($0)") },
-               selected: "\(frame)", note: "From Playport's next start; it costs every frame while on.") { frame = Int($0) ?? 0 }
+               selected: "\(frame)", note: "From pcios's next start; it costs every frame while on.") { frame = Int($0) ?? 0 }
         SettingsSwitchRow(id: "dev:passProfile", title: "GPU time per pass", subtitle: "[pass-prof] lines in the log",
                           on: $passProfile)
         SettingsSwitchRow(id: "dev:cpuProfile", title: "CPU sampling", subtitle: "[wprof] lines in the log", on: $cpuProfile)
@@ -59,10 +59,10 @@ struct DeveloperSettings: View {
         choice("dev:validation", "Metal validation", subtitle: "Errors go to the device log",
                value: levels.first { $0.0.rawValue == validation }?.1 ?? validation,
                options: levels.map { PadOption(id: $0.0.rawValue, label: $0.1) }, selected: validation,
-               note: "From Playport's next start; it costs CPU and GPU time.") { validation = $0 }
-        SettingsSwitchRow(id: "dev:counters", title: "Runtime counters", subtitle: "Off from Playport's next start, as a release build",
+               note: "From pcios's next start; it costs CPU and GPU time.") { validation = $0 }
+        SettingsSwitchRow(id: "dev:counters", title: "Runtime counters", subtitle: "Off from pcios's next start, as a release build",
                           on: Binding(get: { !countersOff }, set: { countersOff = !$0 }))
-        SettingsSwitchRow(id: "dev:inprocsync", title: "In-process sync", subtitle: "NT waits without the wineserver (ppsync); off from Playport's next start",
+        SettingsSwitchRow(id: "dev:inprocsync", title: "In-process sync", subtitle: "NT waits without the wineserver (ppsync); off from pcios's next start",
                           on: Binding(get: { !inprocSyncOff }, set: { inprocSyncOff = !$0 }))
     }
 
@@ -152,7 +152,7 @@ struct DeveloperSettings: View {
         PadRow(id: "set:dev:helperReport", title: "Helper lifetime: read the report", hint: "Read") {
             if !probe.busy { Task { _ = await probe.report() } }
         }
-        PadRow(id: "set:dev:restart", title: "Restart Playport now", subtitle: "What Playport does after a game, with no game",
+        PadRow(id: "set:dev:restart", title: "Restart pcios now", subtitle: "What pcios does after a game, with no game",
                hint: "Restart") {
             if !restart.restarting, !probe.busy { restart.restart(notice: nil) }
         }

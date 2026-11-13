@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""pp: the one tool for Playport: build, ship, test, drive the phone. AGENTS.md has the loop.
+"""pp: the one tool for pcios: build, ship, test, drive the phone. AGENTS.md has the loop.
 
 Build and ship
   pp setup [--check]              record where this machine's toolchains and netmuxd socket are (once)
@@ -55,7 +55,7 @@ Drive the phone (dev app)
 Upstream and review
   pp sync [<madeira-sha>] [--replay]
                                   watch Madeira past the frozen pin (decision 0054): its commits
-                                  that touch what Playport builds, and each component pin's
+                                  that touch what pcios builds, and each component pin's
                                   upstream tip and newest tag; never moves a pin
   pp rebase TARGET NEW [--trial] | --continue | --abort | --write [--pins]
                                   move one series stack onto a new upstream commit in a scratch

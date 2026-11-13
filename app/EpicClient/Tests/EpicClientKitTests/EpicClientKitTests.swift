@@ -89,7 +89,7 @@ final class EpicClientKitTests: XCTestCase {
         let g = try XCTUnwrap(items["c1"]?.game(r))
         XCTAssertEqual(g.id, "Hazelnut")
         XCTAssertEqual(g.folderName, "Limbo")
-        XCTAssertEqual(g.attributes.keys.sorted(), ["CanRunOffline", "FolderName"], "only the attributes Playport uses are kept")
+        XCTAssertEqual(g.attributes.keys.sorted(), ["CanRunOffline", "FolderName"], "only the attributes pcios uses are kept")
         XCTAssertEqual(g.art(width: 800)?.absoluteString, "https://cdn1.epicgames.com/w?w=800&resize=1")
         XCTAssertNil(g.refusal)
         XCTAssertNil(items["c2"]?.game(r), "a DLC is not a game")
@@ -116,9 +116,9 @@ final class EpicClientKitTests: XCTestCase {
         g.attributes = ["UseAccessControl": "true"]
         XCTAssertEqual(g.refusal, EpicManifest.usesAntiCheat)
         g.attributes = ["ThirdPartyManagedProvider": "UbisoftConnect"]
-        XCTAssertEqual(g.refusal, "This game is installed and started through Ubisoft Connect, which Playport does not run.")
+        XCTAssertEqual(g.refusal, "This game is installed and started through Ubisoft Connect, which pcios does not run.")
         g.attributes = ["ThirdPartyManagedProvider": "Origin"]
-        XCTAssertEqual(g.refusal, "This game is installed through another company's launcher, which Playport does not run.")
+        XCTAssertEqual(g.refusal, "This game is installed through another company's launcher, which pcios does not run.")
         g.attributes = [:]
         for (app, word) in [("9c203b6ed35846e8a4a9ff1e314f6593", "Frontier"), ("0fb6e06aacd14e88b1aaea8f54dd8525", "Cryptic"),
                             ("575efd0b5dd54429b035ffc8fe2d36d0", "anti-cheat")] {

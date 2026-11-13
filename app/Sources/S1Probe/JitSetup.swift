@@ -88,7 +88,7 @@ final class JitSetup: ObservableObject {
                 }
                 guard id == generation, presented, UIApplication.shared.applicationState == .active else { return }
                 guard BuiltInJit.hasGetTaskAllow else {
-                    fail("This install cannot enable game debugging. Re-sign Playport with a development signature."); return
+                    fail("This install cannot enable game debugging. Re-sign pcios with a development signature."); return
                 }
                 if candidate == nil {
                     do { original = try BuiltInJit.storedPairingData() }
@@ -260,7 +260,7 @@ struct JitSetupSheet: View {
                                 .buttonStyle(.borderedProminent).controlSize(.large)
                         }
                         Text(pairing.status)
-                        Text("Playport finishes setup by itself when you come back.")
+                        Text("pcios finishes setup by itself when you come back.")
                             .font(.footnote).foregroundStyle(.secondary)
                     } else {
                         if setup.phase != .failed { ProgressView() }
@@ -268,7 +268,7 @@ struct JitSetupSheet: View {
                     }
                     if setup.phase == .failed {
                         Button("Continue") { setup.retry() }.buttonStyle(.borderedProminent)
-                        Button("Playport permissions in iOS Settings") {
+                        Button("pcios permissions in iOS Settings") {
                             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                         }
                     }

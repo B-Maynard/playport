@@ -183,7 +183,7 @@ final class XboxUpdateTests: XCTestCase, @unchecked Sendable {
         XCTAssertEqual(try inode("Tools/Crash.exe"), crash)
         let rec = r.installed
         XCTAssertEqual(rec.version, "1.2.4.0")
-        XCTAssertEqual(rec.packageName, "Playport.TestGame_1.2.4.0_x64__test")
+        XCTAssertEqual(rec.packageName, "pcios.TestGame_1.2.4.0_x64__test")
         XCTAssertEqual(rec.installDir, "Test Game")
         XCTAssertEqual(rec.files.map(\.path).sorted(), v2.files.map(\.path).sorted())
         for e in rec.encrypted { XCTAssertEqual(e.units, v2.units[e.path], e.path) }

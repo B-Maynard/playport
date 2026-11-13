@@ -37,7 +37,7 @@ struct SetupCheckSettings: View {
     private var tunnelUp: Bool? { state.tunnelUp }
 
     var body: some View {
-        SettingsNote(text: "What a game needs from this phone. Playport checks it again by itself before every game.")
+        SettingsNote(text: "What a game needs from this phone. pcios checks it again by itself before every game.")
         PadRow(id: "set:setup:checklist", title: "Setup checklist",
                subtitle: "The steps a first run shows",
                value: "\(SetupChecklist.doneCount(state.facts)) of \(SetupStep.allCases.count) done", accessory: .chevron,
@@ -92,7 +92,7 @@ struct SetupCheckSettings: View {
 
     @ViewBuilder private var jitRows: some View {
         PadRow(id: "set:setup:jitMethod", title: "JIT method",
-               subtitle: JitProvider.inLiveContainer ? "Playport runs inside LiveContainer" : nil,
+               subtitle: JitProvider.inLiveContainer ? "pcios runs inside LiveContainer" : nil,
                value: method.label, accessory: .chevron, hint: "Change") {
             guard !TitleLaunch.shared.running else { return }
             JitMethodPicker.show()
@@ -119,9 +119,9 @@ struct SetupCheckSettings: View {
         switch method {
         case .stikDebug:
             return lc ? "Play opens StikDebug. Turn on Use LiveContainer's Bundle ID in LiveContainer's settings."
-                : "Play opens StikDebug, which enables JIT with its universal.js script and comes back to Playport."
+                : "Play opens StikDebug, which enables JIT with its universal.js script and comes back to pcios."
         default:
-            return lc ? "Launch Playport with JIT from LiveContainer, with the universal.js script. Each game needs a fresh launch."
+            return lc ? "Launch pcios with JIT from LiveContainer, with the universal.js script. Each game needs a fresh launch."
                 : "Play waits for JIT from another app. Its script must be universal.js."
         }
     }
@@ -159,9 +159,9 @@ struct SetupCheckSettings: View {
         if builtIn.detail?.hasPrefix("import failed") ?? false { return "That file is not a pairing file." }
         guard builtIn.pairingFile, !builtIn.busy else { return "Games need it to run fast" }
         switch builtIn.status {
-        case "unreachable": return "LocalDevVPN is not connected. Playport turns it on when you press Play."
+        case "unreachable": return "LocalDevVPN is not connected. pcios turns it on when you press Play."
         case "not ready":
-            return (builtIn.failureReason?.message ?? "Playport could not prepare the phone.") + " Check again."
+            return (builtIn.failureReason?.message ?? "pcios could not prepare the phone.") + " Check again."
         default: return "Games need it to run fast"
         }
     }
@@ -187,7 +187,7 @@ struct SetupCheckSettings: View {
         if #available(iOS 27.0, *) {
             PadRow(id: "set:setup:pair", title: builtIn.pairingFile ? "Pair again" : "Pair this iPhone",
                    subtitle: method == .builtIn ? "Developer Mode and LocalDevVPN need your approval"
-                       : "Lets Playport restart itself after a game", accessory: .chevron, hint: "Pair") {
+                       : "Lets pcios restart itself after a game", accessory: .chevron, hint: "Pair") {
                 guard !builtIn.busy, !pairing.busy, !TitleLaunch.shared.spent else { return }
                 setup.begin(repair: builtIn.pairingFile)
             }
@@ -205,7 +205,7 @@ struct SetupCheckSettings: View {
     // MARK: memory
 
     @ViewBuilder private var memoryRows: some View {
-        SettingsInfoRow(id: "setup:memory", title: "Memory limit", subtitle: "For a game and Playport's JIT memory together",
+        SettingsInfoRow(id: "setup:memory", title: "Memory limit", subtitle: "For a game and pcios's JIT memory together",
                         value: reading.effectiveMB.map { MemoryNeed.format(mb: $0) } ?? "Not reported")
         SettingsInfoRow(id: "setup:iml", title: "Increased Memory Limit",
                         subtitle: reading.entitled == false ? "This copy was signed without it" : nil,

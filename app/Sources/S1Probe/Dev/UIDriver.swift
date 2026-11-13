@@ -368,7 +368,7 @@ enum UIDriver {
                     if AppRestart.shared.restarting {
                         try checkpoint()
                         batch.handoff()
-                        log("the continued Play ended; Playport restarts, and the new process goes on")
+                        log("the continued Play ended; pcios restarts, and the new process goes on")
                         try await batch.waitForHandoff()
                         return
                     }

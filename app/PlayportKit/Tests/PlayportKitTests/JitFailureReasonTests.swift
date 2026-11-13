@@ -12,7 +12,7 @@ final class JitFailureReasonTests: XCTestCase {
         XCTAssertEqual(reason("the JIT helper did not connect within 5 s", ran: false), .helperMissing)
         XCTAssertEqual(reason(nil, ran: false), .helperMissing)
         XCTAssertEqual(JitFailureReason.helperMissing.message,
-                       "The JIT helper is missing: reinstall Playport and keep its app extensions.")
+                       "The JIT helper is missing: reinstall pcios and keep its app extensions.")
     }
 
     func testLockdownPairingErrorsAreARejectedPairingFile() {

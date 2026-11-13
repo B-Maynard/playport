@@ -1,11 +1,11 @@
 # Free IPAs on GitHub Releases, donations on Ko-fi or Patreon
 
 **Status: chosen hosting and workflow ([decision 0037](decisions/0037-ipas-on-github-releases.md)),
-not permission to publish.** Playport is open source. Its IPAs are free to
+not permission to publish.** pcios is open source. Its IPAs are free to
 download from this repository's GitHub Releases, and support is voluntary,
 through Ko-fi or Patreon. `LICENSE` stays GPL-3.0-or-later with the existing
 exception. The source and the IPA were published through separate gates
-([finished plans](https://linear.app/playportdev/issue/PLA-695)).
+([finished plans](https://PLA-695)).
 
 ## What a release holds
 
@@ -14,10 +14,10 @@ these assets:
 
 | Asset | From |
 | --- | --- |
-| `Playport-<version>.ipa` | a verified `pp build --variant release --unsigned` output: signed ad hoc, no profile, for the recipient to re-sign ([decision 0038](decisions/0038-unsigned-release-ipas.md)) |
+| `pcios-<version>.ipa` | a verified `pp build --variant release --unsigned` output: signed ad hoc, no profile, for the recipient to re-sign ([decision 0038](decisions/0038-unsigned-release-ipas.md)) |
 | `SHA256SUMS` | every attached asset, including notes and the release manifest |
 | `provenance.txt`, `artifacts.tsv` | the build output |
-| `Playport-<version>-source.tar` | `pp source --build` on the same output: Playport at the tag, every pinned upstream tree with its submodules and patch series, the dependency tarballs and crates, with its own manifest and `SHA256SUMS` ([DISTRIBUTION.md](DISTRIBUTION.md), section 2) |
+| `pcios-<version>-source.tar` | `pp source --build` on the same output: pcios at the tag, every pinned upstream tree with its submodules and patch series, the dependency tarballs and crates, with its own manifest and `SHA256SUMS` ([DISTRIBUTION.md](DISTRIBUTION.md), section 2) |
 | `NOTICES.tar` | the IPA's exact `Licenses/` files, checked with `pp verify --distribution` before any draft upload ([NOTICES.md](NOTICES.md)) |
 | `INSTALL-REBUILD.tar` | the build commit's distribution, build, device, licensing and notice instructions |
 | `RELEASE-MANIFEST.json` | exact asset/source identities, visible source gaps and unapproved draft status |
@@ -81,7 +81,7 @@ accepts that risk ([decision 0039](decisions/0039-owners-licensing-review.md)).
 
 A release's notes are `site/releases/<version>.md`, committed before `pp release`:
 the draft's body is that file as of the release commit, and `pp release` stops
-if it is missing. Line 1 is `# Playport <version>: <tagline>`, line 2
+if it is missing. Line 1 is `# pcios <version>: <tagline>`, line 2
 `<!-- date: YYYY-MM-DD -->` (the GitHub publish date); the rest is Markdown.
 Link images absolutely (`https://playport.dev/screenshots/<file>`). The same
 files make the site's [releases page](https://playport.dev/releases/): after

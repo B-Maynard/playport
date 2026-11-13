@@ -348,7 +348,7 @@ extension TitleLaunch {
     private func forceEnd() {
         guard running, quitting else { return }
         let s = Int(Date().timeIntervalSince(startedAt))
-        TitleMode.log("quit: the game is still running; Playport restarts to end it")
+        TitleMode.log("quit: the game is still running; pcios restarts to end it")
         TitleMode.finish("launch=quit still-running after_s=\(s)")
         end(LaunchCoordinator.Outcome(kind: .failed, line: "launch=quit still-running after_s=\(s)"))
     }

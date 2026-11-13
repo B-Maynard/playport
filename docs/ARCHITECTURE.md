@@ -6,7 +6,7 @@ how the patch series are organised. The layout and the working rules are in
 
 ## Pins
 
-Playport pins one Madeira commit and carries its changes as ordered patch
+pcios pins one Madeira commit and carries its changes as ordered patch
 files, never commits into a copy of Madeira's history
 ([decision 0001](decisions/0001-superproject-on-madeira.md)). DXMT and FEX
 (with FEX's rpmalloc) are built from their own upstreams with Madeira's ports
@@ -18,7 +18,7 @@ rebased as `patches/*-port` series (decisions
 
 Valve's Proton bleeding-edge is the reference for ARM64 defaults, not a base
 ([decision 0049](decisions/0049-latest-pins.md); the items taken and still open
-are in [the alignment plan](https://linear.app/playportdev/issue/PLA-76)). These
+are in [the alignment plan](https://PLA-76)). These
 do not apply on iOS:
 
 | Proton item | Why not |
@@ -27,11 +27,11 @@ do not apply on iOS:
 | FEX Linux UnixLib (prctl hardware TSO and unaligned atomics, THP, VMA names) | Linux-only kernel interfaces. iOS has no separate FEX UnixLib; its entry points are no-ops (`patches/fex-port` 0030). |
 | `-march=armv8.2-a -mtune=cortex-x3` | Tuning for Snapdragon/Cortex. Apple cores need their own check. |
 | `-marm64x` for DXVK/vkd3d-proton | ARM64X serves native ARM64 callers. Guests are x86, except a native ARM64 child (decision [0170](decisions/0170-native-arm64-guests.md)), which gets a separate `aarch64-windows` build of vkd3d-proton, DXVK's `dxgi` and the Vulkan loader instead (`build/stages/vulkan-pe.sh`). |
-| fsync/ntsync, the Steam runtime, `PROTON_USE_ARM64` paths, `SilentLog`/`PROTON_LOG`, NVAPI | Linux launcher, driver or GPU specifics. In-process sync is ppsync, Playport's userspace ntsync driver ([below](#in-process-sync), 0157, proposed). |
-| FEX `client.json`/`steamwebhelper.json` app configs | These target the Linux Steam client. Playport's Steam client is native Swift. |
+| fsync/ntsync, the Steam runtime, `PROTON_USE_ARM64` paths, `SilentLog`/`PROTON_LOG`, NVAPI | Linux launcher, driver or GPU specifics. In-process sync is ppsync, pcios's userspace ntsync driver ([below](#in-process-sync), 0157, proposed). |
+| FEX `client.json`/`steamwebhelper.json` app configs | These target the Linux Steam client. pcios's Steam client is native Swift. |
 | Valve Wine AVX/YMM contexts, SVE state | Not carried: since `patches/fex-port` 0064 the ARM64EC host has AVX128, which keeps the ymm high halves only in FEX's thread state; Wine's ARM64EC contexts drop them and never set `CONTEXT_XSTATE`, so a guest's handler cannot see them and its own AVX writes reach the code it resumes (`build/ymm-context/test.py` checks this convention; the `ymmctx` probe checks it in a guest). A title's `env.FEX_HOSTFEATURES` with `disableavx` runs it as on a CPU without AVX (`patches/fex` 0088); every World of Warcraft product has it by compatibility default ([evidence](evidence/2026-11-01-x64-ymm-contexts.md)). Apple CPUs have no SVE (0018). |
 | `MIMALLOC_DISABLE_REDIRECT` for Teardown (1167630) | Per-game data, not an ARM default. Carry it only if Teardown is played. |
-| Valve's FEX DLL names (`libarm64ecfex.dll`, `libwow64fex.dll`) | Playport ships `xtajit64.dll`/`xtajit.dll`, the names Windows uses and Madeira's loader expects (0018). |
+| Valve's FEX DLL names (`libarm64ecfex.dll`, `libwow64fex.dll`) | pcios ships `xtajit64.dll`/`xtajit.dll`, the names Windows uses and Madeira's loader expects (0018). |
 
 ## One process on iOS
 
@@ -156,7 +156,7 @@ in both variants. All three end in the same protocol, so
 | Method | What a Play does | Script |
 | --- | --- | --- |
 | Built-in (default) | starts the helper extension (below) | `playport-universal.js` |
-| StikDebug | opens `stikdebug://enable-jit?bundle-id=…&pid=…&script-name=universal.js`; once the pool is blessed, waits up to 60 s for Playport to be in front before the runtime starts | StikDebug's `universal.js` |
+| StikDebug | opens `stikdebug://enable-jit?bundle-id=…&pid=…&script-name=universal.js`; once the pool is blessed, waits up to 60 s for pcios to be in front before the runtime starts | StikDebug's `universal.js` |
 | Another app | waits only: LiveContainer's *Launch with JIT*, SideStore, StikDebug by hand | `universal.js`, set in that app |
 
 - A debugger already attached is used whatever the method (`jit: debugger
@@ -174,10 +174,10 @@ in both variants. All three end in the same protocol, so
   extension: Built-in is not offered, a stored one reads as Another app, and
   `BuiltInJit` refuses to start the helper. StikDebug there needs
   LiveContainer's *Use LiveContainer's Bundle ID*.
-- With StikDebug or another app, Playport's pairing and LocalDevVPN are not
+- With StikDebug or another app, pcios's pairing and LocalDevVPN are not
   setup steps (PlayportKit `SetupChecklist`), and a Play waits for JIT
   without them. The restart after a game (`AppRestart`) still needs the
-  pairing. Without it, or inside LiveContainer, Playport asks to be closed
+  pairing. Without it, or inside LiveContainer, pcios asks to be closed
   and launched again.
 
 ### Built-in JIT
@@ -186,12 +186,12 @@ The outside process is the app's own extension. `PlugIns/PlayportJIT.appex`
 (`app/Sources/PlayportJIT`, declared in `app/xtool.yml` `extensions`) is a
 second process in the same bundle. It embeds StikJIT, StikDebug's MPL-2.0
 framework, unmodified (`build/stages/stikjit.sh`, [LICENSING.md](LICENSING.md#stikjit)),
-and runs it with Playport's own universal-protocol script,
+and runs it with pcios's own universal-protocol script,
 `app/PlayportJIT/playport-universal.js` (`StikJIT.Script.custom`);
 StikJIT's bundled scripts are not staged.
 
 ```text
-Playport (S1Probe or Playport)                 PlayportJIT.appex
+pcios (S1Probe or Playport)                 PlayportJIT.appex
   JitProvider.acquire (title thread)
     BuiltInJit: +[NSExtension extensionWithIdentifier:error:]
                 -beginExtensionRequestWithInputItems:error:  -->  started; entry.c relaxes the
@@ -255,7 +255,7 @@ from a donor pool, on as Auto unless Settings › Graphics › Donor memory turn
 the JIT activation, helpers that then end give purgeable objects, and each
 commit is a `vm_map` of an unused range of one at Wine's address
 (`SharedMemory/GuestPool.m`, `DonorPool.swift`, `DonorRounds.swift`;
-[plan](https://linear.app/playportdev/issue/PLA-216), step 3). Auto takes the phone's tier's
+[plan](https://PLA-216), step 3). Auto takes the phone's tier's
 pool ([decision 0105](decisions/0105-memory-defaults-per-phone.md): 4 GiB on a 12 GB
 phone, 1 GiB on 8 GB, none and no setting under), at most one donor's grant
 (PlayportKit `DonorPoolSizing`). During play the pool stops taking unused pages
@@ -456,7 +456,7 @@ decision [0167](decisions/0167-large-x86-64-images-map-from-a-cache-copy.md)).
   without them: about 100 MiB a Steam `.cmd` entry, of which `cmd`, `conhost`
   and `start` take 84, and 7 MiB for GOG's OpenAL installer. A Play whose
   prerequisites left the game less than 320 MiB (`JitPool.gameRoomMB`; the
-  room plus the tail's free code buffers, `roomForGame`) restarts Playport and
+  room plus the tail's free code buffers, `roomForGame`) restarts pcios and
   starts the game in a fresh process and pool; with more, the game starts in
   the same session
   ([decisions 0084](decisions/0084-prerequisites-before-a-restart.md),
@@ -661,9 +661,9 @@ the other stores' art under Caches (PlayportKit `BattleNetArtCache`).
 
 Play for a Battle.net copy follows PlayportKit `BattleNetPlay` (PLA-514): the first Play of
 each product shows the ban-risk notice ([decision 0175](decisions/0175-anti-cheat-refusal-scope.md),
-proposed, as amended by 0177: Blizzard does not support Playport, an account action is possible,
-Playport changes none of the game's files and none of its code in memory and runs Blizzard's x64
-client through a translator, and Playport stores no Battle.net credential); declining
+proposed, as amended by 0177: Blizzard does not support pcios, an account action is possible,
+pcios changes none of the game's files and none of its code in memory and runs Blizzard's x64
+client through a translator, and pcios stores no Battle.net credential); declining
 starts nothing, accepting is kept with the copy
 (`InstalledTitle.riskNoticeAccepted`, gone with it) and the page keeps the notice's text.
 Every Play then asks the install region's version endpoint for its current build (PLA-521):
@@ -683,7 +683,7 @@ the Vulkan backend with `-d3d12` (arm64ec vkd3d-proton), whatever the graphics s
 
 - **Catalogue** (`app/PlayportKit`, tested on Linux): rebuilt by *adoption*
   each time the app comes to the front, from the prefix's `C:\Games`. A folder
-  with a Playport install receipt is that store's copy and build/version, even
+  with a pcios install receipt is that store's copy and build/version, even
   if its name matches the bundled cohort list (`Titles/titles.json`). Identity is
   `(store, store game ID)` (ContentKit `StoreGameKey`), for Local, Steam, GOG,
   Epic, Battle.net (`bnet-<TACT product code>`) and Xbox (its Product ID, `xbox-<ProductId>`,
@@ -725,7 +725,7 @@ the Vulkan backend with `-d3d12` (arm64ec vkd3d-proton), whatever the graphics s
   Game options show the same inherited backend as Play. Native and no limit are a player's choice. FEX's memory
   ordering comes from a dev build's Game options over the game's profile (the
   release app runs the profile, and every game's default Steam API mode,
-  Playport's Steam client: [decision 0153](decisions/0153-rdr2s-settings-are-every-games-defaults.md)), Proton's FEX
+  pcios's Steam client: [decision 0153](decisions/0153-rdr2s-settings-are-every-games-defaults.md)), Proton's FEX
   settings for its Steam app ID and executable (PlayportKit `FEXProfile`,
   [decision 0021](decisions/0021-fex-ordering-per-game.md)), as `FEX_*`
   environment variables, with the host CPU features FEX cannot read on iOS
@@ -795,7 +795,7 @@ the Vulkan backend with `-d3d12` (arm64ec vkd3d-proton), whatever the graphics s
   include its `installscript.vdf` `Run Process` entries
   ([decision 0081](decisions/0081-steam-common-redistributables.md), PlayportKit
   `SteamInstallScript`): the scripts its retained manifests flag (or found by name for a
-  folder Playport did not download), and those of the Steamworks Common Redistributables
+  folder pcios did not download), and those of the Steamworks Common Redistributables
   (app 228980) depots its install record lists, which a Play downloads first into the one
   shared `Games/Steamworks Shared` (SteamClientKit `CommonRedistributables`; the library
   does not list it, Settings › Storage shows its size and removes it). The id is the entry's HasRunKey and name; an entry whose HasRunKey value
@@ -812,7 +812,7 @@ the Vulkan backend with `-d3d12` (arm64ec vkd3d-proton), whatever the graphics s
   After a success (exit 0 or 3010) the HasRunKey value, and before the game a script's
   `Registry` values, go into `playport-registry-{system,user}.reg` beside the hives, which
   `wine_host.c` merges into them at each runtime start as it does the seed (a value the hive
-  holds is never changed). When one ran, Playport can restart itself and the pool
+  holds is never changed). When one ran, pcios can restart itself and the pool
   left the game too little room, the launch ends there and the game starts after the
   restart, in a new process
   ([decisions 0084](decisions/0084-prerequisites-before-a-restart.md),
@@ -822,7 +822,7 @@ the Vulkan backend with `-d3d12` (arm64ec vkd3d-proton), whatever the graphics s
   `C:\users\playport\AppData\Local\Playport\session`, written only for a
   Play). Once the pool is blessed, a Play in the same process is refused
   (`launch=refused session=spent`), and after a restart that failed the
-  game's page offers Close Playport. `JitProvider` checks for a live tracer
+  game's page offers Close pcios. `JitProvider` checks for a live tracer
   (`CS_DEBUGGED` and `P_TRACED`); Built-in and StikDebug ask for a fresh attach
   when none is attached, Another app is refused. The pool is blessed once per
   process by the `session=spent` rule; blessing a second region with a second
@@ -1043,7 +1043,7 @@ the suggestion on the host.
 ### The in-game menu
 
 Holding the controller's Home button half a second over a running game, or a
-three-finger tap anywhere on it, opens Playport's menu
+three-finger tap anywhere on it, opens pcios's menu
 (`UI/InGameMenuView.swift`, decisions 0034, 0171). HostIO reads Home
 on every pad (its system gesture is off while a game runs) and on the dev
 build's scripted pad (`HOME`); `HostIOKit.QuickMenuControl` turns the
@@ -1119,10 +1119,10 @@ a release build sets no `MTL_HUD_ENABLED`, and `pp verify` fails one that names 
 Quit game resumes the threads and sends `PP_CONTROL_CLOSE`: the root posts
 WM_CLOSE to the job's visible unowned top-level windows (all of them if none
 is), as closing a window does on Windows, so the game saves and exits, and it
-ends the job 10 s later if the game has not. The game's end restarts Playport
+ends the job 10 s later if the game has not. The game's end restarts pcios
 ([Restarting after a game](#restarting-after-a-game)) and the new process
 shows Home; a game still running 25 s after the request (the root itself
-stuck) restarts Playport anyway. A quit game's exit code raises no alert.
+stuck) restarts pcios anyway. A quit game's exit code raises no alert.
 The menu lies over the game surface, which ignores the safe area: its
 content keeps clear of the Dynamic Island on either side through the
 window's own insets (`WindowInsets`).
@@ -1187,7 +1187,7 @@ amended by [0088](decisions/0088-opengl-window-surfaces-and-pacing.md) and
 ### Winios hooks
 
 `libwin32u_unix.a` calls the `winios_*` hooks from `load_display_driver()`.
-They are defined by Madeira's app-side Winios driver, which Playport compiles
+They are defined by Madeira's app-side Winios driver, which pcios compiles
 into the app from staged source (`Sources/WinIOS/Winios.m`, from the Madeira
 pin with `patches/madeira-winios`: the host owns `winios_phase`, and posts
 pointer and focus events; focus changes reach the window's owner thread, and focus back
@@ -1207,7 +1207,7 @@ recipe at the pin and is not in wine's configure; audio does not need it,
 because mmdevapi loads `winepulse.drv` by name and the unix side answers with
 the linked `audio_null_ios` table. The native D3D12 path is not built or
 shipped: the one winemetal unix slot that would reach Apple's converter
-(`madeira_ir_convert`) is a Playport stub that returns
+(`madeira_ir_convert`) is a pcios stub that returns
 `STATUS_NOT_IMPLEMENTED` (`app/Sources/WineHost/d3d12_converter_absent.c`;
 [LICENSING.md](LICENSING.md)). Both appear as `gap` rows in
 `app/artifacts.tsv`.
@@ -1238,7 +1238,7 @@ registry: every AddReg section of `[DefaultInstall.ntamd64]` and the `[BaseInsta
 from the build's generated `wine.inf` with setupapi's semantics (`register_wine_inf`; the Windows
 version values, `ProgramFilesDir`, DirectX, font substitutes, file associations, Session Manager),
 except link values, the Wow64 view, the services and `Software\Microsoft\Wow64` (the emulator DLLs
-are the runtime's: wow64's ARM64 default, FEX's `xtajit.dll`); the `http` and `https` handlers name Playport's
+are the runtime's: wow64's ARM64 default, FEX's `xtajit.dll`); the `http` and `https` handlers name pcios's
 URL opener (below) instead of winebrowser. It applies urlmon's REGINST inf (security zones), the
 media registrations `DllRegisterServer` makes through the media APIs (DirectShow filters and
 categories, DMOs, MFTs; `app/tools/wineboot-media.reg`, data from a desktop prefix of the same Wine,
@@ -1305,7 +1305,7 @@ ported from the build's Wine tree, guarded by a digest of the code they follow.
 
 A game that opens an http or https page (`ShellExecute`, `start`, Unity's
 `Application.OpenURL`; an Epic game's EOS sign-in opens
-`https://www.epicgames.com/activate?userCode=…`) gets Playport's web panel over
+`https://www.epicgames.com/activate?userCode=…`) gets pcios's web panel over
 the running game (decision [0064](decisions/0064-game-web-sheet.md)). shell32
 reads `HKCR\https\shell\open\command`, which the seed (marked for top-up) sets to
 `"C:\windows\system32\playport-url-opener.exe" "%1"`. The opener
@@ -1331,7 +1331,7 @@ A game's own TLS (the EOS SDK's libcurl, Unity's web stack) checks a server
 against the Windows ROOT store. Wine fills that store from the host's roots
 (crypt32's unix side, `enum_root_certs`), and iOS has no call that lists them,
 so the runtime ships them: `Runtime/certs/cacert.pem`, Mozilla's root store as
-published in curl's CA extract, a Playport input locked by date and sha256
+published in curl's CA extract, a pcios input locked by date and sha256
 (pins.lock `ca-bundle`, `build/stages/ca-bundle.sh`; refreshed by hand before
 each release, BUILDING.md "The trusted roots"). `wine_host.c` names it in
 `MADEIRA_CA_BUNDLE` and logs `trusted roots: PATH`; crypt32 logs
@@ -1432,7 +1432,7 @@ trim moves the budget (it hung RDR2 when it never fired).
 ### In-process sync
 
 Wine's in-process NT synchronisation (`inproc_sync`, written for the Linux
-ntsync driver) runs on **ppsync**, Playport's userspace driver
+ntsync driver) runs on **ppsync**, pcios's userspace driver
 ([build/ppsync/README.md](../build/ppsync/README.md); `patches/wine-unix` 0045,
 `patches/madeira-unix` 0220; [decision 0157](decisions/0157-ppsync.md),
 proposed). Every event, mutex, semaphore and server-signalled object (process,
@@ -1538,7 +1538,7 @@ any Swift `Xbox…` type that reaches a release executable.
   then only the game's auth session/web API tickets keep it logged on
   ([0062](decisions/0062-steam-live-session.md)).
 - **For Steam games** using the Steam API emulator (mode `emulated`, which a
-  title's compatibility entry or the player chooses; Playport's Steam client is
+  title's compatibility entry or the player chooses; pcios's Steam client is
   every game's default, decisions 0153 and 0161),
   `SteamAPISwap` puts gbe_fork's `steam_api(64).dll` (`Runtime/steamapi/`) in
   the game's folder and `SteamStub` takes SteamStub 3.1 (x64 and x86, its
@@ -1598,20 +1598,20 @@ host sign-out ([0064](decisions/0064-game-web-sheet.md)); the player revokes it 
 Every patch is a `git format-patch` file listed in its target's `series`, with
 the trailers `Class:`, `Evidence:` and `Offered-upstream:`. The classes are:
 
-- `upstream-bug`: a defect in the upstream code that Playport's tests found;
+- `upstream-bug`: a defect in the upstream code that pcios's tests found;
 - `build-fix`: the pinned upstream does not build from a clean checkout;
-- `linux-build`: needed only because Playport builds on Linux with no Apple tools;
-- `host-app`: an interface Playport's host app needs;
+- `linux-build`: needed only because pcios builds on Linux with no Apple tools;
+- `host-app`: an interface pcios's host app needs;
 - `diagnostics`: logging that measures what a component does, with no
   change to what it does;
-- `ios-port`: Playport's own port to iOS of a component whose upstream runs
+- `ios-port`: pcios's own port to iOS of a component whose upstream runs
   only on macOS (`patches/mesa`, KosmicKrisp), or a change that fits a
   component to the iOS runtime, where every Wine process is a pseudo-process
   of one app and FEX runs inside it (also in `patches/fex`, `rpmalloc`,
   `wine-unix`, `madeira-unix` and `wine-pe`: wine-pe 0045 keeps the runtime's
   variables in a service's environment block, 0055 tells FEX about the images
   loaded before it started);
-- `feature`: a capability the upstream lacks and Playport needs, such as
+- `feature`: a capability the upstream lacks and pcios needs, such as
   KosmicKrisp's geometry shaders, which DXVK requires;
 - `madeira-port`: in `patches/wine-port`, `patches/dxmt-port`, `patches/fex-port`
   and `patches/rpmalloc-port`, one of Madeira's commits rebased onto the
@@ -1655,4 +1655,4 @@ record that proved it. Where each series is
 applied is in [BUILDING.md](BUILDING.md#the-pipeline). No patch has
 been offered upstream yet ([LICENSING.md](LICENSING.md#other-projects)).
 
-The name gate permits only the two exact upstream GN tokens (the argument module and helper module) inside `patches/cef/` and `patches/chromium/`, so that commits from before Playport's CEF build was removed ([0169](decisions/0169-social-club-on-rockstars-cef-in-the-stock-cef-layout.md)) still pass `pp names COMMIT` and `pp source`; all other retired names/prefixes still fail (shared rule in `tools/checks.py`).
+The name gate permits only the two exact upstream GN tokens (the argument module and helper module) inside `patches/cef/` and `patches/chromium/`, so that commits from before pcios's CEF build was removed ([0169](decisions/0169-social-club-on-rockstars-cef-in-the-stock-cef-layout.md)) still pass `pp names COMMIT` and `pp source`; all other retired names/prefixes still fail (shared rule in `tools/checks.py`).

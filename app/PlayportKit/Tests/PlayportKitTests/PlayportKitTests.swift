@@ -2154,15 +2154,15 @@ final class JitMethodTests: XCTestCase {
     func testMissingDebuggerGuidanceNamesTheScriptAndCorrectApp() {
         for method in [JitMethod.external, .stikDebug] {
             let detached = method.debuggerFailureMessage(detached: true, inLiveContainer: true)
-            XCTAssertEqual(detached, "The debugger is no longer attached. In StikDebug, assign universal.js to LiveContainer, then launch Playport again from LiveContainer with JIT. A plain attach-and-detach does not prepare Playport's JIT pool.")
+            XCTAssertEqual(detached, "The debugger is no longer attached. In StikDebug, assign universal.js to LiveContainer, then launch pcios again from LiveContainer with JIT. A plain attach-and-detach does not prepare pcios's JIT pool.")
             let absent = method.debuggerFailureMessage(detached: false, inLiveContainer: false)
             XCTAssertTrue(absent.hasPrefix("No live debugger arrived."))
-            XCTAssertTrue(absent.contains("assign universal.js to Playport"))
-            XCTAssertTrue(absent.contains("relaunch Playport with JIT"))
+            XCTAssertTrue(absent.contains("assign universal.js to pcios"))
+            XCTAssertTrue(absent.contains("relaunch pcios with JIT"))
             XCTAssertFalse(absent.contains("LiveContainer"))
         }
         XCTAssertEqual(JitMethod.builtIn.debuggerFailureMessage(detached: false, inLiveContainer: false),
-                       "No live debugger arrived. Check Built-in JIT in Settings › Setup check, then close Playport and try again.")
+                       "No live debugger arrived. Check Built-in JIT in Settings › Setup check, then close pcios and try again.")
     }
 
     func testOnlyPlayerFacingDebuggerFailuresBypassRawErrorFiltering() {
@@ -2308,7 +2308,7 @@ final class LicencesTests: XCTestCase {
     override func setUpWithError() throws {
         root = FileManager.default.temporaryDirectory.appendingPathComponent("licences-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: root.appendingPathComponent("Wine"), withIntermediateDirectories: true)
-        try Data("GPL text\n".utf8).write(to: root.appendingPathComponent("Playport-LICENSE.txt"))
+        try Data("GPL text\n".utf8).write(to: root.appendingPathComponent("pcios-LICENSE.txt"))
         try Data([0x43, 0x6F, 0x70, 0x79, 0x20, 0xA9, 0x0A]).write(to: root.appendingPathComponent("Wine/COPYING.LIB"))
     }
 
@@ -2317,10 +2317,10 @@ final class LicencesTests: XCTestCase {
     }
 
     /// components.json as build/notices-app.py writes it.
-    private func write(status: String = "unreviewed-app-selection", files: [String] = ["Playport-LICENSE.txt"],
+    private func write(status: String = "unreviewed-app-selection", files: [String] = ["pcios-LICENSE.txt"],
                        open: [String] = ["FreeType: FTL is chosen; confirm."], schema: Int = 1) throws {
         let components: [[String: Any]] = [
-            ["name": "Playport", "licence": "GPL-3.0-or-later", "covers": ["app"], "files": files],
+            ["name": "pcios", "licence": "GPL-3.0-or-later", "covers": ["app"], "files": files],
             ["name": "Wine", "licence": "LGPL-2.1-or-later", "covers": ["P1-wine"], "files": ["Wine/COPYING.LIB"]],
         ]
         let json: [String: Any] = ["schema": schema, "status": status, "components": components,
@@ -2331,11 +2331,11 @@ final class LicencesTests: XCTestCase {
     func testAnUnreviewedBundleLoadsWithItsOpenQuestions() throws {
         try write()
         let l = try Licences.load(directory: root)
-        XCTAssertEqual(l.components.map(\.name), ["Playport", "Wine"])
+        XCTAssertEqual(l.components.map(\.name), ["pcios", "Wine"])
         XCTAssertEqual(l.credits.count, 1)
         XCTAssertEqual(l.open, ["FreeType: FTL is chosen; confirm."])
         XCTAssertFalse(l.reviewed)
-        XCTAssertEqual(try l.text(of: "Playport-LICENSE.txt"), "GPL text\n")
+        XCTAssertEqual(try l.text(of: "pcios-LICENSE.txt"), "GPL text\n")
     }
 
     func testOnlyTheReviewedStatusWithNoOpenQuestionIsReviewed() throws {
@@ -2352,9 +2352,9 @@ final class LicencesTests: XCTestCase {
 
     func testAMissingOrBrokenBundleFailsRatherThanShowingAPlaceholder() throws {
         XCTAssertThrowsError(try Licences.load(directory: root))   // no components.json
-        try write(files: ["Playport-LICENSE.txt", "Playport-LICENSE-EXCEPTION.md"])
+        try write(files: ["pcios-LICENSE.txt", "pcios-LICENSE-EXCEPTION.md"])
         XCTAssertThrowsError(try Licences.load(directory: root)) {
-            XCTAssertEqual($0 as? Licences.LoadError, .missingFile("Playport-LICENSE-EXCEPTION.md"))
+            XCTAssertEqual($0 as? Licences.LoadError, .missingFile("pcios-LICENSE-EXCEPTION.md"))
         }
         try write(files: ["Wine"])   // a directory, not a file
         XCTAssertThrowsError(try Licences.load(directory: root))

@@ -9,9 +9,9 @@
 	<string>1</string>
 	<!-- Device-initiated pairing: publish through Bonjour, not raw multicast (decision 0033). -->
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Playport saves the screenshots you take from its in-game menu to Photos.</string>
+	<string>pcios saves the screenshots you take from its in-game menu to Photos.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Playport advertises a pairing host so this iPhone can set up game debugging without a computer.</string>
+	<string>pcios advertises a pairing host so this iPhone can set up game debugging without a computer.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_remotepairing-pairable-host._tcp</string>
@@ -23,7 +23,7 @@
 		<string>audio</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>Playport</string>
+	<string>pcios</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<!-- The app delegate narrows these per launch: landscape for a title, portrait otherwise. -->
@@ -40,8 +40,8 @@
 	<!-- ProMotion above 60 Hz for a title's presents (TitleScreen.swift). -->
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<!-- LocalDevVPN's way back after Playport turns it on (Sources/S1Probe/LocalDevVPN.swift):
-	     localdevvpn://enable?scheme=playport opens playport://, which only brings Playport to the front. -->
+	<!-- LocalDevVPN's way back after pcios turns it on (Sources/S1Probe/LocalDevVPN.swift):
+	     localdevvpn://enable?scheme=playport opens playport://, which only brings pcios to the front. -->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

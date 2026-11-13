@@ -43,7 +43,7 @@ final class UIDriverBatch {
         if cancelRequested() { cancel("host requested cancellation for this batch") }
         if Task.isCancelled { cancel("task cancelled") }
         sceneChanged(active: active())
-        if !ended && !active() { cancel("Playport is not active") }
+        if !ended && !active() { cancel("pcios is not active") }
         if let failure { throw Stopped(description: failure) }
         if ended { throw Stopped(description: "batch ended") }
     }

@@ -66,5 +66,5 @@ public enum JitFailureReason: Equatable, Sendable {
         }
     }
 
-    public static let helperMissingMessage = "The JIT helper is missing: reinstall Playport and keep its app extensions."
+    public static let helperMissingMessage = "The JIT helper is missing: reinstall pcios and keep its app extensions."
 }

@@ -123,7 +123,7 @@ final class XboxLapses: ObservableObject {
         case .held(let at):
             return refused + " Its removal was due on \(Self.shown(at)) and waits until its saves are in the cloud."
         case .due:
-            return refused + " Playport is uninstalling it; its saves stay."
+            return refused + " pcios is uninstalling it; its saves stay."
         }
     }
 

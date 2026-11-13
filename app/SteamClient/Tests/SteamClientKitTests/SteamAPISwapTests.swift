@@ -130,7 +130,7 @@ final class SteamAPISwapTests: XCTestCase {
         XCTAssertFalse(exists("Game_Data/Plugins/x86_64/steam_api64.dll.orig"))
         XCTAssertFalse(exists("Game_Data/Plugins/x86_64/steam_settings"))
         XCTAssertFalse(exists("tools/steam_settings"))
-        XCTAssertTrue(exists("own/steam_settings/force_language.txt"), "a folder Playport did not write stays")
+        XCTAssertTrue(exists("own/steam_settings/force_language.txt"), "a folder pcios did not write stays")
         XCTAssertEqual(try SteamAPISwap.restore(in: root), 0)
     }
 
@@ -300,7 +300,7 @@ final class SteamAPISwapVerifyTests: XCTestCase {
 
         var report = try await installer.verify(appID: 9)
         XCTAssertEqual(report.bad, [], "the kept original is what the manifest describes")
-        XCTAssertEqual(report.unlisted, [], "the .orig and Playport's steam_settings are not the player's files")
+        XCTAssertEqual(report.unlisted, [], "the .orig and pcios's steam_settings are not the player's files")
 
         let orig = final.appendingPathComponent("bin/steam_api64.dll.orig")
         var damaged = game64

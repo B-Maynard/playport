@@ -436,7 +436,7 @@ private struct ControlsSettings: View {
                           on: $haptics)
         SettingsNote(text: "Each game can turn them off or change these in the in-game menu's Controls; a "
                      + "three-finger tap on the game opens that menu, as holding a controller's Home button does. Connect a controller in iOS "
-                     + "Settings › Bluetooth. Playport and its games use the one you pressed last.")
+                     + "Settings › Bluetooth. pcios and its games use the one you pressed last.")
         if router.controllers.isEmpty {
             SettingsInfoRow(id: "controller:none", title: "No controller", subtitle: "Touch works everywhere meanwhile")
         }
@@ -475,7 +475,7 @@ private struct StorageSettings: View {
     @ObservedObject private var library = LibraryModel.shared
 
     var body: some View {
-        SettingsNote(text: "Games and their saves live inside Playport. Deleting the app deletes them.")
+        SettingsNote(text: "Games and their saves live inside pcios. Deleting the app deletes them.")
         SettingsInfoRow(id: "free", title: "Free on this phone", value: library.freeBytes.map(ByteCount.format) ?? "Unknown")
         let used = library.catalog.titles.compactMap(\.sizeBytes).reduce(0, +)
         SettingsInfoRow(id: "games", title: "Games", subtitle: "\(library.catalog.titles.count) installed",

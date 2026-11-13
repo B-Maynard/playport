@@ -369,7 +369,7 @@ enum LaunchCoordinator {
             // One title per app process (decision 0030): this one's pool is blessed, and the
             // restart after its title failed. The UI offers no Play then (TitleLaunch.spent);
             // a driven one gets this.
-            log("session: this app process has played its title; Playport must be relaunched")
+            log("session: this app process has played its title; pcios must be relaunched")
             return Outcome(kind: .refused, line: "launch=refused session=spent")
         }
 

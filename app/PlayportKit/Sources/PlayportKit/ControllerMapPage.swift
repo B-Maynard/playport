@@ -403,7 +403,7 @@ extension ActionText {
         case .mouse(.right)?: "Right"
         case .mouse(.middle)?: "Middle"
         case .mouse(.move)?: "Mouse"
-        case .playport?: "Playport"
+        case .playport?: "pcios"
         default: name(a)
         }
     }

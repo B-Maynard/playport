@@ -72,7 +72,7 @@ final class CloudConflictSession: ObservableObject {
                     error = "\(left.count) file(s) are still in conflict. Try again, or decide later."
                 }
             } else {
-                error = "Playport needs to be signed in to Steam to settle this. Try again once it is, or decide later."
+                error = "pcios needs to be signed in to Steam to settle this. Try again once it is, or decide later."
             }
             guard error == nil else {
                 LibraryModel.log("cloud: \(titleID): not settled: \(error!)")

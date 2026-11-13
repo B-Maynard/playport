@@ -121,7 +121,7 @@ enum LaunchFix {
             } else if method == .stikDebug {
                 "JIT did not arrive. Check that StikDebug is installed and set up, then try again."
             } else {
-                "JIT did not arrive. Keep Playport in front while the game starts, then try again."
+                "JIT did not arrive. Keep pcios in front while the game starts, then try again."
             }
         case .runtime: "Try again. If it fails again, restart the iPhone."
         case .prerequisites, .game, .drawing: "Try again. If it fails again, check the game's files in its options."
@@ -254,14 +254,14 @@ struct LaunchBar: View {
     }
 }
 
-/// "Tip: hold ⌂ on your controller for the Playport menu".
+/// "Tip: hold ⌂ on your controller for the pcios menu".
 struct LaunchTip: View {
     var body: some View {
         HStack(spacing: 6) {
             Text("Tip: hold")
             Text("⌂").font(.system(size: 11, weight: .bold)).foregroundStyle(PP.background)
                 .padding(.horizontal, 5).frame(minWidth: 20, minHeight: 20).background(PP.text, in: Capsule())
-            Text("on your controller for the Playport menu")
+            Text("on your controller for the pcios menu")
         }
         .font(.system(size: 13))
         .foregroundStyle(PP.muted)
@@ -449,11 +449,11 @@ struct LaunchMessage: Codable, Equatable, Identifiable {
         case .refused where SelfCheck.failure(in: line) != nil, .failed where SelfCheck.failure(in: line) != nil:
             return .init(title: "\(title) could not start", text: SelfCheck.explanation(SelfCheck.failure(in: line)!))
         case .refused where sessionFull(line):
-            return .init(title: "Playport needs to restart",
+            return .init(title: "pcios needs to restart",
                          text: "Playport could not restart itself after the last game. Close it and reopen it from the Home Screen to play \(title).")
         case .refused where line.contains(" graphics="):
             return .init(title: "\(title) could not start",
-                         text: "This build of Playport does not include the Direct3D backend the game is set to. "
+                         text: "This build of pcios does not include the Direct3D backend the game is set to. "
                             + "Pick another under Graphics on its page or in Settings.")
         case .refused:
             return .init(title: "\(title) could not be found",

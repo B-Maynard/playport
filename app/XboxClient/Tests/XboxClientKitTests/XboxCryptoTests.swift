@@ -19,7 +19,7 @@ final class XboxCryptoTests: XCTestCase, @unchecked Sendable {
     }
     func testTheSyntheticBCryptKeySignsLikePythonCryptography() throws {
         let key = try XboxRSA(xboxFixture("synthetic-rsa.bin"))
-        XCTAssertEqual(try key.sign(Array("Playport synthetic RSA known-answer vector".utf8)), try xboxFixture("rsa-signature.bin"))
+        XCTAssertEqual(try key.sign(Array("pcios synthetic RSA known-answer vector".utf8)), try xboxFixture("rsa-signature.bin"))
         XCTAssertEqual(key.privateDER(), try xboxFixture("synthetic-rsa.der"))
     }
     func testOutgoingBrokerSignaturesCoverTheTransmittedXML() async throws {

@@ -98,7 +98,7 @@ public struct EpicManifest: Sendable {
         return nil
     }
 
-    public static let usesAntiCheat = "This game uses anti-cheat, which does not run in Playport."
+    public static let usesAntiCheat = "This game uses anti-cheat, which does not run in pcios."
 
     // MARK: parsing
 

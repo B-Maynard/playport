@@ -1,6 +1,6 @@
 # Licensing
 
-This page records what licences apply to Playport and to what it builds, and
+This page records what licences apply to pcios and to what it builds, and
 what has to happen before an IPA is given to anyone. It is a working record
 by the copyright holder, not legal advice. Each release passes the checks in
 [DISTRIBUTION.md](DISTRIBUTION.md) and the owner's sign-off
@@ -15,55 +15,55 @@ a GPL build retain the right to modify and redistribute it; a private source
 repository is possible, but withholding required source from recipients is not.
 
 **The current combination cannot be distributed as a closed-source application
-merely by changing Playport's own licence.** Madeira's GPL host and port code
-is a separate blocker. Keeping Playport-authored source proprietary might be
+merely by changing pcios's own licence.** Madeira's GPL host and port code
+is a separate blocker. Keeping pcios-authored source proprietary might be
 possible after securing alternative rights or replacing/separating the GPL
 parts, while still supplying LGPL/MPL source and usable relinking materials.
 Nothing here grants such permissions.
 
-Playport is **open source, with free IPAs and optional support**, not
+pcios is **open source, with free IPAs and optional support**, not
 proprietary relicensing. Both publication gates are passed
-([finished plans](https://linear.app/playportdev/issue/PLA-695)).
+([finished plans](https://PLA-695)).
 [RELEASE-HOSTING.md](RELEASE-HOSTING.md) describes the flow: free IPAs on GitHub
 Releases and donations on Ko-fi or Patreon (decision 0037).
 Recipients may mirror their GPL copies anywhere.
 
-## Playport's own licence
+## pcios's own licence
 
-Playport is licensed under the **GNU General Public License, version 3 or (at
+pcios is licensed under the **GNU General Public License, version 3 or (at
 your option) any later version** (`LICENSE`). Its copyright holders are
-the Playport authors.
+the pcios authors.
 
 ### The converter exception
 
 On 2026-09-24 the copyright holder adopted the text of the Madeira Converter
-Exception, version 1, for Playport's own code (`LICENSE-EXCEPTION.md`; the
+Exception, version 1, for pcios's own code (`LICENSE-EXCEPTION.md`; the
 reasoning is in [decision 0006](decisions/0006-licence.md)). In summary:
 
 - it is an additional permission under GPL-3.0 section 7: a work that links
-  or combines Playport with Apple's Metal Shader Converter library
+  or combines pcios with Apple's Metal Shader Converter library
   (`libmetalirconverter.dylib`) or with Apple's system frameworks (Metal,
   Foundation, CoreGraphics, QuartzCore, UIKit, AppKit and related) may be
   conveyed, and its Corresponding Source need not include the source of those
   Apple libraries;
 - it does not extend to the Apple libraries, which stay under Apple's terms,
-  and anyone conveying Playport may remove it from their copies;
-- it covers only code whose copyright Playport's holder owns: `app/`,
+  and anyone conveying pcios may remove it from their copies;
+- it covers only code whose copyright pcios's holder owns: `app/`,
   `build/`, `tools/` and `pp` (except third-party material in them) and
-  Playport's own lines in `patches/madeira-unix`, `patches/madeira-winios`,
+  pcios's own lines in `patches/madeira-unix`, `patches/madeira-winios`,
   `patches/fex`, `patches/rpmalloc` and `patches/dxmt`;
 - it does not cover or change Madeira or its forks (Madeira adopted the same
-  text for its own code), Wine, third-party material Playport uses, or the
+  text for its own code), Wine, third-party material pcios uses, or the
   Apple libraries.
 
-Playport does not build or ship the converter today. The permission keeps
+pcios does not build or ship the converter today. The permission keeps
 that option open without needing every later contributor's consent, which
-adding it later would require. Contributions to Playport are accepted under
+adding it later would require. Contributions to pcios are accepted under
 GPL-3.0-or-later with this permission.
 
 ### Marking
 
-Playport's own source files carry `SPDX-License-Identifier:
+pcios's own source files carry `SPDX-License-Identifier:
 GPL-3.0-or-later` in their first lines. A file without that header is
 upstream or third-party material and keeps its own licence, or is data
 (fixtures, generated manifests, checksum lists). The Markdown documents need
@@ -82,7 +82,7 @@ gate (`pp names`, part of `pp test`). CI checks both
 
 Taking inspiration from other projects' user interfaces is fine. Porting
 their code, or copying their strings, icons or other assets, is not: it
-brings their licence terms and attribution duties into Playport. Design;
+brings their licence terms and attribution duties into pcios. Design;
 do not port. The Xbox client is the one recorded exception: it is written
 from Xodus's code and takes Xodus's terms ("Xbox (planned)" below).
 
@@ -94,11 +94,11 @@ contributions, not the right to use or distribute the code under its licence.
 
 | Component | Where it ends up | Licence |
 | --- | --- | --- |
-| Playport (app, HostIOKit, SteamClientKit, build and tooling code) | executable | GPL-3.0-or-later with the converter exception |
+| pcios (app, HostIOKit, SteamClientKit, build and tooling code) | executable | GPL-3.0-or-later with the converter exception |
 | XboxClientKit and the Xbox sign-in sheet | dev executable only (0181); absent from release | Xodus-derived files GPL-3.0-only, without the converter exception; Nexus's Xodus patches also retain their MIT notice, CLEP decoding retains CikExtractor's MIT notice (below) |
 | Madeira host layer: `build/ntdll-unix`, `build/wineserver`, `build/win32u-unix`, `madeira_cfg.h`, Winios, `IOSDisplayShim` | executable | GPL-3.0-or-later with Madeira's own converter exception; many `build/*-unix` files carry Wine's LGPL header, and some carry none (see "Licence readings") |
 | Wine: WineHQ plus Madeira's fork (`patches/wine-port`, decision 0013) | executable (unix side), both PE DLL sets, `nls/` | LGPL-2.1-or-later (`COPYING.LIB`, `LICENSE`, `LICENSE-MADEIRA.md`; `NOTICES.md` records current third-party notices) |
-| Valve's Wine: the commits of ValveSoftware/wine's `bleeding-edge` branch (the Wine Proton bleeding-edge ships) that Playport carries as `patches/wine-valve` (decisions 0018, 0049) | both PE DLL sets, and the Wine headers the unix side compiles against | LGPL-2.1-or-later, as upstream Wine; each commit keeps its author, and notices are collected from the actual patched Wine tree |
+| Valve's Wine: the commits of ValveSoftware/wine's `bleeding-edge` branch (the Wine Proton bleeding-edge ships) that pcios carries as `patches/wine-valve` (decisions 0018, 0049) | both PE DLL sets, and the Wine headers the unix side compiles against | LGPL-2.1-or-later, as upstream Wine; each commit keeps its author, and notices are collected from the actual patched Wine tree |
 | Libraries bundled into the Wine PE DLLs: compiler-rt, musl, tomcrypt, zlib, libpng, libjpeg, libtiff, vkd3d, FAudio, OpenLDAP, Mozilla-derived `regexp.c` | Wine PE DLLs | NCSA or MIT, MIT, public domain/WTFPL, zlib, PNG v2, IJG, libtiff, LGPL-2.1-or-later, zlib, OpenLDAP 2.8, LGPL-2.1-or-later |
 | FEX: FEX-Emu/FEX plus Madeira's port (`patches/fex-port`, decision 0008) | `xtajit64.dll` (arm64ec) and `xtajit.dll` (FEX's WoW64 CPU for 32-bit games) | MIT upstream; Madeira's changes GPL-3.0-or-later with its exception |
 | Inside `xtajit64.dll`: rpmalloc (FEX-Emu/rpmalloc plus Madeira's changes, `patches/rpmalloc-port`), fmt, xxHash, Cephes, SoftFloat 3e, tiny-json, cpp-optparse, unordered_dense | `xtajit64.dll` | rpmalloc 0BSD upstream plus Madeira's GPL changes; MIT, BSD-2-Clause, BSD, BSD-3-Clause, MIT, MIT, MIT |
@@ -110,15 +110,15 @@ contributions, not the right to use or distribute the code under its licence.
 | FreeType 2.14.3 | executable (in `libwin32u_unix.a`) | FreeType License (FTL) or GPL-2.0-or-later |
 | mingw-w64 `57b595039040eaa15bece85b7cc71d952281b269` (llvm-mingw 20260922's CRT/headers; aarch64 CRT rebuilt with arm64ec support) | compiled into PE binaries where runtime code/header definitions are used | ZPL-2.1 baseline with file-specific permissive/LGPL and other terms; runtime/source notice superset collected, not a linked-code audit ([NOTICES.md](NOTICES.md#mingw-w64-source-and-installed-notices)) |
 | LLVM 15.0.7 libraries (for airconv) | executable (in `libdxmt_combined.a`) | Apache-2.0 WITH LLVM-exception, plus the legacy LLVM licence; the link keeps Henry Spencer's regex and Unicode's `ConvertUTF`, which carry their own notices |
-| Mesa (KosmicKrisp, Zink, EGL): Mesa plus `patches/mesa` (decisions 0014, 0015; Zink PLA-162) | `KosmicKrisp.framework`, `MesaEGL.framework`, `MesaGallium.framework` | MIT for most files, each file per its SPDX header (Mesa `docs/license.rst`; the OpenGL frontend also SGI-B-2.0 and Khronos notices, in Mesa's `licenses/` and the header superset); Playport's patches keep that licence; no MoltenVK code or header is built in |
+| Mesa (KosmicKrisp, Zink, EGL): Mesa plus `patches/mesa` (decisions 0014, 0015; Zink PLA-162) | `KosmicKrisp.framework`, `MesaEGL.framework`, `MesaGallium.framework` | MIT for most files, each file per its SPDX header (Mesa `docs/license.rst`; the OpenGL frontend also SGI-B-2.0 and Khronos notices, in Mesa's `licenses/` and the header superset); pcios's patches keep that licence; no MoltenVK code or header is built in |
 | DXVK `52fe923` (with libdisplay-info and dxbc-spirv), with `patches/dxvk` | `Runtime/vulkan/` DLLs (d3d8, d3d9, d3d10core, d3d11, dxgi) | zlib/libpng; MIT, MIT |
 | Khronos Vulkan/SPIR-V headers in DXVK/vkd3d-proton and their shader converters (seven separately pinned gitlinks) | compiled header definitions in the Vulkan PE backend | Vulkan headers: Apache-2.0 OR MIT per file; SPIR-V headers: MIT-style terms with normative-header warning; documentation/tool texts in the collected superset have separate terms; per-file applicability review remains open ([NOTICES.md](NOTICES.md#khronos-header-notices-in-the-pe-backend)) |
 | Khronos Vulkan-Loader `9e9518d` (tag `v1.4.363`), unmodified, built against Vulkan-Headers `6802bb4` (tag `v1.4.363`) | `Runtime/vulkan-loader/arm64ec-windows/vulkan-1.dll` (decision [0131](decisions/0131-the-khronos-vulkan-loader-for-a-game-whose-layer-must-load.md)) | Apache-2.0; its bundled cJSON MIT; Vulkan-Headers Apache-2.0 OR MIT |
 | vkd3d-proton `472989a` (with dxil-spirv), with `patches/vkd3d-proton` | `Runtime/vulkan/` DLLs (d3d12, d3d12core) | LGPL-2.1-or-later; dxil-spirv MIT, with MIT and BSD-3-Clause third-party files |
 | gbe_fork (Detanup01/gbe_fork) `7103add` (tag `release-2026_09_27`) plus `patches/gbe` (two build fixes and the MSVC way of returning interface structs), its regular `steam_api` build | `Runtime/steamapi/` DLLs (`steam_api64.dll`, `steam_api.dll`), copied into a game's folder at launch in place of the game's own | LGPL-3.0; see "Steam API emulator" below |
 | Linked statically into those DLLs: curl, libssq, Mbed TLS, Opus, PortAudio, Protocol Buffers with utf8_range and Abseil (the pins.lock `abseil-cpp` tag), SDL 3, zlib, and the header libraries in gbe_fork's `libs/` (nlohmann json and fifo_map, SimpleIni, stb, utfcpp, libgamepad, sha1) | `Runtime/steamapi/` DLLs | curl's MIT-style licence, MIT, Apache-2.0 (Mbed TLS's other option is GPL-2.0-or-later), BSD-3-Clause, MIT, BSD-3-Clause and MIT, Apache-2.0, zlib, zlib; MIT, MIT, MIT, MIT or public domain, BSL-1.0, MIT, public domain |
-| nexus-xgameruntime (domsvoboda/nexus-xgameruntime) `ab2fac3` plus `patches/xgameruntime` (a build fix: libxml2 and the WinRT JSON header from Playport's Wine tree; then Playport's runtime features, such as the save-conflict question and add-on mounts and catalog queries), built by `build/stages/xbox-pe.sh` | `Runtime/arm64ec-windows/xgameruntime.dll`, an arm64ec Wine builtin | LGPL-2.1-or-later; see "Xbox (planned)" below for the MIT material in it |
-| Compiled into `xgameruntime.dll`: libxml2 from the Wine pin's `libs/xml2` with Playport's Wine series, and llvm-mingw's C++ runtime linked statically | `Runtime/arm64ec-windows/xgameruntime.dll` | libxml2 MIT, with `list.c` and `dict.c` under their own ISC-style notices and `timsort.h` MIT; the C++ runtime as the llvm-mingw rows say |
+| nexus-xgameruntime (domsvoboda/nexus-xgameruntime) `ab2fac3` plus `patches/xgameruntime` (a build fix: libxml2 and the WinRT JSON header from pcios's Wine tree; then pcios's runtime features, such as the save-conflict question and add-on mounts and catalog queries), built by `build/stages/xbox-pe.sh` | `Runtime/arm64ec-windows/xgameruntime.dll`, an arm64ec Wine builtin | LGPL-2.1-or-later; see "Xbox (planned)" below for the MIT material in it |
+| Compiled into `xgameruntime.dll`: libxml2 from the Wine pin's `libs/xml2` with pcios's Wine series, and llvm-mingw's C++ runtime linked statically | `Runtime/arm64ec-windows/xgameruntime.dll` | libxml2 MIT, with `list.c` and `dict.c` under their own ISC-style notices and `timsort.h` MIT; the C++ runtime as the llvm-mingw rows say |
 | nghttp2 (nghttp2/nghttp2) `85e300c` (tag `v1.70.0`), unmodified, library only (`build/stages/xbox-pe.sh`) | `Runtime/arm64ec-windows/libnghttp2.dll`, an arm64ec Wine builtin that Wine's winhttp loads | MIT; its `lib/sfparse.c` MIT under the sfparse, nghttp3 and nghttp2 contributors |
 | GStreamer 1.28.7, GStreamer's own iOS binary release (the pins.lock `gstreamer` version, sha256 in `build/stages/gstreamer.sh`; built by GStreamer's Cerbero from the `1.28.7` tag of <https://gitlab.freedesktop.org/gstreamer/gstreamer>): core, base, good and bad plugin libraries and the plugins `build/stages/gstreamer.sh` registers | executable (in `libwinegstreamer_unix.a`, statically), with Wine's winegstreamer unix side | LGPL-2.1-or-later; see "GStreamer" below for the libraries it carries |
 | JavaSteam protocol schemas (field tables in `app/SteamClient`) | executable | MIT; pinned by commit `433f2ad15c36d5e690a4fe77401ec3f6b960641e` in the [joshuatam/JavaSteam](https://github.com/joshuatam/JavaSteam) fork of [Longi94/JavaSteam](https://github.com/Longi94/JavaSteam) |
@@ -126,15 +126,15 @@ contributions, not the right to use or distribute the code under its licence.
 | Mozilla's trusted root certificates, as published in curl's CA extract (the dated file the pins.lock `ca-bundle` row names, sha256 in `build/stages/ca-bundle.sh`) | `Runtime/certs/cacert.pem`, unmodified: the roots crypt32 imports into the prefix's ROOT store | MPL-2.0 (the PEM file is its own source form; the app carries the MPL-2.0 text as `StikJIT-LICENSE.txt`) |
 | Wine Mono 11.3.0, WineHQ's binary release (the pins.lock `wine-mono` version, `wine-mono-11.3.0-x86.tar.xz`, sha256 in `build/stages/wine-mono.sh`; decision [0077](decisions/0077-ship-wine-mono.md)): Mono's runtime (`libmono-2.0-x86_64.dll`, `libmono-2.0-x86.dll`) and class libraries, FNA with FAudio, FNA3D and SDL, winforms, wpf, monoDX, System.Speech and Wine Mono's support files | `Runtime/mono/wine-mono-11.3.0/`, unmodified (a link staged as a copy of its target) | the licences its `COPYING` lists: Mono's parts MIT X11 or LGPL (SharpZipLib GPL with an exception), FNA MS-PL and MIT, its libraries zlib, winforms, wpf, monoDX and System.Speech MIT, Wine Mono's own code MIT. Source: the release's `wine-mono-11.3.0-src.tar.xz` (sha256 `SRC_SHA256` in the same script), which the source bundle carries and the notices come from |
 | idevice (jkcoxson/idevice) at the `pins.lock` `idevice` commit plus `patches/idevice` (Bonjour advertising for on-device pairing), its C FFI with the features the restart after a game and pairing use (decisions 0029, 0033), built by `build/stages/idevice.sh` with the `pins.lock` Rust | executable (in `libidevice_ffi.a`, one prelinked object) | MIT; see "idevice in the executable" below for the crates it carries |
-| Playport's patches to Wine (`patches/wine-pe`, `patches/wine-unix`) | Wine trees | offered under LGPL-2.1-or-later, so the Wine tree stays LGPL |
-| Playport's patches to vkd3d-proton, gbe_fork, idevice and nexus-xgameruntime (`patches/vkd3d-proton`, `patches/gbe`, `patches/idevice`, `patches/xgameruntime`) | those trees | offered under each upstream's licence: LGPL-2.1-or-later, LGPL-3.0, MIT, LGPL-2.1-or-later ([decision 0040](decisions/0040-patch-series-under-upstream-licences.md)) |
-| Playport's patches to DXVK (`patches/dxvk`) | the DXVK tree | offered under DXVK's zlib/libpng licence ([decision 0061](decisions/0061-dxvk-as-a-series.md)) |
-| Playport's patches to Madeira, FEX and DXMT | those trees | the patched code keeps its licence; Playport's lines are GPL-3.0-or-later with the exception |
+| pcios's patches to Wine (`patches/wine-pe`, `patches/wine-unix`) | Wine trees | offered under LGPL-2.1-or-later, so the Wine tree stays LGPL |
+| pcios's patches to vkd3d-proton, gbe_fork, idevice and nexus-xgameruntime (`patches/vkd3d-proton`, `patches/gbe`, `patches/idevice`, `patches/xgameruntime`) | those trees | offered under each upstream's licence: LGPL-2.1-or-later, LGPL-3.0, MIT, LGPL-2.1-or-later ([decision 0040](decisions/0040-patch-series-under-upstream-licences.md)) |
+| pcios's patches to DXVK (`patches/dxvk`) | the DXVK tree | offered under DXVK's zlib/libpng licence ([decision 0061](decisions/0061-dxvk-as-a-series.md)) |
+| pcios's patches to Madeira, FEX and DXMT | those trees | the patched code keeps its licence; pcios's lines are GPL-3.0-or-later with the exception |
 
 Apple's frameworks and the Swift runtime are system libraries on the device,
 not bundle contents. The build tools (llvm-mingw, xtool, Apple ld64, the
 Apple SDK) are not redistributed, but llvm-mingw's mingw-w64 CRT and headers
-are compiled into the PE files Playport builds (see "Licence readings").
+are compiled into the PE files pcios builds (see "Licence readings").
 
 The combination is conveyed under GPL-3.0-or-later as a whole: every
 component licence above is compatible with that, and the LGPL relinking
@@ -166,8 +166,8 @@ The JIT helper extension embeds StikJIT's prebuilt framework
   scripts (framework resources) keep their own licences.
   - The scripts are removed from the staged framework (`build/stages/stikjit.sh`
     deletes them; they are resources, not code) and are not shipped. The
-    helper runs Playport's own GPL-3.0-or-later script instead,
-    `app/PlayportJIT/playport-universal.js`, written from Playport's former
+    helper runs pcios's own GPL-3.0-or-later script instead,
+    `app/PlayportJIT/playport-universal.js`, written from pcios's former
     workstation activation tool (removed by decision 0011; in the git
     history) and StikJIT's documented protocol.
   - The embedded idevice library also carries Rust/native dependencies.
@@ -175,12 +175,12 @@ The JIT helper extension embeds StikJIT's prebuilt framework
     archive presence and embedded strings do not establish final linked members
     or exact source versions. The [StikJIT audit](release-audits/stikjit-rust.md)
     found no verified embedded idevice revision, Cargo lock or build derivation.
-    `idevice-LICENSE.txt` is copied from Playport's pinned idevice source
+    `idevice-LICENSE.txt` is copied from pcios's pinned idevice source
     (`d32c8189c51c2789496b0768039419c3705498c3`). Its bytes are verified for
     that donor source only. idevice and its crates are MIT/Apache-2.0: their
     notices are owed, not their source ([decision 0042](decisions/0042-the-source-bundle-is-complete.md)).
 - The StikDebug app itself (AGPL-3.0) is not bundled: Built-in JIT does not
-  need it. The helper's launcher and XPC code are Playport's own
+  need it. The helper's launcher and XPC code are pcios's own
   (`app/Sources/S1Probe/BuiltInJit.swift`, `app/Sources/PlayportJIT`),
   written from StikJIT's integration guide; no other project's code is copied.
 
@@ -209,7 +209,7 @@ it does not establish all copied-file terms or complete attribution:
 `license-file` payloads from checksum-locked archives, as an incomplete superset
 (docs/NOTICES.md). Generic licence texts do not replace missing copyright and
 permission notices. `ns-keyed-archive`, `plist-macro` and `plist_ffi` carry
-notices Playport writes from their Cargo metadata ([decision 0039](decisions/0039-owners-licensing-review.md));
+notices pcios writes from their Cargo metadata ([decision 0039](decisions/0039-owners-licensing-review.md));
 that does not settle the rest: `plist-macro` credits a serde JSON macro port without an
 exact source revision, and `plist_ffi` contains original LGPL-2.1-or-later
 libplist headers/C++ material despite its package-level MIT declaration.
@@ -244,7 +244,7 @@ observed game playback does not constrain all shipped capabilities.
   require the Independent JPEG Group credit listed in [NOTICES.md](NOTICES.md).
 - Rust/stdlib/demangler and MoltenVK member candidates also appear. Cerbero's
   Rust 1.96.0 bootstrap and Vulkan SDK version are not verified embedded source
-  identities; Playport's separate Rust 1.99.0 inventory does not cover them.
+  identities; pcios's separate Rust 1.99.0 inventory does not cover them.
 
 `build/notices-gstreamer.py` preserves a checksum-verified notice superset for
 17 recipe-associated source archives, included in `pp notices`, and `pp source`
@@ -282,7 +282,7 @@ beside it (PLA-650).
 
 ### Xbox (planned)
 
-The Xbox store ([spec PLA-485](https://linear.app/playportdev/issue/PLA-485), [decision 0181](decisions/0181-the-xbox-store.md))
+The Xbox store ([spec PLA-485](https://PLA-485), [decision 0181](decisions/0181-the-xbox-store.md))
 adds a Swift client, `XboxClientKit`, written from Xodus's and Xodus Nexus's
 code and docs (its session and synthetic device land in PLA-491); `xgameruntime`
 as an ARM64EC Wine builtin; and `nghttp2`. This section answers the plan's
@@ -291,7 +291,7 @@ The upstreams were read on 2026-10-30:
 
 | Upstream | Read at | Licence as published |
 | --- | --- | --- |
-| Xodus ([xodus-gaming/xodus](https://github.com/xodus-gaming/xodus)) | `514dd56f360a4bdf12f4acde5148bac5ce5f957f`; MSIXVC2 is its open PR #219 from cyberps96/xodus, `e8194a89ea372c809015952bcab255e65b2b3089`, a fork carrying the same `LICENSE` | GPL-3.0. `LICENSE` is the version 3 text (sha256 `3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986`; it differs from Playport's `LICENSE` only in two FSF URLs). No file header, Cargo `license` field or README line says "only" or "or later" |
+| Xodus ([xodus-gaming/xodus](https://github.com/xodus-gaming/xodus)) | `514dd56f360a4bdf12f4acde5148bac5ce5f957f`; MSIXVC2 is its open PR #219 from cyberps96/xodus, `e8194a89ea372c809015952bcab255e65b2b3089`, a fork carrying the same `LICENSE` | GPL-3.0. `LICENSE` is the version 3 text (sha256 `3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986`; it differs from pcios's `LICENSE` only in two FSF URLs). No file header, Cargo `license` field or README line says "only" or "or later" |
 | Xodus Nexus ([domsvoboda/xodus-nexus](https://github.com/domsvoboda/xodus-nexus)) | `v0.4.1` (`e0668a12f1da931aed13537ef04295599011317b`) and main `96c652343d30ae16fe476818288edbed5dfac673`, the same `LICENSE` | MIT, "Copyright (c) 2026 Xodus Nexus contributors". Its `assets/` patches modify Xodus (GPL-3.0), Wine and xgameruntime (both LGPL-2.1-or-later) |
 | nexus-xgameruntime ([domsvoboda/nexus-xgameruntime](https://github.com/domsvoboda/nexus-xgameruntime)), a fork of [xodus-gaming/xgameruntime](https://github.com/xodus-gaming/xgameruntime) | main `5539e7d23d2d2c49f8547c9b9721fb7bc59139c1`, 74 commits ahead of upstream `f03484d64867c1e65d421c1aba2f290c20bd7b4d` | `LICENSE` is the LGPL-2.1 text (sha256 `108e904a8b3df6012207649af241d5261a9c000f75d025034618f53ff9485c75`); every source file is LGPL-2.1-or-later by its header or SPDX line, except the MIT material listed below |
 | nghttp2 ([nghttp2/nghttp2](https://github.com/nghttp2/nghttp2)) | tag `v1.70.0`, commit `85e300c79fb6dbcfa9c1013215c8710c1c2cd3d2` (the commit Nexus pins) | MIT (`COPYING`, sha256 `6b94f3abc1aabd0c72a7c7d92a77f79dda7c8a0cb3df839a97890b4116a2de2a`) |
@@ -308,7 +308,7 @@ the commit the ground truth's runtime carried, three commits before the main rea
 files name libHttpClient, and the MIT files are the same six; every other C, C++, IDL and
 header file in `src/`, `include/` and `libs/` has an LGPL-2.1-or-later header, and the two
 export `.def` files and `include/version.h.in` carry no notice. `nghttp2`'s `COPYING` has the bytes above.
-libxml2 comes from Playport's Wine tree, not Valve's `7fc704ef` (`patches/xgameruntime` 0001);
+libxml2 comes from pcios's Wine tree, not Valve's `7fc704ef` (`patches/xgameruntime` 0001);
 its `COPYING` has the same bytes as Valve's.
 
 #### The Swift client
@@ -321,14 +321,14 @@ its `COPYING` has the same bytes as Valve's.
   format) are not Xodus's expression, but a file is not split along that line:
   the method decides. Every XboxClientKit file written while reading Xodus's
   code, or Nexus's Xodus patches, is treated as a work based on Xodus.
-- **It may be combined.** Xodus's GPL-3.0 and Playport's GPL-3.0-or-later
+- **It may be combined.** Xodus's GPL-3.0 and pcios's GPL-3.0-or-later
   meet at version 3, and an app that carries the client is conveyed under
   GPL-3.0.
 - **Version 3 only, until the owner decides** (Licence readings). Xodus ships the
   version 3 text and says nothing else. GPL-3.0 section 14 reads "If the
   Program does not specify a version number … you may choose any version
   ever published"; whether shipping the version 3 text specifies one is a
-  reading. Playport takes the stricter reading, as it did for Madeira's
+  reading. pcios takes the stricter reading, as it did for Madeira's
   headerless files. Under it:
   - Xodus-derived code goes in files of its own, headed
     `SPDX-License-Identifier: GPL-3.0-only`, never mixed into a
@@ -342,7 +342,7 @@ its `COPYING` has the same bytes as Valve's.
   such a file, not only from the first IPA:
   - each derived file states that it was modified, with a date (section
     5(a)). Its header names Xodus, the Xodus commit it was written from, and
-    "translated to Swift by the Playport authors" with the date;
+    "translated to Swift by the pcios authors" with the date;
   - the package carries Xodus's `LICENSE` beside the code as
     `LICENSE-Xodus.txt`, as `app/SteamClient` carries JavaSteam's, and the
     app's notices gain an Xodus component for it;
@@ -354,11 +354,11 @@ its `COPYING` has the same bytes as Valve's.
     SPLicense, device-key and content-key code in `XboxLicensing.swift` keep it
     as `LICENSE-CikExtractor.txt`; the app's Xodus component carries it too;
   - Xodus's other files carry no copyright notice to keep; the derived files
-    are in Playport's own source.
+    are in pcios's own source.
 - **The converter exception does not cover it.** The exception covers only
-  code whose copyright Playport's holder owns. The Xodus-derived files are
+  code whose copyright pcios's holder owns. The Xodus-derived files are
   third-party material in `app/`, which `LICENSE-EXCEPTION.md` already leaves
-  out ("material Playport takes from others"). GPL-3.0 section 7 adds: "If
+  out ("material pcios takes from others"). GPL-3.0 section 7 adds: "If
   additional permissions apply only to part of the Program, … the entire
   Program remains governed by this License without regard to the additional
   permissions." So a converter build that included this code could not rely
@@ -381,11 +381,11 @@ its `COPYING` has the same bytes as Valve's.
   own in the runtime, an ARM64EC Wine builtin that a game's process loads. It
   is not linked into the executable, so a recipient replaces it by rebuilding
   its stage, as with gbe_fork.
-- **Playport's lines in `patches/xgameruntime`** are offered under
+- **pcios's lines in `patches/xgameruntime`** are offered under
   LGPL-2.1-or-later, the licence of the tree they patch (decision 0040's rule),
   so the tree stays under one licence and needs no exception.
 - **The converter.** It is a guest PE DLL that never links the converter or
-  an Apple framework, in the same position as Wine's PE DLLs. Playport's reading
+  an Apple framework, in the same position as Wine's PE DLLs. pcios's reading
   is that it adds nothing to the open DXMT question. The owner confirms that
   reading with the converter decision.
 - **What it carries that is not LGPL.** This list was read at the commit
@@ -419,7 +419,7 @@ its `COPYING` has the same bytes as Valve's.
     (LGPL-2.1-or-later).
   - The C++ runtime it links statically (`-static -static-libstdc++`):
     llvm-mingw's libc++, libc++abi, libunwind and the mingw-w64 CRT, as in
-    Playport's other PE files (Licence readings).
+    pcios's other PE files (Licence readings).
   - The GDK API headers in its `include/` are headed as Wine-project files,
     LGPL-2.1-or-later. Their provenance is the upstream's.
 - **Not built:** `external/googletest`, `tests/` and `scripts/`.
@@ -435,7 +435,7 @@ its `COPYING` has the same bytes as Valve's.
 - **Owed: its notice.** `COPYING` (Tatsuhiro Tsujikawa and nghttp2
   contributors) covers the library. `lib/sfparse.c` and `sfparse.h` name
   their own holders (sfparse, nghttp3 and nghttp2 contributors). Its source
-  goes in the bundle like every pin Playport builds, for the recipient's
+  goes in the bundle like every pin pcios builds, for the recipient's
   rebuild; MIT itself asks only for the notice (decision 0042).
 
 #### For the runtime pins (PLA-493)
@@ -447,12 +447,12 @@ No IPA that carries either DLL leaves the workstation without these:
    Recheck the licence facts above at the pinned commit.
 2. **Source** (`build/source-bundle.json` and DISTRIBUTION.md's list of
    git trees):
-   - both trees by commit, with `patches/xgameruntime` in Playport's archive;
+   - both trees by commit, with `patches/xgameruntime` in pcios's archive;
    - submodules a library-only or runtime build does not use, left out with
      their reason: `external/googletest`, and nghttp2's `third-party/mruby`,
      `third-party/neverbleed`, `third-party/urlparse` and `tests/munit`;
    - libxml2 and the WinRT IDL compiled from a Wine tree the bundle packs:
-     Playport's Wine pin with its series. If the stage takes them from
+     pcios's Wine pin with its series. If the stage takes them from
      another Wine commit (the fork's lock names Valve's `7fc704ef`), that
      tree needs its own entry.
 3. **Notices** (`build/notices-assemble.sh`, NOTICES.md's table, one
@@ -482,7 +482,7 @@ No IPA that carries either DLL leaves the workstation without these:
 - **`patches/wine-gdk`** (PLA-494): each commit keeps its author, and
   Nexus's and Xodus's Wine patches become part of the LGPL-2.1-or-later Wine
   tree; the MIT that Nexus's repository names is compatible with that for
-  its authors' lines. Playport's lines are offered under LGPL-2.1-or-later,
+  its authors' lines. pcios's lines are offered under LGPL-2.1-or-later,
   as in `patches/wine-pe`. A patch that copies code from elsewhere keeps
   that code's terms.
 - **Outside this page:** Microsoft's terms, the synthetic device and
@@ -496,7 +496,7 @@ No IPA that carries either DLL leaves the workstation without these:
 - Madeira's native D3D12 runtime (`madeira_d3d12.dll`) and its test programs:
   `build/stages/stage-artifacts.py` takes only names from the Wine PE manifests. The
   one winemetal unix slot that would reach the converter
-  (`madeira_ir_convert`) is a Playport stub that refuses
+  (`madeira_ir_convert`) is a pcios stub that refuses
   (`app/Sources/WineHost/d3d12_converter_absent.c`). Adopting that path would
   first need Apple's converter agreement read.
 - DXMT's `nvapi` (built with `enable_nvapi=false`), Wine bundles that no
@@ -581,11 +581,11 @@ tester. The procedure is [DISTRIBUTION.md](DISTRIBUTION.md).
 - DXMT's upstream is LGPL-2.1-or-later since the move to upstream DXMT
   ([decision 0007](decisions/0007-dxmt-on-upstream.md)). Madeira's
   `LICENSE-MADEIRA.md` in the DXMT tree still calls the upstream licence MIT;
-  it is Madeira's file and is left as it is. LGPL code does not carry Playport's
+  it is Madeira's file and is left as it is. LGPL code does not carry pcios's
   or Madeira's converter exception, and the converter is not built.
 - Madeira's `build/*-unix` files without a licence header: Madeira's
   documents disagree on whether they are LGPL or GPL-3.0; either reading
-  allows Playport to convey the app under GPL-3.0-or-later. Playport takes the
+  allows pcios to convey the app under GPL-3.0-or-later. pcios takes the
   stricter reading, GPL-3.0-or-later, and sends no request ([decision 0039](decisions/0039-owners-licensing-review.md)).
 - Ownership confirmation of the downstream wine commits is recorded as
   pending in Madeira's provenance document. Both Madeira questions, with the
@@ -597,7 +597,7 @@ tester. The procedure is [DISTRIBUTION.md](DISTRIBUTION.md).
 - Only the header lines of each Wine bundled library's licence were read; the
   notice files are copied whole.
 - Xodus's version: GPL-3.0 only, or any version under section 14 because it
-  names none? Playport takes version 3 only until the owner decides
+  names none? pcios takes version 3 only until the owner decides
   ("Xbox (planned)"). Under the other reading, the derived files could carry
   `GPL-3.0-or-later`, and the whole combination would stay "or later".
 - The Xodus-derived Swift and a future converter build: the exception does
@@ -605,7 +605,7 @@ tester. The procedure is [DISTRIBUTION.md](DISTRIBUTION.md).
   on. This is open for the converter decision, as DXMT's question is. The
   routes: the Xodus contributors grant the same permission; the converter
   build leaves XboxClientKit out; or the derived code is replaced by code
-  written without reading Xodus. Playport's reading that `xgameruntime` (a
+  written without reading Xodus. pcios's reading that `xgameruntime` (a
   separate guest PE DLL) adds nothing to that question is confirmed at the
   same time.
 - `xgameruntime`'s libHttpClient-derived threading files: the notice is
@@ -619,4 +619,4 @@ tester. The procedure is [DISTRIBUTION.md](DISTRIBUTION.md).
 The collected notices' known coverage limits are in [NOTICES.md](NOTICES.md#gaps). The
 linked-member and applicability audits not yet done (Wine's bundled libraries against the
 current pin, mingw-w64 and the LLVM runtime, Khronos and Mesa headers, LGPL DXMT with a
-converter) are [PLA-725](https://linear.app/playportdev/issue/PLA-725).
+converter) are PLA-725.

@@ -100,7 +100,7 @@ final class XboxStoreLibraryTests: XCTestCase, @unchecked Sendable {
         XCTAssertEqual([package.contentID, package.format, String(package.downloadSize)], ["31f3afa5-02a7-4cd9-ac6e-4f4be4604ab8", "MSIXVC", "5281849344"])
         XCTAssertEqual(package.neededBytes, 5_545_941_811, "the download plus the install engine's 5% margin")
         for copy in snapshot.copies { XCTAssertNotNil(snapshot.products[copy.id]?.package, copy.id) }
-        XCTAssertNil(snapshot.products["9NNLBL0T2Z43"]?.package, "EAppx is no package Playport installs")
+        XCTAssertNil(snapshot.products["9NNLBL0T2Z43"]?.package, "EAppx is no package pcios installs")
     }
 
     /// A cache from before copies carried their package looks the GDK products up again, once.

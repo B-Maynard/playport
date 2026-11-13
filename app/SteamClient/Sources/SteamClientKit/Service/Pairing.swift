@@ -31,14 +31,14 @@ public struct PairingModel: Sendable, Equatable {
     // MARK: copy
 
     public enum Copy {
-        public static let intro = "Open the Steam app on another phone or tablet signed in to your account, and scan this code. Keep Playport open until it confirms."
+        public static let intro = "Open the Steam app on another phone or tablet signed in to your account, and scan this code. Keep pcios open until it confirms."
         public static let warning = "Don't switch to Steam on this phone; the sign-in will expire."
         public static let requesting = "Getting a code from Steam…"
         public static let scanned = "Approve on your other device…"
         public static let approved = "Paired. Loading your library…"
         public static let expired = "Code expired; show a new one"
         public static let denied = "Sign-in was declined"
-        public static let interrupted = "Playport left the screen, so that code stopped working. Show a new one."
+        public static let interrupted = "pcios left the screen, so that code stopped working. Show a new one."
         public static let showNewCode = "Show a new code"
         public static let start = "Show code"
     }
@@ -217,7 +217,7 @@ public struct CredentialSignInModel: Sendable, Equatable {
         public static let label = "On this phone"
         public static let steps = [
             "Type your Steam account name with the controller keyboard.",
-            "Then your password. It goes to Steam encrypted, and Playport keeps none of it.",
+            "Then your password. It goes to Steam encrypted, and pcios keeps none of it.",
             "Approve the sign-in in the Steam Mobile app, or type its Steam Guard code.",
         ]
         public static let placeholder = "Account name"
@@ -233,7 +233,7 @@ public struct CredentialSignInModel: Sendable, Equatable {
         public static let throttled = "Steam has seen too many sign-in attempts from here. Wait a while, or use the QR code."
         public static let expired = "The sign-in request expired. Start again."
         public static let denied = "The sign-in was declined in the Steam app."
-        public static let unsupported = "Steam asks for a confirmation Playport can't do here. Use the QR code."
+        public static let unsupported = "Steam asks for a confirmation pcios can't do here. Use the QR code."
         public static let busy = "Steam is busy with another sign-in. Try again in a moment."
 
         public static func codeByEmail(_ domain: String?) -> String {

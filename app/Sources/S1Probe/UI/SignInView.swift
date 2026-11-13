@@ -221,7 +221,7 @@ struct SignInView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .firstTextBaseline, spacing: 14) {
                 Text("Sign in to Steam").font(PP.display(28))
-                Text("Your games, cloud saves and achievements. Playport keeps no password.")
+                Text("Your games, cloud saves and achievements. pcios keeps no password.")
                     .font(.system(size: 13)).foregroundStyle(PP.muted).lineLimit(1).minimumScaleFactor(0.8)
             }
             .padding(.top, 20).padding(.bottom, 12)

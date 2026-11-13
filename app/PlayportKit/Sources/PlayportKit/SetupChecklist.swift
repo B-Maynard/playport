@@ -98,17 +98,17 @@ public enum SetupChecklist {
             if f.pairsOnPhone {
                 return SetupItem(step: step, done: f.pairing, title: "Pairing",
                                  detail: f.pairing ? "This iPhone is paired with itself, so games run fast."
-                                     : "Games need JIT, and pairing lets Playport turn it on by itself. Made on this iPhone; iOS asks you to approve it.",
+                                     : "Games need JIT, and pairing lets pcios turn it on by itself. Made on this iPhone; iOS asks you to approve it.",
                                  action: f.pairing ? "Pair again" : "Pair this iPhone")
             }
             return SetupItem(step: step, done: f.pairing, title: "Pairing file",
                              detail: f.pairing ? "Imported, so games run fast."
-                                 : "Games need JIT, and a pairing file lets Playport turn it on by itself. Made once on a computer; pick it from Files.",
+                                 : "Games need JIT, and a pairing file lets pcios turn it on by itself. Made once on a computer; pick it from Files.",
                              action: f.pairing ? "Choose another file" : "Choose file")
         case .vpn:
             if !f.jit.usesTunnel {
                 return SetupItem(step: step, done: true, title: "LocalDevVPN",
-                                 detail: "Playport does not need it while JIT comes from another app.", action: nil)
+                                 detail: "pcios does not need it while JIT comes from another app.", action: nil)
             }
             let up = f.tunnelUp == true
             return SetupItem(step: step, done: up, title: "LocalDevVPN",
@@ -123,7 +123,7 @@ public enum SetupChecklist {
             } else if f.memorySkipped {
                 detail = "Not now. Smaller games play; bigger ones need Increased Memory Limit."
             } else if f.memoryEntitled == nil {
-                detail = "Playport could not read its signature. Bigger games need Increased Memory Limit."
+                detail = "pcios could not read its signature. Bigger games need Increased Memory Limit."
             } else {
                 detail = "This copy was signed without Increased Memory Limit, so bigger games will not start."
             }
@@ -201,7 +201,7 @@ public enum SetupChecklist {
         guard f.jit.usesPairing else { return .go }
         if !f.pairing {
             return f.pairsOnPhone ? .fixesItself(.pairing)
-                : .needs(.pairing, "Playport needs a pairing file to run games. Choose it from Files on the Pairing file step.")
+                : .needs(.pairing, "pcios needs a pairing file to run games. Choose it from Files on the Pairing file step.")
         }
         if f.tunnelUp != true { return .fixesItself(.vpn) }
         return .go

@@ -33,7 +33,7 @@ enum SettingsLink {
 
     @MainActor static func open() async -> Bool {
         if await UIApplication.shared.open(top) { return true }
-        BuiltInJitStatus.log("on-device pairing: Settings' top level did not open; opening Playport's page")
+        BuiltInJitStatus.log("on-device pairing: Settings' top level did not open; opening pcios's page")
         return await UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
 }
@@ -135,7 +135,7 @@ final class PairingCodeWindow {
             let size = a.size()
             a.draw(at: CGPoint(x: (CGFloat(w) - size.width) / 2, y: y))
         }
-        centred("Playport pairing code", .systemFont(ofSize: 34, weight: .medium), .lightGray, y: 28)
+        centred("pcios pairing code", .systemFont(ofSize: 34, weight: .medium), .lightGray, y: 28)
         let spaced = code.prefix(3) + " " + code.suffix(3)
         centred(String(spaced), .monospacedDigitSystemFont(ofSize: 120, weight: .semibold), .white, y: 92)
         UIGraphicsPopContext()

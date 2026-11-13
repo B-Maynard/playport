@@ -47,10 +47,10 @@ final class OnDevicePairing: NSObject, ObservableObject, @preconcurrency NetServ
         status = "Starting Bonjour…"
         let run = PairingSession()
         attempt = run
-        background = UIApplication.shared.beginBackgroundTask(withName: "Playport pairing") {
+        background = UIApplication.shared.beginBackgroundTask(withName: "pcios pairing") {
             Task { @MainActor in
                 guard self.attempt === run else { return }
-                self.stop(reason: "iOS ended the background time. Return to Playport and try again.")
+                self.stop(reason: "iOS ended the background time. Return to pcios and try again.")
             }
         }
         timeout = Task {
@@ -61,7 +61,7 @@ final class OnDevicePairing: NSObject, ObservableObject, @preconcurrency NetServ
         BuiltInJitStatus.log("on-device pairing: starting Bonjour")
         DispatchQueue.global(qos: .userInitiated).async {
             let context = Unmanaged.passUnretained(run).toOpaque()
-            let error = pairable_host_accept_bonjour("Playport", pin, { identifier, txt, port, context in
+            let error = pairable_host_accept_bonjour("pcios", pin, { identifier, txt, port, context in
                 guard let identifier, let txt, let context else { return }
                 let run = Unmanaged<PairingSession>.fromOpaque(context).takeUnretainedValue()
                 let name = String(cString: identifier)
@@ -96,14 +96,14 @@ final class OnDevicePairing: NSObject, ObservableObject, @preconcurrency NetServ
 
     func netServiceDidPublish(_ sender: NetService) {
         guard service === sender else { return }
-        status = "Tap Open Settings, then Privacy & Security → Developer Mode → Pair with Playport, and enter this code. With Picture in Picture on, it stays on screen over Settings. Return here afterwards."
+        status = "Tap Open Settings, then Privacy & Security → Developer Mode → Pair with pcios, and enter this code. With Picture in Picture on, it stays on screen over Settings. Return here afterwards."
         BuiltInJitStatus.log("on-device pairing: Bonjour published")
     }
 
     func netService(_ sender: NetService, didNotPublish errorDict: [String: NSNumber]) {
         guard service === sender else { return }
         BuiltInJitStatus.log("on-device pairing: Bonjour publication failed \(errorDict)")
-        stop(reason: "Bonjour could not advertise Playport. Allow Local Network access in Playport’s iOS Settings, then try again.")
+        stop(reason: "Bonjour could not advertise pcios. Allow Local Network access in pcios’s iOS Settings, then try again.")
     }
 
     func stop(reason: String = "Cancelled") {

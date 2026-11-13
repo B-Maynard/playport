@@ -595,7 +595,7 @@ final class BattleNetInstallTests: XCTestCase {
         XCTAssertGreaterThan(cdn.requests.count, 20)
         for r in cdn.requests {
             XCTAssertTrue(named.contains(r.url.host ?? ""), "\(r.url)")
-            XCTAssertEqual(r.headers["User-Agent"], "Playport")
+            XCTAssertEqual(r.headers["User-Agent"], "pcios")
         }
         XCTAssertLessThanOrEqual(cdn.peak, 3)
         XCTAssertEqual(cdn.peak, 3)

@@ -33,7 +33,7 @@ public enum XboxInstallRefusal: Error, Sendable, Equatable, CustomStringConverti
         case .notEntitled:
             "Microsoft didn't give this account a download for this game. Check that you own it or that your PC Game Pass is active, then try again."
         case .licence(let failure): failure.description
-        case .noPackage: "Microsoft lists no Windows package for this game that Playport can install."
+        case .noPackage: "Microsoft lists no Windows package for this game that pcios can install."
         }
     }
 }

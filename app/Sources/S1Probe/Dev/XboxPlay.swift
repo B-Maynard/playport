@@ -45,7 +45,7 @@ enum XboxPlay {
         guard account.state == .signedIn else { return .failure(.refused(.signedOut)) }
         let installer = XboxInstalls.shared.installer
         guard let rec = installer.loadRecord(id) else {
-            return .failure(.failed("Playport has no install record for this Xbox copy. Remove it and install it again."))
+            return .failure(.failed("pcios has no install record for this Xbox copy. Remove it and install it again."))
         }
         let folder = LibraryModel.paths.games.appendingPathComponent(rec.installDir, isDirectory: true)
         let manifest: XboxGameManifest, copy: XboxBridgeCopy
@@ -53,7 +53,7 @@ enum XboxPlay {
             manifest = try XboxGameManifest.load(folder: folder)
             copy = try XboxBridgeCopy(productID: id, installed: rec, folder: folder)
         } catch {
-            return .failure(.failed("The game's MicrosoftGame.config is missing from its folder or is not the one Playport installed. "
+            return .failure(.failed("The game's MicrosoftGame.config is missing from its folder or is not the one pcios installed. "
                                     + "Verify the game."))
         }
 

@@ -430,7 +430,7 @@ struct EpicAccountSettings: View {
                    value: account.loading ? "Asking Epic…" : nil, hint: "Refresh") {
                 Task { await account.loadGames() }
             }
-            PadRow(id: "set:epic:signout", title: "Sign out", subtitle: "Installed games stay. Playport ends the session at Epic.",
+            PadRow(id: "set:epic:signout", title: "Sign out", subtitle: "Installed games stay. pcios ends the session at Epic.",
                    destructive: true, hint: "Sign out") {
                 PadModal.shared.picker(
                     title: "Sign out of Epic Games?", context: "Settings · Accounts",

@@ -108,7 +108,7 @@ public enum GOGDependencies {
 
     /// DirectX June 2010's DXSETUP, skipped as Steam's is (decision 0086).
     static let directX = "DirectX"
-    public static let directXReason = "Playport's built-in DirectX libraries cover it"
+    public static let directXReason = "pcios's built-in DirectX libraries cover it"
     /// The .NET Framework installers: Wine Mono stands in for the Framework, as the prefix's .NET
     /// HasRunKeys make Steam skip its own .NET entries (decision 0081). The .NET Core and .NET
     /// (Desktop Runtime) installers are not the Framework: they run.

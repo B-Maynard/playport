@@ -421,7 +421,7 @@ actor XboxTestServices: XboxInstallServices {
     var licences = 0
     init(_ cdn: XboxTestCDN, size: Int) {
         location = XboxPackageLocation(contentID: XboxTestPackage.contentID.uuidString.lowercased(), version: "1.2.3.0",
-                                       fileName: "Playport.TestGame_1.2.3.0_x64__test.msixvc", size: UInt64(size), urls: [cdn.url])
+                                       fileName: "pcios.TestGame_1.2.3.0_x64__test.msixvc", size: UInt64(size), urls: [cdn.url])
         licenceResult = .licensed(XboxLicence(contentID: XboxTestPackage.contentID.uuidString.lowercased(),
                                               keys: [XboxContentKey(id: XboxTestPackage.keyID, key: Secret(XboxTestPackage.key))],
                                               expiresAt: .distantFuture, offlineLease: nil, source: .microsoft))

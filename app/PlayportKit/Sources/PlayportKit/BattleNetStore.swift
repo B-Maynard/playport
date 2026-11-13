@@ -200,10 +200,10 @@ public enum BattleNet {
         guard let e = error as? BattleNetError else { return nil }
         switch e {
         case .unreachable: return "Blizzard's servers can't be reached. Check the connection, then try again."
-        case .refused(429, _): return "Blizzard's servers are asking Playport to slow down (HTTP 429). Try again later."
+        case .refused(429, _): return "Blizzard's servers are asking pcios to slow down (HTTP 429). Try again later."
         case let .refused(status, _): return "Blizzard's servers refused the download (HTTP \(status)). Try again later."
         case .damaged: return "Blizzard's servers sent damaged data. Try again later."
-        case .missingKey, .unsupported: return "Playport can't read this build yet."
+        case .missingKey, .unsupported: return "pcios can't read this build yet."
         case let .outdated(installed, current): return "The game is on \(installed) and its region on \(current): update it first, then try again."
         }
     }

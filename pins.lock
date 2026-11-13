@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# What Playport builds from. pp build reads this file and nothing
+# What pcios builds from. pp build reads this file and nothing
 # else to decide which upstream commits to check out.
 #
 # madeira is the pin: it must equal the upstream/madeira gitlink. It is frozen
-# at 8c050d0 and Playport owns that layer (decision 0054): it does not move,
+# at 8c050d0 and pcios owns that layer (decision 0054): it does not move,
 # and pp sync only reports what Madeira did since.
 #
 # Wine is taken from its own upstream, not from Madeira (decision 0013): wine
@@ -15,7 +15,7 @@
 #
 # The base stays WineHQ's newest development tag; Valve's Wine is not the
 # base (decision 0018, which weighed it). wine-valve is the ValveSoftware/wine
-# bleeding-edge commit that patches/wine-valve, the Valve commits Playport
+# bleeding-edge commit that patches/wine-valve, the Valve commits pcios
 # takes, was cherry-picked from (decision 0049); the series is applied after
 # patches/wine-port in both Wine trees. It moves by hand, by a pick from
 # Valve's bleeding-edge branch (decision 0049), never through pp sync; each
@@ -105,7 +105,7 @@ gstreamer    1.28.7                                    https://gstreamer.freedes
 wine-mono    11.3.0                                    https://dl.winehq.org/wine/wine-mono           -
 #
 # idevice (MIT) is built from this commit into the app by build/stages/idevice.sh:
-# its C FFI, with which Playport restarts itself after a game (decision 0029).
+# its C FFI, with which pcios restarts itself after a game (decision 0029).
 # The idevice static library inside StikJIT's binary does not record its
 # revision, so that copy's MIT notice is taken from this commit too
 # (build/stages/stikjit.sh; LICENSE.txt's sha256 is there).

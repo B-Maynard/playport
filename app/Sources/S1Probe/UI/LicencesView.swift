@@ -35,7 +35,7 @@ extension LicencePage {
 
 @MainActor
 enum BundledLicences {
-    static let copyright = "Copyright (C) 2026 The Playport authors"
+    static let copyright = "Copyright (C) 2026 The pcios authors"
     static let directory = Bundle.main.bundleURL.appendingPathComponent("Licenses", isDirectory: true)
     static let loaded: Result<Licences, Error> = Result { try Licences.load(directory: directory) }
     static var version: String {
@@ -82,7 +82,7 @@ private struct LicencesList: View {
                              + "under the terms of the GNU General Public License as published by the Free Software "
                              + "Foundation, either version 3 of the License, or (at your option) any later version, "
                              + "with the additional permission of its licence exception.")
-            LicenceParagraph(id: "warranty", text: "Playport is distributed in the hope that it will be useful, but "
+            LicenceParagraph(id: "warranty", text: "pcios is distributed in the hope that it will be useful, but "
                              + "WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
                              + "FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.")
             if case .success(let licences) = BundledLicences.loaded {
@@ -90,10 +90,10 @@ private struct LicencesList: View {
                 if licences.contains(Licences.playportException) { fileRow("Additional permission", Licences.playportException) }
             }
             PadSectionHeader(text: "Source code")
-            LicenceParagraph(id: "source", text: "The complete source code of this version, with every change Playport "
+            LicenceParagraph(id: "source", text: "The complete source code of this version, with every change pcios "
                              + "makes to the projects it is built from and how to build it, is published free of charge "
                              + "beside it, on the release it came from, as Playport-\(BundledLicences.version)-source.tar. "
-                             + "You may copy, change and share Playport under these licences.")
+                             + "You may copy, change and share pcios under these licences.")
             switch BundledLicences.loaded {
             case .success(let licences):
                 PadSectionHeader(text: "Components")
@@ -103,7 +103,7 @@ private struct LicencesList: View {
                         AppNavigation.shared.openLicence(.component(c.name))
                     }
                 }
-                SettingsNote(text: "Each part of Playport keeps its own licence. These are the texts it carries.")
+                SettingsNote(text: "Each part of pcios keeps its own licence. These are the texts it carries.")
                 if !licences.credits.isEmpty {
                     PadSectionHeader(text: "Credits")
                     ForEach(licences.credits.indices, id: \.self) { i in

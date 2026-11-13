@@ -81,10 +81,10 @@ final class AppRestart: ObservableObject {
             restartFailed?()
             #endif
             let how = JitProvider.inLiveContainer
-                ? "To play again, close Playport and launch it again from LiveContainer with JIT."
-                : "To play again, close Playport and open it again."
+                ? "To play again, close pcios and launch it again from LiveContainer with JIT."
+                : "To play again, close pcios and open it again."
             let game = notice.map { "\n\n\($0.title): \($0.text)" } ?? ""
-            TitleLaunch.shared.message = LaunchMessage(title: "Close Playport to play again", text: how + game)
+            TitleLaunch.shared.message = LaunchMessage(title: "Close pcios to play again", text: how + game)
             return
         }
         restarting = true
@@ -92,14 +92,14 @@ final class AppRestart: ObservableObject {
         if UIApplication.shared.applicationState == .active {
             send(r)
         } else {
-            Self.log("waiting until Playport is in front")
+            Self.log("waiting until pcios is in front")
             waiting = r
         }
     }
 
     /// Why Playport cannot restart itself here, or nil.
     static var cannotRestart: String? {
-        if JitProvider.inLiveContainer { return "Playport runs inside LiveContainer" }
+        if JitProvider.inLiveContainer { return "pcios runs inside LiveContainer" }
         if !BuiltInJit.hasPairingFile { return "no pairing (JIT from \(JitProvider.method.label))" }
         return nil
     }
@@ -148,15 +148,15 @@ final class AppRestart: ObservableObject {
         #endif
         restarting = false
         continuing = nil
-        let why = failure ?? "the phone replied, but did not restart Playport"
+        let why = failure ?? "the phone replied, but did not restart pcios"
         Self.log("failed: \(why)")
         #if PLAYPORT_RELEASE
-        let detail = "Check that LocalDevVPN is connected. To play again, close Playport and reopen it from the Home Screen."
+        let detail = "Check that LocalDevVPN is connected. To play again, close pcios and reopen it from the Home Screen."
         #else
         let detail = "\(why). Check that LocalDevVPN is connected. To play again, close Playport and reopen it from the Home Screen."
         #endif
         let game = r.notice.map { "\n\n\($0.title): \($0.text)" } ?? ""
-        TitleLaunch.shared.message = LaunchMessage(title: "Playport could not restart itself", text: detail + game)
+        TitleLaunch.shared.message = LaunchMessage(title: "pcios could not restart itself", text: detail + game)
     }
 
     private nonisolated static func request(started: Int64) -> String? {

@@ -12,10 +12,10 @@ enum JitMethodPicker {
     static func show() {
         let inLC = JitProvider.inLiveContainer
         let current = JitProvider.method
-        var note = "Every method needs Developer Mode. StikDebug and another app need the universal.js script for Playport."
+        var note = "Every method needs Developer Mode. StikDebug and another app need the universal.js script for pcios."
         if inLC {
-            note = "Playport runs inside LiveContainer, which cannot start Playport's own JIT helper. "
-                + "Launch Playport with JIT from LiveContainer (its JIT enabler set to StikDebug, with universal.js), "
+            note = "pcios runs inside LiveContainer, which cannot start pcios's own JIT helper. "
+                + "Launch pcios with JIT from LiveContainer (its JIT enabler set to StikDebug, with universal.js), "
                 + "or choose StikDebug and turn on LiveContainer's Use LiveContainer's Bundle ID."
         }
         PadModal.shared.picker(

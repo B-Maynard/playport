@@ -45,8 +45,8 @@ public struct EpicGame: Codable, Equatable, Sendable, Identifiable {
     public var refusal: String? {
         if let provider = attributes["ThirdPartyManagedProvider"], !provider.isEmpty {
             return provider.lowercased() == "ubisoftconnect"
-                ? "This game is installed and started through Ubisoft Connect, which Playport does not run."
-                : "This game is installed through another company's launcher, which Playport does not run."
+                ? "This game is installed and started through Ubisoft Connect, which pcios does not run."
+                : "This game is installed through another company's launcher, which pcios does not run."
         }
         // Epic's access control (Fortnite) is its anti-cheat's.
         if attributes["UseAccessControl"]?.lowercased() == "true" { return EpicManifest.usesAntiCheat }
@@ -57,9 +57,9 @@ public struct EpicGame: Codable, Equatable, Sendable, Identifiable {
     /// survey, 2026-10-07), by app name.
     static let knownRefusals: [String: String] = [
         // Elite Dangerous: Frontier's EDLaunch.exe, with a Frontier account.
-        "9c203b6ed35846e8a4a9ff1e314f6593": "This game starts through Frontier's launcher and its account, which Playport does not run.",
+        "9c203b6ed35846e8a4a9ff1e314f6593": "This game starts through Frontier's launcher and its account, which pcios does not run.",
         // Star Trek Online: Cryptic's launcher (Star Trek Online.exe).
-        "0fb6e06aacd14e88b1aaea8f54dd8525": "This game starts through Cryptic's launcher, which Playport does not run.",
+        "0fb6e06aacd14e88b1aaea8f54dd8525": "This game starts through Cryptic's launcher, which pcios does not run.",
         // Marvel Rivals: its own launcher and anti-cheat, with no anti-cheat file by name.
         "575efd0b5dd54429b035ffc8fe2d36d0": EpicManifest.usesAntiCheat,
     ]

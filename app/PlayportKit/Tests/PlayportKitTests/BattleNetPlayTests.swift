@@ -179,7 +179,7 @@ final class BattleNetPlayTests: XCTestCase {
     func testTheNoticeSaysWhatThePlayerRisksAndWhatPlayportDoesNotKeep() {
         let n = BattleNetPlay.notice(.wow)
         XCTAssertEqual(n.title, "Before you play World of Warcraft")
-        for words in ["Blizzard does not support Playport", "action against your Battle.net account",
+        for words in ["Blizzard does not support pcios", "action against your Battle.net account",
                       "stores no Battle.net email, password or session", "changes none of the game's files",
                       "none of its code in memory", "Blizzard's x64 Windows client through an x86-64 translator (FEX)"] {
             XCTAssertTrue(n.text.contains(words), words)

@@ -80,7 +80,7 @@ public actor SteamSession {
     public let store: SecretStore
     public let log: Logger
     public let http: HTTPClient
-    public var deviceName = "Playport iOS"
+    public var deviceName = "pcios iOS"
     /// EOSType sent at logon (enums.steamd: Windows10 = 16).
     public var osType: UInt32 = 16
 
