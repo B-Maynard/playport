@@ -3,6 +3,7 @@
 socket entry is given back when it ends and reused by a later child (RDR2's 56th Social Club helper start found the
 64-entry table full and spoke on another process's socket)."""
 import pathlib
+import platform
 import shutil
 import subprocess
 import tempfile
@@ -99,7 +100,10 @@ class ProcSocketTests(unittest.TestCase):
             subprocess.run([cc, "-std=gnu11", "-O2", "-Wall", "-Wextra", "-Werror", "-pthread",
                             "-fsanitize=thread", "-I", str((d / HEADER).parent), "-o", str(d / "t"),
                             str(d / "test.c")], check=True)
-            subprocess.run([str(d / "t")], check=True)
+            # ThreadSanitizer cannot map its shadow memory under address randomisation on some kernels
+            setarch = shutil.which("setarch")
+            argv = [setarch, platform.machine(), "-R", str(d / "t")] if setarch else [str(d / "t")]
+            subprocess.run(argv, check=True)
 
     def test_registration_exit_and_teardown_use_it(self):
         text = PATCH.read_text()

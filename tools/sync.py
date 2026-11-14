@@ -171,7 +171,7 @@ def sh(args, cwd=None, check=True, env=None, timeout=None, stdout=None):
     e = dict(os.environ, **(env or {}))
     try:
         r = subprocess.run(args, cwd=cwd, env=e, timeout=timeout, text=True, errors="replace",
-                           stdout=stdout or subprocess.PIPE, stderr=subprocess.STDOUT)
+                           stdin=subprocess.DEVNULL, stdout=stdout or subprocess.PIPE, stderr=subprocess.STDOUT)
     except subprocess.TimeoutExpired:
         if check:
             raise Fail(f"timed out after {timeout} s: {' '.join(args)}")

@@ -203,7 +203,7 @@ def main():
                         str(HERE / "wine_context.c"), "-o", str(wine_obj)], check=True, env=env)
         subprocess.run(["clang++", "-std=c++20", "-O1", "-Wall", "-Wextra", "-Werror", "-DFEX_IOS_HOST",
                         "-fsanitize=address,undefined", "-fno-sanitize-recover=all",
-                        "-I", str(gen), "-isystem", str(WINE / "include"), "-isystem", str(FEX / "FEXCore/include"),
+                        "-I", str(gen), "-isystem", str(WINE / "include"), "-isystem", str(FEX / "FEXCore/include"), "-isystem", str(FEX / "External/fmt/include"),
                         str(HERE / "roundtrip.cpp"), str(wine_obj), "-o", str(exe)], check=True, env=env)
         run = subprocess.run([str(exe)], env=env)
         failed += run.returncode != 0

@@ -70,6 +70,10 @@ class Rebase(unittest.TestCase):
         git(fex, "branch", "-q", "next", self.n1)
         with open(f"{repo}/pins.lock", "w") as f:
             f.write(f"fex {self.b0} {fex} main\nrpmalloc {self.rpm} {rpm} fex\n")
+        # a real checkout is a git repository that tracks patches/ and pins.lock
+        git(repo, "init", "-q", "-b", "main")
+        git(repo, "add", "-A")
+        git(repo, "commit", "-q", "-m", "fixture")
         self.originals = {s: {n: read(f"{repo}/patches/{s}/{n}") for n in os.listdir(f"{repo}/patches/{s}")}
                           for s in ("fex-port", "fex")}
         self.build = f"{t}/build"
@@ -235,6 +239,9 @@ class MisplacedClean(unittest.TestCase):
         self.n1 = commit(fex, "upstream lines between the blocks", **{"dup.c": dup_c(pad=30)})
         with open(f"{repo}/pins.lock", "w") as f:
             f.write(f"fex {self.b0} {fex} main\n")
+        git(repo, "init", "-q", "-b", "main")   # as in Rebase.setUp: a real checkout is a repository
+        git(repo, "add", "-A")
+        git(repo, "commit", "-q", "-m", "fixture")
         self.build = f"{t}/build"
         os.makedirs(f"{self.build}/cache")
         subprocess.run(["git", "clone", "-q", "--bare", fex, f"{self.build}/cache/fex.git"], check=True,

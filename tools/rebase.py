@@ -70,7 +70,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sync  # noqa: E402
 from sync import Fail, git, git_ok, log, sh  # noqa: E402
 
-COMMITTER = {"GIT_COMMITTER_NAME": "pp-rebase", "GIT_COMMITTER_EMAIL": "pp-rebase@localhost"}
+COMMITTER = {"GIT_COMMITTER_NAME": "pp-rebase", "GIT_COMMITTER_EMAIL": "pp-rebase@localhost",
+             "GIT_EDITOR": "true"}  # a resumed pick takes git's message, never an editor
 TRAILER_RE = re.compile(r"^(Rebased|Picked): (clean|resolved)$", re.M)
 # The class of a pick a person resolved in this run: its range-diff change is theirs, not flagged.
 RESOLVED = {"resolved"}
@@ -116,7 +117,15 @@ def apply_failures(tree, commit):
 
 
 def cherry_pick(tree, commit, *extra):
-    return sh(["git", "-C", tree, "cherry-pick", "--empty=drop", *extra, commit], env=COMMITTER, check=False)[0]
+    """Pick commit onto HEAD; 0 when it applied or was dropped as empty. Git before 2.45 has no
+    --empty=drop (it is a usage error there, read as a conflict), so an empty pick is skipped here:
+    it stops with CHERRY_PICK_HEAD, no unmerged path and a tree equal to HEAD (a rerere resolution
+    leaves its change in the tree and is not skipped)."""
+    rc = sh(["git", "-C", tree, "cherry-pick", *extra, commit], env=COMMITTER, check=False)[0]
+    if rc and not unmerged(tree) and git_ok(tree, "rev-parse", "-q", "--verify", "CHERRY_PICK_HEAD") \
+            and sh(["git", "-C", tree, "diff", "--quiet", "HEAD"], check=False)[0] == 0:
+        rc = sh(["git", "-C", tree, "cherry-pick", "--skip"], env=COMMITTER, check=False)[0]
+    return rc
 
 
 def pick(tree, rec, trial):
