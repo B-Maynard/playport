@@ -41,8 +41,8 @@ struct HomeView: View {
             HStack(spacing: 14) {
                 hero
                 VStack(spacing: 10) {
-                    downloadCard.openingCard(1, cornerRadius: 14)
-                    nextCard.openingCard(2, cornerRadius: 14)
+                    downloadCard.openingCard()
+                    nextCard.openingCard()
                 }
                 .frame(width: 250)
             }
@@ -77,7 +77,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 14))
             .padItem("hero:\(t.id)", hint: "Open", cornerRadius: 14) { nav.openTitle(t.id) }
-            .openingCard(0, cornerRadius: 14)
+            .openingCard()
         } else {
             VStack(alignment: .leading, spacing: 6) {
                 Text("No games yet").font(PP.display(30)).foregroundStyle(PP.text)
@@ -87,7 +87,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
             .background(PP.surface, in: RoundedRectangle(cornerRadius: 14))
             .padItem("hero", hint: "Library", cornerRadius: 14) { _ = nav.open("games") }
-            .openingCard(0, cornerRadius: 14)
+            .openingCard()
         }
     }
 
@@ -175,8 +175,8 @@ struct HomeView: View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-                    ForEach(Array(recent.enumerated()), id: \.element.id) { i, entry in
-                        tile(entry).openingCard(3 + i, cornerRadius: 10)
+                    ForEach(recent, id: \.id) { entry in
+                        tile(entry).openingCard()
                     }
                     Text("+ Find games")
                         .font(.system(size: 14, weight: .semibold)).foregroundStyle(PP.muted)
@@ -185,7 +185,7 @@ struct HomeView: View {
                         .background(PP.surface, in: RoundedRectangle(cornerRadius: 10))
                         .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(PP.line, style: StrokeStyle(lineWidth: 1, dash: [4, 3])))
                         .padItem("find", hint: "Library", cornerRadius: 10) { _ = nav.open("games") }
-                        .openingCard(7, cornerRadius: 10)
+                        .openingCard()
                 }
                 // Room for the ring, which draws outside each tile.
                 .padding(.horizontal, 6).padding(.vertical, 6)

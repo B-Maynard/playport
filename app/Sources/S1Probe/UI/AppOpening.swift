@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // The opening animation (UI/OpeningView.swift draws it): at every start of the app it
 // covers the first listing of the stores' games and Home's pictures, so Home appears
-// whole rather than with empty tiles. Its intro lasts 1.8 s: placeholders where Home's
-// cards will be fall into the porthole as the app's icon forms. It then holds on the
-// icon, an arc orbiting it, until each store has listed its games and the art Home draws
+// whole rather than with empty tiles. Its intro lasts 1.8 s: the bundled app icon
+// lifts into a blue glow and catches a sweep of light. It then holds on the
+// icon until each store has listed its games and the art Home draws
 // has loaded, or 4 s after the start, whichever comes first; then Home's cards fly out of
-// the porthole into place. The animation names no store.
+// the icon into place. The animation names no store.
 //
 // - After a game pcios restarts itself (AppRestart): the new process skips the intro
 //   and starts on the finished icon. Reduce Motion does the same, and its cards fade in.
@@ -27,19 +27,11 @@ final class AppOpening: ObservableObject {
     private(set) var clock = Date()
     /// When the cards started to fly out.
     @Published private(set) var leftAt: Date?
-    /// Home's cards (the hero, its two cards, the Recent row), by order: where the intro's
-    /// placeholders stand and where the cards fly out to. Global coordinates.
-    @Published private(set) var cards: [Int: Card] = [:]
-    /// The screen's centre in global coordinates (the porthole's), from the overlay.
+    /// The screen's centre in global coordinates (the icon's), from the overlay.
     @Published var center: CGPoint = .zero
     private(set) var skipsIntro = false
     private(set) var reduceMotion = false
     private var started = false
-
-    struct Card: Equatable {
-        var frame: CGRect
-        var corner: CGFloat
-    }
 
     nonisolated static let introSeconds = 1.8
     /// From the start: the longest the animation waits for the stores.
@@ -49,11 +41,6 @@ final class AppOpening: ObservableObject {
 
     /// Covering the shell: everything until the cards have landed.
     var covering: Bool { phase != .done }
-
-    func report(_ order: Int, _ card: Card) {
-        guard phase != .done, cards[order] != card else { return }
-        cards[order] = card
-    }
 
     /// Starts the animation (once per process) and ends it when `ready` returns or at the cap.
     func run(until ready: @escaping @MainActor () async -> Void) {
@@ -85,7 +72,6 @@ final class AppOpening: ObservableObject {
             phase = .leaving
             try? await Task.sleep(for: .seconds(Self.leaveSeconds))
             phase = .done
-            cards = [:]
         }
     }
 }
@@ -97,11 +83,7 @@ struct OpeningCurve: Sendable {
     let x1, y1, x2, y2: Double
 
     static let standard = OpeningCurve(x1: 0.2, y1: 0.8, x2: 0.2, y2: 1)
-    static let easeOut = OpeningCurve(x1: 0, y1: 0, x2: 0.58, y2: 1)
-    static let easeIn = OpeningCurve(x1: 0.42, y1: 0, x2: 1, y2: 1)
     static let easeInOut = OpeningCurve(x1: 0.42, y1: 0, x2: 0.58, y2: 1)
-    /// Placeholders pulled into the porthole.
-    static let pull = OpeningCurve(x1: 0.55, y1: 0, x2: 0.8, y2: 0.2)
     /// Cards flying out of it.
     static let fly = OpeningCurve(x1: 0.15, y1: 0.85, x2: 0.25, y2: 1)
 
@@ -141,12 +123,10 @@ enum OpeningTime {
 
 // MARK: Home's side
 
-/// One of Home's cards: reports its frame for the intro's placeholders, is hidden while the
-/// animation covers, and flies out of the porthole into place as it ends.
+/// One of Home's cards: remembers its destination frame, is hidden while the
+/// animation covers, and flies out of the icon into place as it ends.
 private struct OpeningCardModifier: ViewModifier {
     @ObservedObject private var opening = AppOpening.shared
-    let order: Int
-    let corner: CGFloat
     @State private var frame: CGRect = .zero
 
     func body(content: Content) -> some View {
@@ -159,7 +139,6 @@ private struct OpeningCardModifier: ViewModifier {
         }
         .onGeometryChange(for: CGRect.self) { $0.frame(in: .global) } action: { f in
             frame = f
-            opening.report(order, .init(frame: f, corner: corner))
         }
     }
 
@@ -198,9 +177,9 @@ private struct OpeningChromeModifier: ViewModifier {
 }
 
 extension View {
-    /// One of Home's cards, in the order they fall into the porthole.
-    func openingCard(_ order: Int, cornerRadius: CGFloat) -> some View {
-        modifier(OpeningCardModifier(order: order, corner: cornerRadius))
+    /// One of Home's cards, revealed from the opening icon.
+    func openingCard() -> some View {
+        modifier(OpeningCardModifier())
     }
 
     /// Chrome that fades in once the opening animation's cards have flown out.
