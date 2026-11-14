@@ -182,7 +182,7 @@ if [ "$BUILD" = 1 ]; then
     rm "$LOG/ds.out"
     [ "$reg" = 1 ] || die "the phone is not registered on the team; 'xtool install --network' of the unsigned release IPA registers it (docs/DEVICE.md, Free-team limits; a signed IPA makes a second app)"
 fi
-BID_RE='^XTL-[A-Z0-9]+\.dev\.playport\.app$'
+BID_RE='^XTL-[A-Z0-9]+\.dev\.pcios\.app$'
 xtl_apps apps-before
 mapfile -t APPS < "$LOG/apps-before.txt"
 INSTALLED=$(grep -E "$BID_RE" "$LOG/apps-before.txt" || true)

@@ -76,7 +76,7 @@ LOCK = os.environ.get("PLAYPORT_DEVICE_LOCK") or os.path.join(DEVICE_DIR, "devic
 HOLDER = os.path.join(os.path.dirname(LOCK), "device.holder.json")
 STATE = os.path.join(DEVICE_DIR, "device-state.json")
 UNATTENDED = os.path.join(DEVICE_DIR, "unattended.json")
-BID_RE = re.compile(r"^XTL-[A-Z0-9]+\.dev\.playport\.app$")
+BID_RE = re.compile(r"^XTL-[A-Z0-9]+\.dev\.pcios\.app$")
 PLACEHOLDER_BID = "XTL-TEAMIDXXXX.dev.pcios.app"
 EXECUTABLES = ("S1Probe", "Playport")
 
