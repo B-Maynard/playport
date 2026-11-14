@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Keeps the pairing code in view while the person is in iOS Settings, and
 // takes them there. The code floats in a picture-in-picture window (a
-// sample-buffer layer fed a rendered image of it), which also keeps Playport
+// sample-buffer layer fed a rendered image of it), which also keeps pcios
 // running while the listener waits (Info.plist UIBackgroundModes audio, the
 // documented requirement for picture in picture). Open Settings opens
 // Settings' top level.
@@ -15,7 +15,7 @@ import UIKit
 /// DEVELOPER_SETTINGS) lands on Settings' Apps list, `prefs:` is refused, and
 /// the bare `App-prefs:` opens Settings' top level, from which Privacy &
 /// Security is one tap (docs/evidence/2026-09-30-on-device-pairing.md). None of
-/// these is public API; Playport's own Settings page is the public fallback.
+/// these is public API; pcios's own Settings page is the public fallback.
 enum SettingsLink {
     static let top = URL(string: "App-prefs:")!
 
@@ -93,7 +93,7 @@ final class PairingCodeWindow {
         }
     }
 
-    /// Back in Playport (or done): the inline view is enough.
+    /// Back in pcios (or done): the inline view is enough.
     func dock() { controller?.stopPictureInPicture() }
 
     func close() {
@@ -178,7 +178,7 @@ struct PairingCodeView: UIViewRepresentable {
 }
 
 extension OnDevicePairing {
-    /// Opens Settings; the code window floats over it as Playport leaves the
+    /// Opens Settings; the code window floats over it as pcios leaves the
     /// front. The code is not copied: the pairing field in Settings refused
     /// paste on iOS 27.0 (24A437).
     func openSettings() {

@@ -5,7 +5,7 @@
 //
 //   installed  a folder a store install wrote (its receipt under installs/ wins:
 //              Steam's <appID>.json, or a GOG or Epic StoreReceipt)
-//   imported   a folder Playport copied in from Files (a local StoreReceipt)
+//   imported   a folder pcios copied in from Files (a local StoreReceipt)
 //   cohort     a folder without a receipt named as a titles.json entry: that pin, Ready
 //   found      any other folder with a Windows executable: Ready too
 //

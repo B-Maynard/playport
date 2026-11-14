@@ -4,7 +4,7 @@
 // (wine_host_jit_pool_acquire); only what attaches the debugger differs:
 //
 // - builtIn: the app's own helper extension (PlayportJIT.appex) with the
-//   pairing Playport keeps. The default.
+//   pairing pcios keeps. The default.
 // - stikDebug: Play opens StikDebug (stikdebug://enable-jit) with this
 //   process's bundle ID and PID and StikDebug's own universal.js, then waits.
 // - external: Play only waits for a debugger, from whatever the player uses:
@@ -38,7 +38,7 @@ public enum JitMethod: String, CaseIterable, Sendable {
         return choices(inLiveContainer: inLiveContainer).contains(m) ? m : .external
     }
 
-    /// Whether JIT needs Playport's own pairing and LocalDevVPN (the setup checklist's first two steps).
+    /// Whether JIT needs pcios's own pairing and LocalDevVPN (the setup checklist's first two steps).
     public var usesPairing: Bool { self == .builtIn }
     /// Whether the method needs LocalDevVPN's tunnel (StikDebug reaches the phone through it too).
     public var usesTunnel: Bool { self != .external }
@@ -80,7 +80,7 @@ public enum JitMethod: String, CaseIterable, Sendable {
         case .stikDebug, .external:
             let target = inLiveContainer ? "LiveContainer" : "pcios"
             let launch = inLiveContainer ? "launch pcios again from LiveContainer with JIT" : "relaunch pcios with JIT"
-            return why + " In StikDebug, assign universal.js to \(target), then \(launch). A plain attach-and-detach does not prepare Playport's JIT pool."
+            return why + " In StikDebug, assign universal.js to \(target), then \(launch). A plain attach-and-detach does not prepare pcios's JIT pool."
         }
     }
 

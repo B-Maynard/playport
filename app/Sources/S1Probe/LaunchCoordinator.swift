@@ -6,7 +6,7 @@
 // The Play then acquires the JIT pool (JitProvider, through
 // WineHostRuntime.start, which checks it) in the size the limit gives it
 // (PlayportKit JitPool) and starts the runtime and its session root. That is
-// once per app process: after the title Playport restarts itself (decision
+// once per app process: after the title pcios restarts itself (decision
 // 0029), and a Play in a process that already blessed its pool is refused
 // (decision 0030). The title runs as the session root's
 // child with its directory as the working directory; the launch waits for it
@@ -31,7 +31,7 @@
 // 0063), started at Play, stops when the launch ends. A title's own prerequisite
 // installer that has not run in the prefix runs first, as the session root's child,
 // and is recorded whatever its exit code; the game then starts (decision 0079), after
-// Playport's restart when one ran, it can restart itself (decision 0084) and they left
+// pcios's restart when one ran, it can restart itself (decision 0084) and they left
 // the pool too little room for the game (decision 0094): the launch then ends as
 // `.prerequisitesRan` and the new process continues the Play.
 // Progress goes to the app log
@@ -109,7 +109,7 @@ enum LaunchCoordinator {
         /// How long the title goes on after it ran the pool out before the launch ends (decisions
         /// 0022, 0030); a publisher's launcher Open carries its own (decision 0112).
         var exhaustionGrace: TimeInterval = JitPool.exhaustionGrace
-        /// Whether a prerequisite that ran may end the launch before the game, for Playport's
+        /// Whether a prerequisite that ran may end the launch before the game, for pcios's
         /// restart and the same Play in the new process (decision 0084), when the pool after
         /// them leaves the game too little room (decision 0094); false starts the game in this
         /// session after them.
@@ -141,7 +141,7 @@ enum LaunchCoordinator {
         /// Play; nil leaves the emulator's made-up ones.
         var tickets: SteamTicketBroker? = nil
         /// False when Steam refused the app's ownership ticket with AccessDenied: the
-        /// account has no licence for it, and Playport's Steam client answers so.
+        /// account has no licence for it, and pcios's Steam client answers so.
         var owned: Bool = true
     }
 
@@ -175,7 +175,7 @@ enum LaunchCoordinator {
             /// FEX's host band refused a request (FexBand.Use.exhausted) before the title ended,
             /// whatever its exit code; a pool that also ran out is reported as that (decision 0120).
             case outOfEmulatorMemory
-            /// The title's prerequisites ran and the game did not start: Playport restarts
+            /// The title's prerequisites ran and the game did not start: pcios restarts
             /// and the new process starts it, as the same Play (decision 0084).
             case prerequisitesRan
         }
@@ -190,7 +190,7 @@ enum LaunchCoordinator {
     fileprivate static func log(_ line: String) { WineHostRuntime.appendLog("title: " + line) }
 
     /// Puts the game's steam_api in the launch's mode: the emulator with its
-    /// settings written and SteamStub taken off the executables Playport can
+    /// settings written and SteamStub taken off the executables pcios can
     /// unwrap, or the game's own of both. A failure is logged and the launch
     /// goes on: the game then meets whichever files are in place.
     private static func prepareSteamAPI(_ s: SteamAPI) {
@@ -219,7 +219,7 @@ enum LaunchCoordinator {
                     log("ticket: none; the emulator makes up its own")
                 }
             }
-            // The emulator's unix calls reach the play's broker, or none (SteamTicketHost); Playport's
+            // The emulator's unix calls reach the play's broker, or none (SteamTicketHost); pcios's
             // Steam client's reach its own provider (SteamClientHost, decision 0115).
             SteamTicketHost.arm(s.mode == .emulated ? s.tickets : nil)
             SteamClientHost.arm(s.mode == .client ? prepareSteamClient(s, settings: settings, runtime: runtime) : nil)
@@ -248,7 +248,7 @@ enum LaunchCoordinator {
         }
     }
 
-    /// The prefix's Steam client for a play in client mode (decision 0115): Playport's
+    /// The prefix's Steam client for a play in client mode (decision 0115): pcios's
     /// steamclient64.dll and steamclient.dll in `C:\Program Files (x86)\Steam\`, as Steam installs
     /// both (an i386 game's steam_api.dll loads the second, an x86-64 one's steam_api64.dll the
     /// first, whatever the title's executable), and the `Valve\Steam` keys a genuine steam_api reads
@@ -264,7 +264,7 @@ enum LaunchCoordinator {
                 if (try? Data(contentsOf: dest)) != shim {
                     try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
                     try shim.write(to: dest, options: .atomic)
-                    log("steamclient: Playport's \(name) (\(shim.count) bytes) placed in C:\\Program Files (x86)\\Steam")
+                    log("steamclient: pcios's \(name) (\(shim.count) bytes) placed in C:\\Program Files (x86)\\Steam")
                 }
             }
             try PrefixRegistryFile(prefix: prefix).add(SteamClientKeys.values)
@@ -588,7 +588,7 @@ enum LaunchCoordinator {
             log(rc == 0 ? String(format: "services: services.exe runs for this play (%.2f s)", Date().timeIntervalSince(t0))
                         : "services: services.exe not started (\(rc)); the title starts without Windows services")
         }
-        // Playport's Steam client (decision 0115): the session root stands for Steam's process.
+        // pcios's Steam client (decision 0115): the session root stands for Steam's process.
         if let s = r.steamAPI, s.mode == .client {
             let rc = runtime.steamClient(accountID: SteamClientHost.accountID)
             log(rc == 0 ? "steamclient: the session root is the prefix's running Steam client"
@@ -608,7 +608,7 @@ enum LaunchCoordinator {
                                                pool: afterPrerequisites) {
             // Their processes' copies stay in this pool's head (docs/ARCHITECTURE.md, JIT pool use),
             // and left the game too little room: it gets a fresh process and pool (decisions 0084, 0094).
-            log("prerequisites: \(ran) ran, \(room); Playport restarts and the game starts in the new process")
+            log("prerequisites: \(ran) ran, \(room); pcios restarts and the game starts in the new process")
             mark("prerequisites done; restarting for the game")
             PacedMetalLayer.onFirstFrame { }
             PacedMetalLayer.onFirstPresent { }
@@ -620,7 +620,7 @@ enum LaunchCoordinator {
         if ran > 0 {
             log(r.restartAfterPrerequisites
                 ? "prerequisites: \(ran) ran, \(room); the game starts in this session (decision 0094)"
-                : "prerequisites: \(ran) ran, \(room); Playport cannot restart itself here, so the game starts in this session")
+                : "prerequisites: \(ran) ran, \(room); pcios cannot restart itself here, so the game starts in this session")
         }
         if let use = PoolLog.read() { log("at the game's start: " + use.line) }
         step(.startingGame)

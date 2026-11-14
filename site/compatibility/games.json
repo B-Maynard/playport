@@ -1,5 +1,5 @@
 {
-  "comment": "Playport's public compatibility list, shown by site/compatibility/index.html: each title's status from Linear project Compatibility (team PLA), with Works and Playable with issues both shown as runs. Keep entries sorted by name; tools/tests/test_compat_site.py checks the format.",
+  "comment": "pcios's public compatibility list, shown by site/compatibility/index.html: each title's status from Linear project Compatibility (team PLA), with Works and Playable with issues both shown as runs. Keep entries sorted by name; tools/tests/test_compat_site.py checks the format.",
   "updated": "2026-11-10",
   "games": [
     {

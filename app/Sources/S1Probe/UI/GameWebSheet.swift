@@ -23,7 +23,7 @@
 // Each panel has its own non-persistent website data store: its cookies live
 // in WebKit's network process and end with the panel; the host's Epic tokens
 // never enter it. The bar shows the page's host only. Nothing opens Safari:
-// Playport would go to the background mid-game.
+// pcios would go to the background mid-game.
 
 import ContentKit
 import EpicClientKit

@@ -66,7 +66,7 @@ def adhoc_macho(code_body, specials, entitlements, cms=b""):
     return code + sig
 
 
-def make_app(root, entitlements=ENTITLEMENTS, bundle_id="dev.playport.app", cms=b"", profile=False):
+def make_app(root, entitlements=ENTITLEMENTS, bundle_id="dev.pcios.app", cms=b"", profile=False):
     app = root / "Playport.app"
     app.mkdir(parents=True)
     info = plistlib.dumps({"CFBundleExecutable": "Playport", "CFBundleIdentifier": bundle_id})
@@ -120,7 +120,7 @@ class Unsigned(unittest.TestCase):
         cases = [
             (dict(entitlements={**ENTITLEMENTS, "application-identifier": "TEAMID.x"}), "entitlements"),
             (dict(entitlements={}), "entitlements"),
-            (dict(bundle_id="XTL-TEAMIDXXXX.dev.playport.app"), "team prefix"),
+            (dict(bundle_id="XTL-TEAMIDXXXX.dev.pcios.app"), "team prefix"),
             (dict(cms=b"0\x82certificate"), "CMS"),
             (dict(profile=True), "embedded.mobileprovision"),
         ]

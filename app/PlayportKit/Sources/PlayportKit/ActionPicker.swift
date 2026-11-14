@@ -4,7 +4,7 @@
 // (ControllerMapPage.swift) opens it for a controller input; phase 5's layout
 // editor opens it for an on-screen control, with its own `accepts`.
 //
-// - Tabs: Keyboard, Mouse, Controller, Playport (LB and RB switch them). Only
+// - Tabs: Keyboard, Mouse, Controller, pcios (LB and RB switch them). Only
 //   the choices `accepts` takes are shown, and a tab with none is left out:
 //   a whole stick gets Mouse look (`mouse:move`) and the pad's sticks only.
 // - The cursor moves over the tab's rows, then the bottom row: the modifier
@@ -12,7 +12,7 @@
 //   land on the cell under the one left, as the controller keyboard does.
 // - A key is chosen with the modifiers that are on (`key:shift+0x31`); a
 //   modifier key itself never carries its own modifier. A recent choice is
-//   chosen as it was. Playport's "Nothing" unbinds the input.
+//   chosen as it was. pcios's "Nothing" unbinds the input.
 // - Recent choices (ActionPickerRecent): the newest first, each once, at most
 //   `limit`, kept under `controls.recentActions`.
 // - "Press a real key" (RealKeyCapture): a hardware keyboard's key, as KeyMap
@@ -356,7 +356,7 @@ public struct RealKeyCapture: Equatable, Sendable {
 
 /// The words an action is shown with (the Controller page's rows, the ActionPicker).
 public enum ActionText {
-    /// `Space`, `Shift+1`, `Left button`, `Mouse look`, `Pad A`, `Playport menu`, `Touch keyboard`; nil is `Nothing`.
+    /// `Space`, `Shift+1`, `Left button`, `Mouse look`, `Pad A`, `pcios menu`, `Touch keyboard`; nil is `Nothing`.
     public static func name(_ a: InputAction?) -> String {
         switch a {
         case nil: "Nothing"

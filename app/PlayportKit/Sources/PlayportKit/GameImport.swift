@@ -75,7 +75,7 @@ public enum ImportError: Error, Equatable, CustomStringConvertible {
         switch self {
         case .empty: "There is nothing to import there."
         case let .notDownloaded(n): "\(n) of its files are still in iCloud. Download the folder in Files first."
-        case let .refused(why): "Playport can't import this: \(why)"
+        case let .refused(why): "pcios can't import this: \(why)"
         case let .insufficientSpace(needed, available):
             "Not enough free space: \(ByteCount.format(needed)) needed, \(ByteCount.format(available)) free."
         }
@@ -148,7 +148,7 @@ public struct GameImporter: Sendable {
 
     static func planZip(_ url: URL) throws -> ImportPlan {
         let zip: ZipArchive
-        do { zip = try ZipArchive(url: url) } catch { throw ImportError.refused("it is not a zip Playport can read (\(error))") }
+        do { zip = try ZipArchive(url: url) } catch { throw ImportError.refused("it is not a zip pcios can read (\(error))") }
         var entries: [(parts: [String], entry: ZipArchive.Entry)] = []
         var symlinks = 0
         for e in zip.entries {
@@ -376,7 +376,7 @@ public struct GameImporter: Sendable {
 
 /// The launch record a store left in a game's folder: GOG's `goggame-<id>.info`
 /// (its name and primary play task), Epic's `.egstore/*.mancpn`. It says how to
-/// start the game, never whose copy it is: a folder Playport did not install from
+/// start the game, never whose copy it is: a folder pcios did not install from
 /// a store is a Local game (decision 0057, owner 2026-10-06).
 public enum StoreMarkers {
     public struct Marker: Equatable, Sendable {

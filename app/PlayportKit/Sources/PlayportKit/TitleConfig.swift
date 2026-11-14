@@ -33,7 +33,7 @@ public enum TitleConfig {
     public static func merged(shared: String?, config: [String: String], title: String) -> String {
         var out = shared ?? ""
         if !out.isEmpty, !out.hasSuffix("\n") { out += "\n" }
-        out += "# Playport: \(title)'s own keys, after the shared file; the last line for a key wins.\n"
+        out += "# pcios: \(title)'s own keys, after the shared file; the last line for a key wins.\n"
         for k in config.keys.sorted() { out += "\(k) = \(config[k]!)\n" }
         return out
     }

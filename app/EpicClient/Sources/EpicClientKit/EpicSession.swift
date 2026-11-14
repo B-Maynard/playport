@@ -96,7 +96,7 @@ public struct EpicAccountIdentity: Sendable {
 /// its own service name; decision 0058). Sign-out kills the session at Epic, then
 /// deletes the item.
 public actor EpicSession {
-    public static let keychainService = "dev.playport.app.epic"
+    public static let keychainService = "dev.pcios.app.epic"
     static let key = "session"
 
     public enum State: Sendable, Equatable { case signedOut, signedIn }

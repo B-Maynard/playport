@@ -5,10 +5,10 @@ version: 1
 # S1Probe; build/stages/stage-artifacts.py release generates the release variant's
 # copy from it, with product Playport and Runtime/ at its package root
 # (docs/BUILDING.md, "Variants").
-bundleID: dev.playport.app
+bundleID: dev.pcios.app
 product: S1Probe
 # The JIT helper (docs/ARCHITECTURE.md, "Built-in JIT"): PlugIns/PlayportJIT.appex,
-# bundle ID dev.playport.app.PlayportJIT, its own free-team App ID
+# bundle ID dev.pcios.app.PlayportJIT, its own free-team App ID
 # and profile. It takes no device slot. Its resource is Playport's JIT protocol
 # script, copied to the .appex root.
 extensions:

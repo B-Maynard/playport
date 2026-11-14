@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Playport's in-game menu (QuickMenu.dc.html; S1Probe UI/InGameMenuView.swift):
+// pcios's in-game menu (QuickMenu.dc.html; S1Probe UI/InGameMenuView.swift):
 // its rows in order, the ring moving along them, and the words each row shows.
 // The controller side (the Home button held, the presses) is HostIOKit's
 // QuickMenuControl. Controls opens a panel beside the rows (QuickMenuControls.dc.html):

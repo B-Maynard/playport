@@ -5,7 +5,7 @@
 // runs itself on Windows when the VC++ runtime's key is missing, a key the
 // prefix seed has), started before the game in the same session and waited for.
 // A Steam game's install-script entries run the same way (SteamInstallScript, decision
-// 0081), and a GOG game's redistributables (GOGDependencies, decision 0090); Playport ships no
+// 0081), and a GOG game's redistributables (GOGDependencies, decision 0090); pcios ships no
 // redistributable and downloads only the store's ones a game lists. Each id is run once per
 // prefix: the record (PrerequisiteRecord, a file in the prefix, so it goes with the prefix)
 // keeps the code and the app build that ran it, and the game starts either way, as Epic's
@@ -151,7 +151,7 @@ public struct Prerequisite: Equatable, Sendable {
 public struct PrerequisiteRecord: Codable, Equatable, Sendable {
     public struct Run: Codable, Equatable, Sendable {
         public var name: String
-        /// Nil for an entry Playport skipped (`skipped`): it did not run.
+        /// Nil for an entry pcios skipped (`skipped`): it did not run.
         public var exitCode: UInt32?
         public var date: Date
         /// The title whose Play ran it.
@@ -159,7 +159,7 @@ public struct PrerequisiteRecord: Codable, Equatable, Sendable {
         /// The app build that ran it (the app's own identifier); nil in a record written before
         /// builds were kept, which counts as another build.
         public var build: String?
-        /// Why Playport did not run it (SteamPrerequisites.Skipped); nil when it ran.
+        /// Why pcios did not run it (SteamPrerequisites.Skipped); nil when it ran.
         public var skipped: String?
         /// The command line it ran with (Prerequisite.commandLine); nil in a record written before
         /// command lines were kept, or for a skipped entry.
@@ -249,7 +249,7 @@ public struct PrerequisiteStore: Sendable {
 /// process a prerequisite starts (cmd, conhost, start, an installer and its own children) leaves
 /// its image copies in the JIT pool's head, which nothing returns, and a process plays in one
 /// session (decision 0030); so when they left the game too little room, the game starts after
-/// Playport's restart, in a fresh session with a fresh pool, as the same Play (decision 0094).
+/// pcios's restart, in a fresh session with a fresh pool, as the same Play (decision 0094).
 /// The restart record carries this (AppRestart's `restart.json`).
 public struct PlayContinuation: Codable, Equatable, Sendable {
     /// The catalogue's id of the title, as the library's Play takes it.
@@ -268,8 +268,8 @@ public struct PlayContinuation: Codable, Equatable, Sendable {
         self.epicOffline = epicOffline
     }
 
-    /// Whether the launch restarts Playport before the game: one prerequisite at least ran
-    /// (started and ended) in this session, Playport can restart itself, and the pool after them
+    /// Whether the launch restarts pcios before the game: one prerequisite at least ran
+    /// (started and ended) in this session, pcios can restart itself, and the pool after them
     /// leaves the game less than `JitPool.gameRoomMB` (`Use.roomForGame`), or ran out, or could
     /// not be read (decision 0094). Otherwise the game starts in the same session. Without the
     /// restart (inside LiveContainer, or JIT from another app with no pairing) it always does,

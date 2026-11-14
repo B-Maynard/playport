@@ -115,7 +115,7 @@ public enum LaunchProgress {
         }
     }
 
-    /// What the screen across Playport's restart between a title's dependencies and the game
+    /// What the screen across pcios's restart between a title's dependencies and the game
     /// says (decisions 0084, 0094, 0095): the old process's last screen and the new one's first.
     public static func continuing(title: String) -> String {
         "Dependencies installed. " + (title.isEmpty ? "Starting the game…" : "Starting \(title)…")

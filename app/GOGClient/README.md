@@ -7,7 +7,7 @@ runs its offline tests on the Linux host.
 - **Session** (`GOGSession`): GOG's desktop-client identity (decision 0058). The app's sign-in
   sheet opens `GOGAPI.loginURL`; the page GOG redirects to carries a code, which the session
   trades for tokens at `auth.gog.com/token` and keeps only in the credential store (the
-  Keychain, service `dev.playport.app.gog`). Tokens refresh five minutes before they expire.
+  Keychain, service `dev.pcios.app.gog`). Tokens refresh five minutes before they expire.
   Sign-out deletes the item; GOG has no revoke endpoint.
 - **Library** (`GOGLibrary`): `embed.gog.com/account/getFilteredProducts`, the owned Windows games.
 - **Content** (`GOGContent`, generation 2): the builds, newest first; a build's zlib JSON

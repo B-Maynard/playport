@@ -14,7 +14,7 @@ import WineHost
 /// (playport-session.exe, the process's one __wine_main), and runs its title
 /// as the root's child. The runtime cannot start twice in a process (a second
 /// wine_host_init or __wine_main aborts it), so once the pool is blessed the
-/// process plays nothing more: Playport restarts itself (AppRestart, decision
+/// process plays nothing more: pcios restarts itself (AppRestart, decision
 /// 0029). Used by one launch thread at a time (LaunchCoordinator).
 final class WineHostRuntime: @unchecked Sendable {
     static let shared = WineHostRuntime()

@@ -232,7 +232,7 @@ pcios (S1Probe or Playport)                 PlayportJIT.appex
   `-e _NSExtensionMain`. `PlayportJITEntry/entry.c` defines that symbol in
   the executable and hands on to Foundation's; `-ObjC` keeps the principal
   class, which nothing references by symbol.
-- The extension has its own bundle ID (`dev.playport.app.PlayportJIT`)
+- The extension has its own bundle ID (`dev.pcios.app.PlayportJIT`)
   and so its own free-team App ID and profile, one of the ten App IDs a free
   team may register per week. It takes no device slot.
 
@@ -1494,7 +1494,7 @@ an injected `XboxHTTP` (request in, status/body out), on ContentKit's `SecretSto
 Microsoft's inline sign-in result through signed SOAP, and silently renews the user session.
 The non-persistent `XboxSignInSheet` (`Dev/XboxAccount.swift`) presents as CloudExperienceHost
 to Microsoft's own page and bridges only main-frame messages from `https://login.live.com`.
-The Xbox Keychain service (`dev.playport.app.xbox`, this-device-only) separates the device
+The Xbox Keychain service (`dev.pcios.app.xbox`, this-device-only) separates the device
 from issued session tickets/proofs: sign-out deletes the latter, retaining the same device
 for the next sign-in. Microsoft's device-auth rejection or Developer's Reset Xbox device
 replaces it; a network/service error does not. The Store's 10-device limit is a licensing

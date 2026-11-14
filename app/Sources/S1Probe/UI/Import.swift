@@ -125,7 +125,7 @@ final class GameImports: ObservableObject, DownloadDriver {
         case let .success(p): plan = p
         case let .failure(e):
             SteamUILog.logger.warn("import", "\(url.lastPathComponent): refused: \(e)")
-            return (e as? ImportError)?.description ?? "Playport can't read that: \(e)"
+            return (e as? ImportError)?.description ?? "pcios can't read that: \(e)"
         }
         let name = url.lastPathComponent
         // The same item again: its held import resumes from the stage.

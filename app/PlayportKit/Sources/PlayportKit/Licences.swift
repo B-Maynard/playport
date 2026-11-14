@@ -40,7 +40,7 @@ public struct Licences: Equatable, Sendable {
     public static let schema = 1
     /// The status a reviewed selection carries (build/notices-bundle.py RELEASE_STATUS).
     public static let reviewedStatus = "release-reviewed"
-    /// Playport's own licence and additional permission, as the selection names them.
+    /// pcios's own licence and additional permission, as the selection names them.
     public static let playportLicence = "pcios-LICENSE.txt"
     public static let playportException = "pcios-LICENSE-EXCEPTION.md"
 

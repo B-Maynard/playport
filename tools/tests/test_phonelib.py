@@ -150,7 +150,7 @@ class PhonelibTest(unittest.TestCase):
 
     def test_activate_launches_without_ending_the_app(self):
         phone = self.pl.Phone(self.tmp, dry=False, events=self.pl.Events(echo=False))
-        phone._bid = "XTL-T.dev.playport.app"
+        phone._bid = "XTL-T.dev.pcios.app"
         calls = []
 
         def run(name, args, secs, check=True, env=None):
@@ -159,7 +159,7 @@ class PhonelibTest(unittest.TestCase):
         phone.run = run
         self.assertEqual(phone.activate(), 4242)
         self.assertEqual(calls, [("activate", ["pymobiledevice3", "developer", "dvt", "launch", "--no-kill-existing",
-                                               "XTL-T.dev.playport.app"], False)])
+                                               "XTL-T.dev.pcios.app"], False)])
         phone.run = lambda *a, **k: "error\n"
         self.assertIsNone(phone.activate())
 

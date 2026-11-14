@@ -4,7 +4,7 @@
 // keeps, each keyed by its game's store identity (decision 0057). What a job
 // does is its store's driver's (DownloadDriver): Steam's (SteamInstalls.swift),
 // the import from Files (Import.swift). The queue is written to the container
-// after every change (DownloadQueueStore), because Playport restarts after
+// after every change (DownloadQueueStore), because pcios restarts after
 // every game (decision 0029): a game's launch holds every job (decision 0004),
 // and the new process lets go of every hold but the player's Pause and carries
 // on once each job's driver may run it (Steam signed in, the network). Only
@@ -126,7 +126,7 @@ final class Downloads: ObservableObject {
     /// Why no job runs now although one waits (not signed in, the network), else nil.
     @Published private(set) var blocked: String?
     /// A title has launched in this process and the restart after it failed:
-    /// no download starts again until Playport is reopened.
+    /// no download starts again until pcios is reopened.
     @Published private(set) var suspended = false
 
     private var queue: DownloadQueue {

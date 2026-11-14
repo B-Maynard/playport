@@ -19,7 +19,7 @@
 //   puts it back to Settings' (asking first over an edited Custom table).
 // - The pad's picture in the middle, its inputs' rows down both sides ("As the
 //   controller" in As a controller); the ringed input is amber in the picture.
-//   Home is Playport's, labelled, never a row.
+//   Home is pcios's, labelled, never a row.
 // - A on an input: in Custom the ActionPicker (a stick's or the D-pad's list
 //   first); as keyboard & mouse (read only) "Edit a copy?" first, as a
 //   controller "Switch to Custom?" first, then the same in Custom
@@ -552,7 +552,7 @@ struct PadPicture: View {
             ctx.stroke(cross, with: .color(edge), lineWidth: 1.2)
             rect(CGRect(x: 126, y: 70, width: 14, height: 9), .back, radius: 3)
             rect(CGRect(x: 160, y: 70, width: 14, height: 9), .start, radius: 3)
-            // Home: Playport's, always amber-edged.
+            // Home: pcios's, always amber-edged.
             let home = Path(ellipseIn: CGRect(x: 141, y: 43, width: 18, height: 18))
             ctx.fill(home, with: .color(fill))
             ctx.stroke(home, with: .color(PP.accent), lineWidth: 1.2)

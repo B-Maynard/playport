@@ -240,7 +240,7 @@ final class LibraryModel: ObservableObject {
     /// does not is refused, a failed check is said on the launch screen; then a copy whose client is not
     /// the x64 one is refused, and the x64 client starts through FEX on Vulkan. `battleNetUpdate`: the
     /// check's answer when the Play already has it.
-    /// `continuing`: the Play goes on after Playport's restart that followed its prerequisites
+    /// `continuing`: the Play goes on after pcios's restart that followed its prerequisites
     /// (AppRestart.continuePlay, decision 0084): no cloud save check (the Play passed it a few
     /// seconds ago) and no prerequisites, so it cannot restart again.
     @discardableResult
@@ -323,7 +323,7 @@ final class LibraryModel: ObservableObject {
         settings.maxInst = nil
         settings.x87Reduced = nil
         settings.diskCache = nil
-        // Playport's Steam client unless the game's compatibility default says otherwise (decisions 0115, 0153).
+        // pcios's Steam client unless the game's compatibility default says otherwise (decisions 0115, 0153).
         let compat = LaunchSettingsStore.shared.compat(for: t.id)?.settings
         settings.steamAPI = LaunchSettings.releaseSteamAPI(compat: compat)
         // The compatibility default's runtime keys, never a person's (decision 0126); every game's go under
@@ -354,7 +354,7 @@ final class LibraryModel: ObservableObject {
                      + "and runtime keys apply")
         }
         // A Steam app's steam_api: the emulator told about the paired account, the game's own served by
-        // Playport's Steam client (decision 0115), or the game's own alone.
+        // pcios's Steam client (decision 0115), or the game's own alone.
         let service = SteamAccountModel.current?.service
         // The emulator's encrypted app ticket, on by default (decision 0017): asked for now, while the
         // session is up (TitleLaunch.start closes it), after the start's sweep of old ones.
@@ -362,7 +362,7 @@ final class LibraryModel: ObservableObject {
         // The game's auth session and web API tickets, on by default (decision 0062): armed now, and
         // the CM session stays logged on for them alone through the play.
         var tickets: SteamTicketBroker?
-        // Steam refused the app's ownership ticket (AccessDenied): no licence grants it, and Playport's
+        // Steam refused the app's ownership ticket (AccessDenied): no licence grants it, and pcios's
         // Steam client says so (decision 0115). Unknown (no session) counts as owned, as before.
         var owned = true
         if let app = t.appID, settings.steamAPI == .emulated || settings.steamAPI == .client, let service {
@@ -435,7 +435,7 @@ final class LibraryModel: ObservableObject {
             }.value
         }
         // A Steam game's install scripts (decision 0081): its own, and those of the Steamworks Common
-        // Redistributables depots it lists, downloaded first when Playport does not hold them yet.
+        // Redistributables depots it lists, downloaded first when pcios does not hold them yet.
         if !continuing, let app = t.appID, t.store == .steam {
             storePrerequisites += await steamInstallScripts(t, appID: app)
         }
@@ -518,7 +518,7 @@ final class LibraryModel: ObservableObject {
     }
 
     /// A Steam game's install-script prerequisites (decision 0081), its `Registry` values written
-    /// for the runtime's start. The app 228980 depots it lists that Playport lacks are downloaded
+    /// for the runtime's start. The app 228980 depots it lists that pcios lacks are downloaded
     /// into Games/Steamworks Shared first, on the paired session; without them (no session, a
     /// failed download) their entries are left out and the game starts all the same.
     private func steamInstallScripts(_ t: InstalledTitle, appID: UInt32) async -> [Prerequisite] {
@@ -610,7 +610,7 @@ final class LibraryModel: ObservableObject {
 
     /// A GOG game's redistributables (decision 0090), as GOG Galaxy and Heroic install them: the ids
     /// its build names, looked up in GOG's dependency repository; DirectX and the .NET Framework are
-    /// recorded as skipped (Playport's builtins and Wine Mono cover them); each other installer is
+    /// recorded as skipped (pcios's builtins and Wine Mono cover them); each other installer is
     /// placed in the game's folder when absent and runs once per prefix. Without GOG (signed out,
     /// offline, a failed download) the ones it cannot place are left out and the game starts.
     private func gogDependencies(_ t: InstalledTitle) async -> [Prerequisite] {

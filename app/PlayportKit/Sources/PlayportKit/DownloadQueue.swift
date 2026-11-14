@@ -8,7 +8,7 @@
 //   waiting or held (the player's Pause, a game's launch, a failure), the
 //   downloads finished today, and the automatic updates the player cancelled.
 //   It is kept in the container (DownloadQueueStore) after every change,
-//   because Playport restarts after every game (decision 0029): the new
+//   because pcios restarts after every game (decision 0029): the new
 //   process loads it, lets go of every hold but the player's, and carries on
 //   once Steam is signed in.
 // - Y on a waiting job ("Download next") moves it to the front, behind the
@@ -260,7 +260,7 @@ public struct DownloadQueue: Codable, Equatable, Sendable {
     public mutating func remove(_ appID: UInt32) -> DownloadJob? { remove(.steam(appID)) }
     public mutating func finished(_ appID: UInt32, bytes: UInt64?, at: Date) { finished(.steam(appID), bytes: bytes, at: at) }
 
-    /// A new process (Playport restarts after every game): every job waits
+    /// A new process (pcios restarts after every game): every job waits
     /// its turn again but the ones the player paused.
     public mutating func afterRestart() {
         for i in jobs.indices where jobs[i].hold != .player { jobs[i].hold = nil }

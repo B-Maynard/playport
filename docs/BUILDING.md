@@ -372,7 +372,7 @@ xtool runs: the per-target `-r` steps go to `ld64.lld`, every final link to ld64
 - **Account.** `xtool auth login` once, from a terminal; bare `xtool auth` is
   the login and fails without one.
 - **Identity.** One bundle ID for both variants, signed as
-  `XTL-<team>.dev.playport.app`; display name pcios; the
+  `XTL-<team>.dev.pcios.app`; display name pcios; the
   executable is `S1Probe` (dev) or `Playport` (release). The JIT helper
   extension has its own bundle ID and profile
   ([ARCHITECTURE.md](ARCHITECTURE.md#built-in-jit)).

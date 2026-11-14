@@ -21,7 +21,7 @@
 //
 // The same facts are checked before every launch (`SetupState.beforePlay`,
 // called by LibraryModel.play): a missing pairing on iOS 27 or LocalDevVPN
-// down Playport fixes itself (JitSetup, which then goes on with the Play); a
+// down pcios fixes itself (JitSetup, which then goes on with the Play); a
 // missing pairing file on iOS 26 opens this checklist on that step with the
 // fix and the Play does not start. No controller and a signed-out Steam never
 // stop a launch; the launch screen names them (`launchNotes`).
@@ -192,7 +192,7 @@ final class SetupState: ObservableObject {
     }
 
     /// The check a Play runs before JIT. False when the player has to act
-    /// first: the checklist opens on the step, with the fix. A step Playport
+    /// first: the checklist opens on the step, with the fix. A step pcios
     /// fixes itself (pairing on iOS 27, LocalDevVPN) goes on to JitSetup.
     func beforePlay(steamGame: Bool) -> Bool {
         var f = facts
@@ -205,7 +205,7 @@ final class SetupState: ObservableObject {
         case .go:
             Self.log("before play: " + SetupChecklist.summary(f) + ": ready")
         case .fixesItself(let step):
-            Self.log("before play: " + SetupChecklist.summary(f) + ": Playport sets up \(step.rawValue) first")
+            Self.log("before play: " + SetupChecklist.summary(f) + ": pcios sets up \(step.rawValue) first")
         case .needs(let step, let fix):
             Self.log("before play: " + SetupChecklist.summary(f) + ": needs \(step.rawValue); the checklist")
             message = fix

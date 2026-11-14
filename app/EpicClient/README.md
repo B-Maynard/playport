@@ -7,7 +7,7 @@ runs its offline tests on the Linux host.
 - **Session** (`EpicSession`): the launcher's desktop-client identity (decision 0058). The app's
   sign-in sheet opens `EpicAPI.loginURL`, which ends on Epic's redirect page: JSON with the
   `authorizationCode`, which the session trades for `eg1` tokens (36 h access, a year's refresh)
-  and keeps only in the credential store (the Keychain, service `dev.playport.app.epic`). A
+  and keeps only in the credential store (the Keychain, service `dev.pcios.app.epic`). A
   corrective-action reply (seen: accept the updated privacy policy) is told to the player.
   Sign-out ends the session at Epic (`sessions/kill`), then deletes the item.
 - **Library** (`EpicLibrary`): the library service's records (cursor-paged), then the

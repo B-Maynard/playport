@@ -31,7 +31,7 @@ public enum XboxSessionError: Error, Sendable, Equatable, CustomStringConvertibl
 /// membername, password, SPLicenseBlock (private RSA key) and hardware survive
 /// sign-out. Every issued ticket/proof and every account identifier is deleted.
 public actor XboxSession {
-    public static let keychainService = "dev.playport.app.xbox"
+    public static let keychainService = "dev.pcios.app.xbox"
     private let store: any SecretStore
     // Internal, not private: XboxLicensing.swift extends the session.
     let http: any XboxHTTP

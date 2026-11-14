@@ -13,7 +13,7 @@
 import Foundation
 
 public enum SteamClientKeys {
-    /// Where Playport's steamclient64.dll goes in the prefix, as Steam installs itself.
+    /// Where pcios's steamclient64.dll goes in the prefix, as Steam installs itself.
     public static let folder = #"C:\Program Files (x86)\Steam"#
     /// `Software\Valve\Steam` in the 64-bit view, then the same in the Wow6432Node view.
     public static let steamKeys = [#"Software\Valve\Steam"#, #"Software\Wow6432Node\Valve\Steam"#]

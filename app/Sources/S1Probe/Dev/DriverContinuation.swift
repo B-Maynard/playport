@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Dev builds only: a driven run goes on across Playport's restart after a game
+// Dev builds only: a driven run goes on across pcios's restart after a game
 // (AppRestart, decision 0029). `pp ui --action play:A --action play:B` plays A,
-// Playport restarts itself, and the new process plays B under the same run.
+// pcios restarts itself, and the new process plays B under the same run.
 //
 // Just before the restart request, the UI driver's variables (the run's nonce,
 // its session, the settings flags, the scripted pad) and the actions left after

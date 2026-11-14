@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Xodus 514dd56f360a4bdf12f4acde5148bac5ce5f957f webview.rs and login.rs;
-// translated to Swift by the Playport authors, 2026-10-30. Modified: 0058's
+// translated to Swift by the pcios authors, 2026-10-30. Modified: 0058's
 // non-persistent WKWebView, origin-checked main-frame script messages, dev only.
 import Combine
 import ContentKit

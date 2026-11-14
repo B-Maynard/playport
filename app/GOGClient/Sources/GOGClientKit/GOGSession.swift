@@ -59,7 +59,7 @@ struct GOGTokens: Codable, Sendable {
 /// its own service name; decision 0058). Sign-out deletes the item: GOG has no
 /// revoke endpoint, so the refresh token expires by itself.
 public actor GOGSession {
-    public static let keychainService = "dev.playport.app.gog"
+    public static let keychainService = "dev.pcios.app.gog"
     static let key = "session"
 
     public enum State: Sendable, Equatable { case signedOut, signedIn }

@@ -220,10 +220,10 @@ final class SafetyTests: XCTestCase {
 
     func testMaskTeam() {
         // A free-team group carries the team twice; a paid-team group once.
-        XCTAssertEqual(Redactor.maskTeam(accessGroup: "A1B2C3D4E5.XTL-A1B2C3D4E5.dev.playport.app"),
-                       "<team>.XTL-<team>.dev.playport.app")
-        XCTAssertEqual(Redactor.maskTeam(accessGroup: "A1B2C3D4E5.dev.playport.app"),
-                       "<team>.dev.playport.app")
+        XCTAssertEqual(Redactor.maskTeam(accessGroup: "A1B2C3D4E5.XTL-A1B2C3D4E5.dev.pcios.app"),
+                       "<team>.XTL-<team>.dev.pcios.app")
+        XCTAssertEqual(Redactor.maskTeam(accessGroup: "A1B2C3D4E5.dev.pcios.app"),
+                       "<team>.dev.pcios.app")
         XCTAssertEqual(Redactor.maskTeam(accessGroup: "?"), "?")
         XCTAssertEqual(Redactor.maskTeam(accessGroup: "A1B2C3D4E5"), "<group:redacted>")
         XCTAssertEqual(Redactor.maskTeam(accessGroup: ".x"), "<group:redacted>")

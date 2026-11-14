@@ -10,7 +10,7 @@
 // - Graphics: what every game launches with unless its Game options change
 //   it (LaunchSettingsStore.global): resolution, frame rate limit and
 //   Direct3D, changed with left and right, each "Default · X" while it follows
-//   Playport's default; and the performance overlay (UI/PerformanceOverlay.swift).
+//   pcios's default; and the performance overlay (UI/PerformanceOverlay.swift).
 // - Downloads: PlayportKit DownloadPreferences (the download queue reads
 //   them) and Steam Cloud's switch (SteamAccountModel.cloudKey).
 // - Controls: when the on-screen controls show, every game's starting layout
@@ -550,7 +550,7 @@ private struct StorageSettings: View {
 
 private struct AboutSettings: View {
     var body: some View {
-        SettingsNote(text: "Playport runs Windows games on this iPhone. It is built on willfaust/Madeira: "
+        SettingsNote(text: "pcios runs Windows games on this iPhone. It is built on willfaust/Madeira: "
                      + "Wine, FEX-Emu and DXMT in one process.")
         SettingsInfoRow(id: "version", title: "Version", value: version)
         #if PLAYPORT_RELEASE
@@ -563,7 +563,7 @@ private struct AboutSettings: View {
                accessory: .chevron, hint: "Open") {
             AppNavigation.shared.openLicence(.list)
         }
-        SettingsNote(text: "\(BundledLicences.copyright). Playport is free software under the GNU GPL and comes "
+        SettingsNote(text: "\(BundledLicences.copyright). pcios is free software under the GNU GPL and comes "
                      + "with ABSOLUTELY NO WARRANTY.")
     }
 

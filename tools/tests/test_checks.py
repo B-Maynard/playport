@@ -49,7 +49,7 @@ class Secrets(unittest.TestCase):
         # Made up, and split so that pp secrets does not find them in this file.
         steam_id, team = "7656119" + "8000000000", "XTL-" + "ABCDE12345."
         self.assertEqual([w for w, _ in checks.secret_hits(f"id {steam_id}\nnothing here")], ["SteamID64"])
-        self.assertEqual(checks.secret_hits("XTL-TEAMIDXXXX.dev.playport.app"), [])
+        self.assertEqual(checks.secret_hits("XTL-TEAMIDXXXX.dev.pcios.app"), [])
         self.assertEqual([w for w, _ in checks.secret_hits(team + "com.x")], ["team ID in a bundle ID"])
 
     def test_encrypted_app_ticket(self):

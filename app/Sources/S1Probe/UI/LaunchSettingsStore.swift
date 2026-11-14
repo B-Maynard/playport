@@ -47,7 +47,7 @@ final class LaunchSettingsStore: ObservableObject {
     /// A game's compatibility default, nil for none.
     func compat(for id: String) -> CompatDefaults.Entry? { Self.compat.entry(for: id) }
 
-    /// The person's own settings for a game over its compatibility default, over Playport's
+    /// The person's own settings for a game over its compatibility default, over pcios's
     /// defaults for every game (LaunchSettings.everyGame, decision 0153).
     func effective(for title: InstalledTitle, inheritingGraphics: Bool = false) -> LaunchSettings.Effective {
         let compat = LaunchSettings.overEveryGame(Self.compat.entry(for: title.id)?.settings)

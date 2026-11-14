@@ -18,7 +18,7 @@
 //                their `temp_executable`, decision 0099; Tomb Raider: Anniversary's a `.cmd` that
 //                sets Windows Games Explorer keys)
 //
-// Playport writes the setRegistry values into the prefix before the runtime starts, as it writes a
+// pcios writes the setRegistry values into the prefix before the runtime starts, as it writes a
 // Steam install script's `Registry` (PrefixRegistryFile: a value the hive holds is kept); the
 // other actions are left out and logged (setIni too: a changed game file would fail GOG's verify,
 // and repair would put it back).
@@ -107,7 +107,7 @@ public struct GOGInstallScript: Equatable, Sendable {
         }
         let raw = a.arguments["valueData"] ?? ""
         guard let expanded = Self.expand(raw, folder: folder) else {
-            p.notes.append("\(label): \(subkey) \"\(name)\" names a folder Playport does not map (\(raw)); left out")
+            p.notes.append("\(label): \(subkey) \"\(name)\" names a folder pcios does not map (\(raw)); left out")
             return
         }
         let data: PrefixRegistryValue.Data
@@ -142,7 +142,7 @@ public struct GOGInstallScript: Equatable, Sendable {
         return w
     }
 
-    /// `{app}` and `{supportDir}` as the game's folder (Playport places the support files there,
+    /// `{app}` and `{supportDir}` as the game's folder (pcios places the support files there,
     /// decision 0099), `/` as `\` after them; nil for another placeholder.
     static func expand(_ s: String, folder: String) -> String? {
         guard s.contains("{") else { return s }

@@ -119,7 +119,7 @@ final class XboxLapses: ObservableObject {
         switch state(key) {
         case .licensed: return nil
         case .lapsed(let at):
-            return refused + " Playport uninstalls it on \(Self.shown(at)), keeping its saves, unless the licence returns: Check licence asks Microsoft again."
+            return refused + " pcios uninstalls it on \(Self.shown(at)), keeping its saves, unless the licence returns: Check licence asks Microsoft again."
         case .held(let at):
             return refused + " Its removal was due on \(Self.shown(at)) and waits until its saves are in the cloud."
         case .due:

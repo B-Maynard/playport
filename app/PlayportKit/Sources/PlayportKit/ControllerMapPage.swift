@@ -5,7 +5,7 @@
 //
 // - Rows (ControllerMapRow): LT, LB, L stick, L3, D-pad, View and Menu down
 //   the left; RT, RB, Y, X, B, A, R stick and R3 down the right. Home is
-//   Playport's, shown and not a row.
+//   pcios's, shown and not a row.
 // - A stick's row is the whole stick (mouse look, a pad stick) or its four
 //   directions (W A S D); the D-pad's row is its four directions. Choosing
 //   such a row lists its parts (ControllerMapPart): for a stick Whole stick
@@ -395,7 +395,7 @@ extension ControllerInput {
 }
 
 extension ActionText {
-    /// A row's key cap: `W`, `Shift+1`, `Left`, `Mouse`, `Pad A`, `Playport`; `–` for nothing.
+    /// A row's key cap: `W`, `Shift+1`, `Left`, `Mouse`, `Pad A`, `pcios`; `–` for nothing.
     public static func short(_ a: InputAction?) -> String {
         switch a {
         case nil: "–"

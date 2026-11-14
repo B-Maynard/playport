@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// The controller in Playport's own screens. iOS gives SwiftUI no gamepad
+// The controller in pcios's own screens. iOS gives SwiftUI no gamepad
 // focus on iPhone, so the router reads every extended gamepad through
 // GameController, turns its snapshots into presses (HostIOKit.PadNavigation:
 // a button as it goes down, a held direction repeating) and publishes them;

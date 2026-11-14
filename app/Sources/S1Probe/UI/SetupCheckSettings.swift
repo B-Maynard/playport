@@ -3,7 +3,7 @@
 // its state, and the rows that fix one. The controller; JIT, from the app's
 // own helper (BuiltInJit.swift) with its pairing (on iOS 27 made on the
 // phone, JitSetup; the import from Files is touch only); LocalDevVPN, which
-// Playport turns on (LocalDevVPN.swift); and the memory iOS lets Playport use
+// pcios turns on (LocalDevVPN.swift); and the memory iOS lets pcios use
 // (MemoryLimit), with the JIT memory a Play gets from it; Steam, optional. Its
 // first row opens the first-run checklist (SetupView.swift), which shows the
 // pairing, LocalDevVPN, Increased Memory Limit and Steam (PlayportKit
@@ -12,7 +12,7 @@
 // The JIT method row picks where JIT comes from (JitMethodPicker, decision
 // 0051). With StikDebug or another app, the built-in helper's rows give way
 // to what that method needs; the pairing stays offered outside LiveContainer,
-// since Playport restarts itself after a game with it (AppRestart).
+// since pcios restarts itself after a game with it (AppRestart).
 //
 // A dev build's built-in JIT rows are the full panel (the helper's raw readiness and
 // reason, the disk image reset); a release build's show what a player acts

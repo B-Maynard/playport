@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Registry values Playport writes into the prefix for a store, as the store's client would on
+// Registry values pcios writes into the prefix for a store, as the store's client would on
 // Windows: Steam's install-script `Registry` entries and the HasRunKey it writes after a
 // prerequisite ran (decision 0081). They go into a file beside the prefix's hives in wineserver's
 // format, every section marked for top-up, which the runtime merges into the hive before its

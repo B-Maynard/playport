@@ -186,7 +186,7 @@ public enum SetupChecklist {
     public enum LaunchCheck: Equatable, Sendable {
         /// Everything a game needs is there.
         case go
-        /// Playport fixes it itself: pairs this iPhone (iOS 27) or turns
+        /// pcios fixes it itself: pairs this iPhone (iOS 27) or turns
         /// LocalDevVPN on, then goes on with the Play (JitSetup).
         case fixesItself(SetupStep)
         /// The player has to act first: the checklist on that step, with the fix.

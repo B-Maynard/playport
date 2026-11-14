@@ -73,7 +73,7 @@ enum MemoryLimit {
     }
 
     /// A reading every 2 s until the task ends. The limit moves: Game Mode, which iOS turns
-    /// on a few seconds after Playport comes to the front, raises it (6 GB to 8 GB on the
+    /// on a few seconds after pcios comes to the front, raises it (6 GB to 8 GB on the
     /// reference phone).
     @MainActor static func follow(_ update: (Reading) -> Void) async {
         while !Task.isCancelled {

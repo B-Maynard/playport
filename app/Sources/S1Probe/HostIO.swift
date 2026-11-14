@@ -22,7 +22,7 @@
 //                 (HostIOKit.InputMixer), their keys and buttons through
 //                 Lifecycle, shown while no extended controller is connected
 //   in-game menu  the controller's Home button held, or a three-finger tap
-//                 anywhere on the game (GameSurfaceView), opens Playport's menu
+//                 anywhere on the game (GameSurfaceView), opens pcios's menu
 //                 (UI/InGameMenuView.swift, HostIOKit.QuickMenuControl); while
 //                 it is up the pads' presses are the menu's, the guest's pads
 //                 are at rest (HostIOKit.GuestPadGate), audio stops and the
@@ -426,7 +426,7 @@ final class HostIO {
         pad.valueChangedHandler = { gp, _ in
             MainActor.assumeIsolated { HostIO.shared.padChanged(gp, slot: slot) }
         }
-        // Home is Playport's: held, it opens the in-game menu (the system's own use of it is off while a game runs).
+        // Home is pcios's: held, it opens the in-game menu (the system's own use of it is off while a game runs).
         if let home = pad.buttonHome {
             home.preferredSystemGestureState = .disabled
             home.pressedChangedHandler = { [weak pad] _, _, _ in
@@ -470,7 +470,7 @@ final class HostIO {
     /// their pad into slot 0 (unless `padOn` is false: the touch keyboard over a
     /// controller that is player 1), their keys and mouse buttons through Lifecycle
     /// (a press while the menu is up does not reach the game, a release does), the
-    /// Playport button's menu.
+    /// pcios button's menu.
     func touchControls(_ t: TouchOutput?, padOn: Bool = true) {
         let outputs = Self.pads.withLock { p in
             let earlier = p.mixer.takeOutputs()   // the mapped pads', in the order they came

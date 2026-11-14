@@ -4,14 +4,14 @@
 // tip for the in-game menu; the steps listed only when JIT is slow), the
 // screen of a launch that failed at a step (LaunchFailureView: the steps,
 // what happened and the fix), what a launch that did not end cleanly says
-// (LaunchMessage), and the screen shown while Playport restarts itself after
-// a game (decision 0029). A clean exit says nothing: Playport restarts to
+// (LaunchMessage), and the screen shown while pcios restarts itself after
+// a game (decision 0029). A clean exit says nothing: pcios restarts to
 // Home. A launch refused before the runtime started (a memory limit below
 // the game's need, a failed start-up self-check, a missing executable or
 // Direct3D backend) says why in an alert over the page it was started from;
 // one that failed at a step (JIT, the runtime, the game's start) shows the
 // failure screen there or, when it had spent the runtime, once the
-// restarted Playport shows Home (AppRestart); a crash or the JIT pool running
+// restarted pcios shows Home (AppRestart); a crash or the JIT pool running
 // out says why in an alert then.
 
 import HostIOKit
@@ -199,7 +199,7 @@ struct LaunchBackdrop: View {
     }
 }
 
-/// Across Playport's restart between a title's prerequisites and its game (decision 0084):
+/// Across pcios's restart between a title's prerequisites and its game (decision 0084):
 /// the launch screen's art and name with "Dependencies installed. Starting <title>…" (decision
 /// 0095), in the old process from its
 /// restart request to its end and in the new one until the game's launch screen takes over.
@@ -450,7 +450,7 @@ struct LaunchMessage: Codable, Equatable, Identifiable {
             return .init(title: "\(title) could not start", text: SelfCheck.explanation(SelfCheck.failure(in: line)!))
         case .refused where sessionFull(line):
             return .init(title: "pcios needs to restart",
-                         text: "Playport could not restart itself after the last game. Close it and reopen it from the Home Screen to play \(title).")
+                         text: "pcios could not restart itself after the last game. Close it and reopen it from the Home Screen to play \(title).")
         case .refused where line.contains(" graphics="):
             return .init(title: "\(title) could not start",
                          text: "This build of pcios does not include the Direct3D backend the game is set to. "

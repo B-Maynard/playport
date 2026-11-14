@@ -36,7 +36,7 @@ final class UIDriverBatch {
     func sceneChanged(active: Bool) {
         guard !ended else { return }
         if active { observedActive = true }
-        else if observedActive { cancel("Playport left foreground (inactive/background)") }
+        else if observedActive { cancel("pcios left foreground (inactive/background)") }
     }
 
     func checkpoint() throws {

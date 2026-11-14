@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Playport's app (docs/ARCHITECTURE.md): the product UI (UI/AppShell.swift).
+// pcios's app (docs/ARCHITECTURE.md): the product UI (UI/AppShell.swift).
 // A dev build can also be driven through that UI from the workstation
 // (S1_MODE=ui, Dev/UIDriver.swift); a release build cannot (decisions 0009, 0012).
 
@@ -16,7 +16,7 @@ struct PlayportApp: App {
         _ = WineHostRuntime.documents
         AppLog.start()
         #if !PLAYPORT_RELEASE
-        // A driven run that restarted Playport goes on in this process (its
+        // A driven run that restarted pcios goes on in this process (its
         // environment, before anything reads it), then settings an earlier
         // driver session changed go back before anything reads them.
         DriverContinuation.adoptAtStart()
@@ -79,7 +79,7 @@ struct RootView: View {
                     }
                     // The text bar over the running game, above the iOS keyboard (UI/TextBarView.swift).
                     .overlay { if textBar.isOpen { TextBarView() } }
-                    // Playport's menu over the paused game, on a long press of Home (UI/InGameMenuView.swift).
+                    // pcios's menu over the paused game, on a long press of Home (UI/InGameMenuView.swift).
                     .overlay { if menu.isOpen || menu.quitting { InGameMenuView() } }
                     // A web page the game opened, over the running game (UI/GameWebSheet.swift).
                     .overlay { if web.isUp { GameWebSheetView() } }
@@ -143,14 +143,14 @@ struct RootView: View {
                 restart.sceneBecameActive()
                 setup.sceneBecameActive()
             }
-            // Back from LocalDevVPN after Playport turned it on (LocalDevVPN.swift).
+            // Back from LocalDevVPN after pcios turned it on (LocalDevVPN.swift).
             LocalDevVPN.scenePhaseChanged(phase)
         }
-        // `playport://` only brings Playport back to the front (LocalDevVPN's
+        // `pcios://` only brings pcios back to the front (LocalDevVPN's
         // return); what a URL carries does nothing (decision 0012).
         .onOpenURL { _ in }
         // Why a launch did not end cleanly (here, or in the process before a restart),
-        // or why Playport could not restart itself (UI/LaunchViews.swift, LaunchMessage).
+        // or why pcios could not restart itself (UI/LaunchViews.swift, LaunchMessage).
         // A step that failed shows on the launch failure screen instead (PadModal).
         .alert(item: Binding(get: { launch.message?.step == nil ? launch.message : nil }, set: { launch.message = $0 })) { m in
             Alert(title: Text(m.title), message: Text(m.text), dismissButton: .default(Text("OK")))

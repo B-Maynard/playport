@@ -5,7 +5,7 @@
 // Steamworks Common Redistributables depots it lists (CommonRedistributables). Each `Run Process`
 // entry that applies to the prefix's Windows (64-bit Windows 10) becomes a Prerequisite, run from
 // Play as decision 0079's are; its id is Steam's HasRunKey and the entry's name, the value Steam
-// writes under that key after a success, and Playport writes it the same way.
+// writes under that key after a success, and pcios writes it the same way.
 
 import Foundation
 import SteamClientKit
@@ -40,7 +40,7 @@ public struct SteamInstallScript: Equatable, Sendable {
     public var registry: [RegistryEntry]
 
     /// Parses a script (Valve KeyValues text; only its first root, `InstallScript` in any case, is
-    /// read: the `kvsignatures` after it is Steam's). Entries Playport does not run (`Run Process On
+    /// read: the `kvsignatures` after it is Steam's). Entries pcios does not run (`Run Process On
     /// Uninstall`, `Firewall`, ...) are left out.
     public static func parse(_ data: Data) throws -> SteamInstallScript {
         let root = try KeyValue.parseText(Array(data))
@@ -98,7 +98,7 @@ extension SteamInstallScript.RunProcess {
         }
     }
 
-    /// Whether the entry is DirectX's redistributable setup, which Playport skips: each step runs
+    /// Whether the entry is DirectX's redistributable setup, which pcios skips: each step runs
     /// `DXSETUP.exe` from a `_CommonRedist\DirectX` folder (names in any case). Its DLLs are the ones
     /// Proton copies its builtins over at every launch (its `#dxsetup redist` list), so under Proton
     /// it has no lasting effect; on iOS its x64 `infinst.exe`, fixed at 0x100000000, cannot load
@@ -121,7 +121,7 @@ extension SteamInstallScript.RunProcess {
 
 extension SteamInstallScript {
     /// The script of Steam's DirectX June 2010 depot (CommonRedistributables.directXJun2010Depot) and
-    /// its path in Steamworks Shared: its one entry, DXSETUP, which Playport skips. Read from here
+    /// its path in Steamworks Shared: its one entry, DXSETUP, which pcios skips. Read from here
     /// when the depot is not downloaded for that entry alone, so the skip still writes its HasRunKey.
     public static let directXJun2010Script = "_CommonRedist/DirectX/Jun2010/installscript.vdf"
     public static let directXJun2010 = SteamInstallScript(runProcesses: [RunProcess(
@@ -132,7 +132,7 @@ extension SteamInstallScript {
 
 /// What a game's install scripts ask for, ready to run.
 public struct SteamPrerequisites: Equatable, Sendable {
-    /// An entry Playport does not run (RunProcess.isDirectXSetup): recorded as skipped in the
+    /// An entry pcios does not run (RunProcess.isDirectXSetup): recorded as skipped in the
     /// prefix's PrerequisiteRecord, its HasRunKey value written as after a success.
     public struct Skipped: Equatable, Sendable {
         public var ids: [String]
@@ -157,7 +157,7 @@ public struct SteamPrerequisites: Equatable, Sendable {
 
     public init() {}
 
-    /// A game's install scripts found by name, for a Steam game Playport did not download (no
+    /// A game's install scripts found by name, for a Steam game pcios did not download (no
     /// retained manifests flag them): `*installscript*.vdf` in its folder and in `_CommonRedist`
     /// below it (four levels), relative and `/`-separated, sorted.
     public static func scriptFiles(in dir: URL) -> [String] {

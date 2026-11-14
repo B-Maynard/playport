@@ -27,7 +27,7 @@ The release package has no XboxClientKit dependency. Every Xbox Swift type start
 - `deviceTicket` exchanges the device's STS ticket for a service ticket. Ticket
   values are `Secret<String>`; each carries its expiry. The synthetic device's
   private key and proof secret never cross this boundary to a game.
-- Keychain service `dev.playport.app.xbox` uses ContentKit's
+- Keychain service `dev.pcios.app.xbox` uses ContentKit's
   `AfterFirstUnlockThisDeviceOnly`, non-synchronisable store. Item `device`
   holds random hardware, the registration and its encrypted private-key state;
   it survives sign-out. Items `session` and `device-token` hold **all issued

@@ -7,7 +7,7 @@
 // has loaded, or 4 s after the start, whichever comes first; then Home's cards fly out of
 // the porthole into place. The animation names no store.
 //
-// - After a game Playport restarts itself (AppRestart): the new process skips the intro
+// - After a game pcios restarts itself (AppRestart): the new process skips the intro
 //   and starts on the finished icon. Reduce Motion does the same, and its cards fade in.
 // - Nothing reaches the shell while it covers: pad presses are dropped (AppShell.press),
 //   and the overlay takes touches until Home's cards start to move.

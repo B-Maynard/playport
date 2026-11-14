@@ -3,7 +3,7 @@
 // first Play of each product, then the update check (PLA-521), which also brings the x64 client to
 // an install from before 0177, then the product's x64 client through FEX on the x86-64 path,
 // drawing with Direct3D 12 through vkd3d-proton (x64/arm64ec) on Vulkan. World of Warcraft shows
-// its own login; Playport passes it no sign-in and keeps no Battle.net credential or session. The
+// its own login; pcios passes it no sign-in and keeps no Battle.net credential or session. The
 // app (LibraryModel.play) asks `decide`, does the step, and asks again with what it learned, until
 // the step is `launch`.
 
@@ -130,8 +130,8 @@ public enum BattleNetPlay {
     public static func notice(_ product: BattleNetProduct) -> (title: String, text: String) {
         ("Before you play \(product.name)",
          "Blizzard does not support pcios. Blizzard may take action against your Battle.net account for playing "
-         + "\(product.name) here, up to a suspension or a ban. Playport changes none of the game's files and none of its "
+         + "\(product.name) here, up to a suspension or a ban. pcios changes none of the game's files and none of its "
          + "code in memory: it runs Blizzard's x64 Windows client through an x86-64 translator (FEX), as Windows on ARM "
-         + "PCs do. You sign in inside \(product.name) itself: Playport stores no Battle.net email, password or session.")
+         + "PCs do. You sign in inside \(product.name) itself: pcios stores no Battle.net email, password or session.")
     }
 }

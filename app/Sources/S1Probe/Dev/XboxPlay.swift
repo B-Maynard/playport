@@ -112,7 +112,7 @@ enum XboxPlay {
         do { try await listener.start() } catch {
             listener.stop()
             try? swap.restore(play: play)
-            return .failure(.failed("Playport couldn't open the game's Xbox sign-in channel (\(error)). Try again."))
+            return .failure(.failed("pcios couldn't open the game's Xbox sign-in channel (\(error)). Try again."))
         }
 
         // 4. The keys the GDK runtime and the game's thunks read in the prefix.

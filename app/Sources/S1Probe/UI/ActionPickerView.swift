@@ -3,7 +3,7 @@
 // PlayportKit ActionPicker.swift): what one input does. A PadModal: it takes
 // every press while it is up and draws its own footer.
 //
-// - LB and RB switch the tabs (Keyboard, Mouse, Controller, Playport), the
+// - LB and RB switch the tabs (Keyboard, Mouse, Controller, pcios), the
 //   D-pad and the left stick move over the cells, A chooses (or turns a
 //   modifier chip on or off), B cancels (nothing changes). Every cell, chip and tab is a tap too.
 // - X, Press a real key: the next key of a hardware keyboard is chosen, with

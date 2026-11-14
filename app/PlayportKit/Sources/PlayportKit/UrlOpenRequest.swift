@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import Foundation
 
-/// A web page a running game asked to open (decision 0064): what Playport's URL
+/// A web page a running game asked to open (decision 0064): what pcios's URL
 /// opener handed the host, sorted into what the web sheet does with it.
 public struct UrlOpenRequest: Equatable, Sendable {
     public enum Kind: String, Equatable, Sendable {

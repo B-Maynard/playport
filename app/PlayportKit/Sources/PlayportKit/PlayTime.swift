@@ -3,7 +3,7 @@
 // catalogue beside `lastPlayed` (InstalledTitle.playSeconds; Home's
 // "Played 2 h ago · 14 h total", the game page's Play time).
 //
-// A session runs from Play to the game's end. Playport restarts itself after
+// A session runs from Play to the game's end. pcios restarts itself after
 // every game (decision 0029), and a process can also die with the game (a
 // crash, the system, `pp ui` ending the app), so the session does not wait
 // for its end to be counted: the app keeps it in a file

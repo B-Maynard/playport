@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // LocalDevVPN (App Store) carries the loopback tunnel to 10.7.0.1 that every
 // JIT attach and the restart after a game use (docs/DEVICE.md, "JIT
-// activation"). Playport cannot carry that tunnel itself: a packet tunnel
+// activation"). pcios cannot carry that tunnel itself: a packet tunnel
 // needs the Network Extension entitlement, which a free team cannot have. It
 // turns LocalDevVPN on for the player instead, when a Play, a restart or
 // Settings finds the tunnel down.
 //
-// - LocalDevVPN's `localdevvpn://enable?scheme=playport` starts its tunnel and,
-//   about a second later, opens `playport://`, which brings Playport back.
-//   Playport's scheme (Info.plist CFBundleURLTypes) is that way back only: the
+// - LocalDevVPN's `localdevvpn://enable?scheme=pcios` starts its tunnel and,
+//   about a second later, opens `pcios://`, which brings pcios back.
+//   pcios's scheme (Info.plist CFBundleURLTypes) is that way back only: the
 //   app ignores what a URL carries (RootView; decision 0012).
 // - An open that fails means LocalDevVPN is not installed: its App Store page
 //   opens instead. No URL scheme is queried (the release check forbids
@@ -37,7 +37,7 @@ enum LocalDevVPN {
     }
 
     static let appStore = URL(string: "https://apps.apple.com/app/id6755608044")!
-    private static let enable = URL(string: "localdevvpn://enable?scheme=playport")!
+    private static let enable = URL(string: "localdevvpn://enable?scheme=pcios")!
     private static let lateAfter: TimeInterval = 60
 
     private struct Pending: Sendable {
@@ -49,7 +49,7 @@ enum LocalDevVPN {
 
     nonisolated static func log(_ line: String) { WineHostRuntime.appendLog("vpn: " + line) }
 
-    /// Opens LocalDevVPN to connect its tunnel. `then` runs once Playport is in
+    /// Opens LocalDevVPN to connect its tunnel. `then` runs once pcios is in
     /// front again, or at once with `.notInstalled`. A second call while one
     /// waits replaces it.
     static func connect(then: @escaping @MainActor (Outcome) -> Void) {

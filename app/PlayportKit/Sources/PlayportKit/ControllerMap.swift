@@ -8,7 +8,7 @@
 //   no pad input from the controller.
 // - `custom`: the same kind of table (HostIOKit ControllerBindings), edited;
 //   it starts as a copy of the preset, and is kept while another mode is chosen.
-// - Home stays Playport's in every mode (it is never an input of a table).
+// - Home stays pcios's in every mode (it is never an input of a table).
 // - The on-screen controls' pad is not a controller: no map applies to it.
 //
 // A game's map is part of its GameControls record (`controllerMap`, missing

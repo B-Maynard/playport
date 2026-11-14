@@ -13,7 +13,7 @@
 // file reaches players: it names no issue, run or build; where an entry comes from is in
 // the decision and evidence records. Precedence for one launch setting: the person's own
 // choice on the game's page, then the title's compatibility default, then Settings, then
-// Playport's built-in default; a game page's reset goes back to the compatibility default.
+// pcios's built-in default; a game page's reset goes back to the compatibility default.
 // Runtime keys and Graphics options take that precedence per key (decision 0091).
 
 import Foundation

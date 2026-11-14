@@ -7,7 +7,7 @@
 //   this process with the pairing file the app holds (BuiltInJit.swift,
 //   docs/DEVICE.md, "JIT activation"); no second app, no app switch;
 // - StikDebug: Play opens stikdebug://enable-jit for this PID with StikDebug's
-//   universal.js, and StikDebug comes back to Playport;
+//   universal.js, and StikDebug comes back to pcios;
 // - another app: Play only waits, for LiveContainer's Launch with JIT,
 //   SideStore, or StikDebug started by hand.
 // A debugger already attached (LiveContainer's Launch with JIT attaches before
@@ -49,11 +49,11 @@ enum JitProvider {
         }
     }
 
-    /// LiveContainer runs Playport inside its own process and starts no app
+    /// LiveContainer runs pcios inside its own process and starts no app
     /// extension, so the built-in helper cannot run (StikJIT INTEGRATION.md, "LiveContainer").
     static let inLiveContainer = getenv("LC_HOME_PATH") != nil
 
-    /// The player's choice (Settings › Setup check), or the default for where Playport runs.
+    /// The player's choice (Settings › Setup check), or the default for where pcios runs.
     static var method: JitMethod {
         JitMethod.effective(stored: UserDefaults.standard.string(forKey: JitMethod.key), inLiveContainer: inLiveContainer)
     }
@@ -122,7 +122,7 @@ enum JitProvider {
         if rc == -2 || rc == -6 || rc == -7 { throw debuggerFailure(rc, method: method) }
         guard rc == 0, let rx, let rw else { throw Failure.acquire(rc) }
         // StikDebug (or the player) switched apps for the attach: the runtime
-        // starts once Playport is in front again, never in the background.
+        // starts once pcios is in front again, never in the background.
         if method != .builtIn { waitUntilActive(since: t0) }
         return Pool(rx: rx, rw: rw, size: size)
     }

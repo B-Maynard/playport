@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// A publisher's launcher Playport opens from Settings › Launchers (PLA-616,
+// A publisher's launcher pcios opens from Settings › Launchers (PLA-616,
 // Where a launcher lives in the UI): a launch whose title is the launcher itself, started standalone
 // in the shared prefix. The compatibility table is keyed by a game's title id, so a launcher's play
 // settings (Windows services, decision 0107; its JIT pool, decision 0108; the backend, decision 0100)
 // live here. The launcher's own installer records its folder in the prefix's registry, which is
-// where Playport finds it: no install, no folder, no Open.
+// where pcios finds it: no install, no folder, no Open.
 
 import Foundation
 
@@ -36,7 +36,7 @@ public struct PublisherLauncher: Equatable, Sendable, Identifiable {
     public let games: [String]
     /// The launcher's own saved window settings, relative to the prefix user's profile folder:
     /// a dev build's Settings › Launchers row and the driver's `forget-launcher-window:ID` delete
-    /// this one file (forgetWindowSettings). Nil when Playport knows none.
+    /// this one file (forgetWindowSettings). Nil when pcios knows none.
     public let windowSettingsFile: String?
     /// The line the games in `games` log once they signed in through this launcher. A Play whose
     /// compatibility entry ends the launcher (LaunchSettings.endLauncherAfterSignIn) ends it when
@@ -88,7 +88,7 @@ public struct PublisherLauncher: Equatable, Sendable, Identifiable {
 
     public static func named(_ id: String) -> PublisherLauncher? { all.first { $0.id == id } }
 
-    /// The launcher a game's Play starts, nil for a game that starts no launcher Playport knows.
+    /// The launcher a game's Play starts, nil for a game that starts no launcher pcios knows.
     public static func startedBy(game titleID: String) -> PublisherLauncher? { all.first { $0.games.contains(titleID) } }
 
     /// What a game's Play through this launcher runs with (decision 0115): its Open's runtime keys

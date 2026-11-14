@@ -60,7 +60,7 @@ final class HelperLifetimeProbe: ObservableObject {
             Self.log("failed: \(failure)")
             return failure
         }
-        status = "helper ticking; Playport ends by \(end.rawValue) in \(Int(Self.grace)) s"
+        status = "helper ticking; pcios ends by \(end.rawValue) in \(Int(Self.grace)) s"
         DispatchQueue.global().asyncAfter(deadline: .now() + Self.grace) {
             let ms = Self.nowMs
             try? Data("\(ms) \(end.rawValue) pid=\(getpid())\n".utf8).write(to: Self.hostFile, options: .atomic)

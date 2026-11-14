@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Xodus Nexus e0668a12f1da931aed13537ef04295599011317b src/renderer/OfflinePermissions.tsx
-// and src/main/index.ts (settleOfflinePermissions); translated to Swift by the Playport
+// and src/main/index.ts (settleOfflinePermissions); translated to Swift by the pcios
 // authors, 2026-10-30. Modified: a Settings › Accounts › Xbox row with the pad's
 // confirmation; dev only (decision 0181).
 import ContentKit

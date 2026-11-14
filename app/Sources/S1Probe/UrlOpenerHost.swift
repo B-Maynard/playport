@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// The host side of Playport's URL opener (decision 0064): the provider behind
+// The host side of pcios's URL opener (decision 0064): the provider behind
 // the opener's unix call table (WineHost url_opener.c). A game that opens an
 // http or https page during a play reaches it through the prefix's handler,
 // playport-url-opener.exe; the call comes on the opener's thread, is checked

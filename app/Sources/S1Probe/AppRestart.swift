@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Playport restarts itself after every game that used the runtime (decision
+// pcios restarts itself after every game that used the runtime (decision
 // 0029; docs/ARCHITECTURE.md, "Restarting after a game"). A process runs one
 // Wine session, one JIT pool and whatever threads a game left behind; rather
 // than reset them, the next game gets a new process. The app asks the phone's
@@ -14,15 +14,15 @@
 //   game did not end cleanly, if it did not). The new process logs the gap as a
 //   `restart:` line, shows the reason once as an alert over the library, and
 //   deletes the file. A record older than a minute, or this process's own, is dropped.
-// - With LocalDevVPN's tunnel down, Playport turns it on first and sends the
+// - With LocalDevVPN's tunnel down, pcios turns it on first and sends the
 //   request once it is back in front (LocalDevVPN.swift).
 // - If the request fails (LocalDevVPN off, no pairing file), this process
 //   stays: the reason, and the one before it, show as an alert, and the game's
-//   page offers Close Playport. It plays nothing more (decision 0030).
+//   page offers Close pcios. It plays nothing more (decision 0030).
 // - Inside LiveContainer, or with no pairing (JIT from another app, decision
 //   0051), there is no request: CoreDevice would launch LiveContainer, not
-//   Playport, and the request needs the pairing. The alert asks the player to
-//   close Playport and launch it again (with JIT), and the page offers Close Playport.
+//   pcios, and the request needs the pairing. The alert asks the player to
+//   close pcios and launch it again (with JIT), and the page offers Close pcios.
 // - After a title's prerequisites ran and left the game too little JIT pool (decisions 0084,
 //   0094) the record also carries the Play
 //   (PlayportKit PlayContinuation): the screen across the restart names the game, and the
@@ -97,7 +97,7 @@ final class AppRestart: ObservableObject {
         }
     }
 
-    /// Why Playport cannot restart itself here, or nil.
+    /// Why pcios cannot restart itself here, or nil.
     static var cannotRestart: String? {
         if JitProvider.inLiveContainer { return "pcios runs inside LiveContainer" }
         if !BuiltInJit.hasPairingFile { return "no pairing (JIT from \(JitProvider.method.label))" }
@@ -153,7 +153,7 @@ final class AppRestart: ObservableObject {
         #if PLAYPORT_RELEASE
         let detail = "Check that LocalDevVPN is connected. To play again, close pcios and reopen it from the Home Screen."
         #else
-        let detail = "\(why). Check that LocalDevVPN is connected. To play again, close Playport and reopen it from the Home Screen."
+        let detail = "\(why). Check that LocalDevVPN is connected. To play again, close pcios and reopen it from the Home Screen."
         #endif
         let game = r.notice.map { "\n\n\($0.title): \($0.text)" } ?? ""
         TitleLaunch.shared.message = LaunchMessage(title: "pcios could not restart itself", text: detail + game)

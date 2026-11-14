@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// After Playport ends the game's own Social Club (decisions 0133, 0141, 0153), RDR2 sometimes
+// After pcios ends the game's own Social Club (decisions 0133, 0141, 0153), RDR2 sometimes
 // takes it for a sign-out: it signs in again at once and starts a reload that needs the helper,
 // which ntdll refuses (decision 0138), and sits on its own loading screen (4 of 9 runs, PLA-413).
 // Decision 0155: the app watches for that re-sign-in after each end and then allows the

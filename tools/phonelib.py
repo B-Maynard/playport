@@ -39,7 +39,7 @@ The install record. DEVICE_DIR/device-state.json says which IPA `pp install`
 put on the phone, from which checkout. `pp ui` refuses to drive a build
 another checkout installed (installed_check).
 
-The app. The one XTL-<team>.dev.playport.app on the phone; no other
+The app. The one XTL-<team>.dev.pcios.app on the phone; no other
 bundle ID is ever driven. The app writes Documents/run-events.jsonl during a
 driven launch (app/Sources/S1Probe/Dev/RunEvents.swift): marks such as
 `first frame`, UI actions, and the done line.
@@ -77,7 +77,7 @@ HOLDER = os.path.join(os.path.dirname(LOCK), "device.holder.json")
 STATE = os.path.join(DEVICE_DIR, "device-state.json")
 UNATTENDED = os.path.join(DEVICE_DIR, "unattended.json")
 BID_RE = re.compile(r"^XTL-[A-Z0-9]+\.dev\.playport\.app$")
-PLACEHOLDER_BID = "XTL-TEAMIDXXXX.dev.playport.app"
+PLACEHOLDER_BID = "XTL-TEAMIDXXXX.dev.pcios.app"
 EXECUTABLES = ("S1Probe", "Playport")
 
 
@@ -495,7 +495,7 @@ class Phone:
         text = self.pmd("apps", "apps", "list", "-t", "User")
         found = [b for b in json.loads(text[text.index("{"):text.rindex("}") + 1]) if BID_RE.match(b)]
         if len(found) != 1:
-            raise PhoneError(f"expected one installed XTL-<team>.dev.playport.app, found {len(found)} "
+            raise PhoneError(f"expected one installed XTL-<team>.dev.pcios.app, found {len(found)} "
                              "(pp install)")
         self._bid = found[0]
         return self._bid

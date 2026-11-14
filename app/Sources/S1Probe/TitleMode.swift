@@ -3,10 +3,10 @@
 // environment, so the library (UI/) starts a catalogued title through
 // TitleLaunch, which runs the one launch path (LaunchCoordinator) with a JIT
 // pool sized from the memory limit (JitProvider, the built-in helper) and shows its steps over
-// the title's screen. When a game that used the runtime ends, Playport restarts
+// the title's screen. When a game that used the runtime ends, pcios restarts
 // itself to the library (AppRestart, decision 0029); a launch refused before
 // that says why in an alert (LaunchMessage). A launch whose prerequisites ran and left
-// the game too little JIT pool ends before the game, and Playport restarts into the same
+// the game too little JIT pool ends before the game, and pcios restarts into the same
 // Play (decisions 0084, 0094).
 // Progress goes to the app log (AppLog) as `title:` lines.
 
@@ -45,7 +45,7 @@ final class TitleLaunch: ObservableObject {
     @Published private(set) var installsDependencies = false
     /// The game's hero art for the launch screen, from the art cache; nil until loaded or without one.
     @Published private(set) var art: UIImage?
-    /// Why a launch did not end cleanly, or why Playport could not restart
+    /// Why a launch did not end cleanly, or why pcios could not restart
     /// itself: an alert over the page (RootView), or, for a step that failed
     /// (LaunchMessage.step), the launch screen's steps with the fix
     /// (LaunchFailureView); nil once dismissed.
@@ -54,7 +54,7 @@ final class TitleLaunch: ObservableObject {
     }
     /// This app process can start no other title: its JIT pool was blessed
     /// (decision 0030), and the restart after the launch failed, so another
-    /// title needs Playport closed and reopened.
+    /// title needs pcios closed and reopened.
     @Published private(set) var spent = false
     /// When Play started this launch (the in-game menu's "Playing · 42 min").
     private(set) var startedAt = Date()
@@ -107,7 +107,7 @@ final class TitleLaunch: ObservableObject {
         // An Epic game's sign-in arguments stay out of the log (decision 0059).
         TitleMode.log("in-app start \(exe) \(EpicInstaller.redacted(args).joined(separator: " "))")
         // Prerequisites that run and leave the game too little pool end the launch before the
-        // game, and the restart continues the Play, when Playport can restart itself
+        // game, and the restart continues the Play, when pcios can restart itself
         // (decisions 0084, 0094).
         let restartAfterPrerequisites = AppRestart.cannotRestart == nil
         if !prerequisites.isEmpty, let why = AppRestart.cannotRestart {
@@ -243,7 +243,7 @@ final class TitleLaunch: ObservableObject {
 
     /// Back to the app's screens. A launch that used the runtime (the JIT pool was
     /// blessed) leaves this process's Wine session, pool and threads behind:
-    /// Playport restarts itself, and a launch that did not end cleanly says
+    /// pcios restarts itself, and a launch that did not end cleanly says
     /// why once the new process shows the library. The session root has put
     /// the registry on disk before it reported the end (playport-session.c).
     /// A launch refused before that leaves the process as it was: its alert
@@ -291,7 +291,7 @@ final class TitleLaunch: ObservableObject {
 }
 
 extension TitleLaunch {
-    /// The title's prerequisites ran and its game did not start (decision 0084): Playport
+    /// The title's prerequisites ran and its game did not start (decision 0084): pcios
     /// restarts, recording the Play, and the new process starts the game as the same Play.
     /// The screen across the restart names the game (RootView's PlayContinuingScreen); the
     /// prerequisites' time is not play time. The launch screen stays until the restart is
@@ -326,9 +326,9 @@ extension TitleLaunch {
     /// the session root posts WM_CLOSE to the game's windows, so it saves and
     /// exits as it would when its window is closed on Windows, and ends the
     /// game's processes if they are still running `closeWait` seconds later;
-    /// the game's end then restarts Playport (decision 0029). One that has
+    /// the game's end then restarts pcios (decision 0029). One that has
     /// still not ended `giveUp` seconds after the request (the root itself
-    /// stuck) restarts Playport anyway: the new process has no game in it.
+    /// stuck) restarts pcios anyway: the new process has no game in it.
     static let closeWait: UInt32 = 10
     static let giveUp: TimeInterval = 25
 
@@ -337,7 +337,7 @@ extension TitleLaunch {
         quitting = true
         TitleMode.log("quit: the in-game menu's Quit game; WM_CLOSE, ended after \(Self.closeWait) s if still running")
         HostIO.sessionControl(Int(PP_CONTROL_CLOSE), "close", wait: Self.closeWait * 1000) { rc, _ in
-            if rc != 0 { TitleMode.log("quit: the session root did not take the close (\(rc)); Playport restarts to end the game") }
+            if rc != 0 { TitleMode.log("quit: the session root did not take the close (\(rc)); pcios restarts to end the game") }
             DispatchQueue.main.asyncAfter(deadline: .now() + (rc == 0 ? Self.giveUp : 0)) {
                 MainActor.assumeIsolated { TitleLaunch.shared.forceEnd() }
             }

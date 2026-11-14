@@ -35,7 +35,7 @@ enum MemoryNote {
 
     /// Why a Play was refused (LaunchMessage).
     static func refused(limitMB: Int, needMB: Int) -> String {
-        "iOS lets Playport use \(MemoryNeed.format(mb: limitMB)) of memory, and this game has needed about "
+        "iOS lets pcios use \(MemoryNeed.format(mb: limitMB)) of memory, and this game has needed about "
             + "\(MemoryNeed.format(mb: needMB)): iOS would close it partway through. " + advice
     }
 
@@ -46,13 +46,13 @@ enum MemoryNote {
         switch need.verdict(limitMB: limit) {
         case .fits: return nil
         case .tooLow:
-            return "This game has needed about \(MemoryNeed.format(mb: need.minimumMB)) of memory, and iOS lets Playport "
-                + "use \(have): Playport will not start it. " + advice
+            return "This game has needed about \(MemoryNeed.format(mb: need.minimumMB)) of memory, and iOS lets pcios "
+                + "use \(have): pcios will not start it. " + advice
         case .tight where need.measured:
-            return "This game has used up to \(MemoryNeed.format(mb: need.minimumMB)) of memory, and iOS lets Playport "
+            return "This game has used up to \(MemoryNeed.format(mb: need.minimumMB)) of memory, and iOS lets pcios "
                 + "use \(have): iOS may close it."
         case .tight:
-            return "iOS lets Playport use \(have) of memory. A larger game may need more, and iOS closes a game "
+            return "iOS lets pcios use \(have) of memory. A larger game may need more, and iOS closes a game "
                 + "that goes past it."
         }
     }

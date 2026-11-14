@@ -2,7 +2,7 @@
 // What a setting's row shows (Game options, Settings › Graphics;
 // docs/design/2026-09-28-gamepad-ui/GameOptions.dc.html): "Default · 720p"
 // while it follows the level above it (a game follows Settings, Settings
-// follows Playport's defaults), the value alone with the changed mark once it
+// follows pcios's defaults), the value alone with the changed mark once it
 // is set there. Y puts it back: the value becomes nil again.
 
 public struct OptionValue: Equatable, Sendable {

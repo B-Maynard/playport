@@ -131,7 +131,7 @@ final class EpicAccount: ObservableObject, DownloadDriver {
 
     func game(_ app: String) -> EpicGame? { games.first { $0.id == app } }
 
-    /// Why the game is not installed by Playport, or nil.
+    /// Why the game is not installed by pcios, or nil.
     func refusal(_ app: String) -> String? { game(app)?.refusal ?? refused[app] }
 
     /// What a Play needs to start the game signed in (decision 0059).

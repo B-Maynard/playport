@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Steam's VC++ redistributable `.cmd` in its standard form, whose installer Playport runs directly
+// Steam's VC++ redistributable `.cmd` in its standard form, whose installer pcios runs directly
 // (decision 0096): what Steam's `cmd` and `start /w` would run, with the same arguments, working
 // directory and exit code, without the three x86-64 processes (cmd, conhost, start: about 84 MiB of
 // JIT pool head) and the console window they bring. Any other script runs through `cmd` as before.

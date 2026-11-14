@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// The host side of Playport's steamclient64.dll (decision 0115): the provider
+// The host side of pcios's steamclient64.dll (decision 0115): the provider
 // behind its unix call table (WineHost steam_client.c). HELLO answers the
 // play's snapshot (the SteamID, the persona name, logged on, ownership of the
 // launched app, the language); CALL passes auth session and web API tickets to

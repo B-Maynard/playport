@@ -513,7 +513,7 @@ private struct GameDetailPage: View {
         }
     }
 
-    /// An Epic game not installed: Install (not offered for a game Playport refuses), or its download's controls.
+    /// An Epic game not installed: Install (not offered for a game pcios refuses), or its download's controls.
     @ViewBuilder
     private func epicInstallButtons(_ eg: EpicGame) -> some View {
         if let job {
@@ -672,7 +672,7 @@ private struct GameDetailPage: View {
                     Text("No Windows executable in this folder.").foregroundStyle(.orange)
                 } else if let job {
                     if case let .paused(reason?) = job.phase { Text(reason).foregroundStyle(.orange) }
-                    // An update Playport queued by itself holds Play too: say how to play now.
+                    // An update pcios queued by itself holds Play too: say how to play now.
                     Text(job.kind == .repair ? "Play is available once the repair finishes, or after Cancel."
                          : job.record.automatic ? "pcios queued this update by itself. Play is available once it finishes, or after Cancel: it waits for Steam's next version then."
                          : "Play is available once the update finishes, or after Cancel.")
@@ -1131,7 +1131,7 @@ private struct GameDetailPage: View {
             PadModal.shared.picker(
                 title: "Executable", context: "\(context) · Game",
                 note: "What Play starts. The first is pcios's own pick; installers, tools and crash reporters are last.",
-                options: [PadOption(id: "", label: "Default", detail: found.first.map { "\($0), Playport's pick" })]
+                options: [PadOption(id: "", label: "Default", detail: found.first.map { "\($0), pcios's pick" })]
                     + found.map { PadOption(id: $0, label: $0) },
                 selected: t.chosenExecutable ?? "") { library.setExecutable(t.id, $0.isEmpty ? nil : $0) }
         }
@@ -1378,7 +1378,7 @@ private struct GameDetailPage: View {
                                      maxLength: 300) { settings.wrappedValue.graphicsOptions = $0 }
         }
         if let app = t.appID {
-            // Playport's Steam client (decision 0115) may be the game's compatibility default.
+            // pcios's Steam client (decision 0115) may be the game's compatibility default.
             let steamAPI = OptionValue.of(own: settings.wrappedValue.steamAPI, compat: compat?.steamAPI, inherited: every.steamAPI ?? .emulated,
                                           name: Self.steamAPIModeText)
             PadRow(id: "opt:steamAPI", title: "Steam API", value: steamAPI.text, accessory: .chevron,
@@ -1682,7 +1682,7 @@ enum ProblemReport {
     }
 
     /// `urls` as one zip in the temporary folder, which a GitHub issue takes and a
-    /// paste site does not need to (PLA-21): `Playport-report-<id>-<time>.zip`, with
+    /// paste site does not need to (PLA-21): `pcios-report-<id>-<time>.zip`, with
     /// the files in a folder of that name. iOS zips a folder for upload
     /// (NSFileCoordinator's forUploading, through the queue form: the blocking form's
     /// non-escaping block makes Swift record this file's full path for its escape check);
@@ -1696,7 +1696,7 @@ enum ProblemReport {
         stamp.locale = Locale(identifier: "en_US_POSIX")
         stamp.dateFormat = "yyyyMMdd-HHmmss"
         let safe = String(id.map { $0.isLetter || $0.isNumber || $0 == "-" ? $0 : "_" })
-        let base = "Playport-report-\(safe)-\(stamp.string(from: Date()))"
+        let base = "pcios-report-\(safe)-\(stamp.string(from: Date()))"
         let folder = root.appendingPathComponent(base, isDirectory: true)
         let zip = root.appendingPathComponent(base + ".zip")
         do {
@@ -1779,6 +1779,6 @@ enum JitNote {
         let more = poolMB > 0 && poolMB < JitPool.minimumMB
             ? "Less than usual was set aside: Settings › Developer's Simulated JIT memory makes it smaller."
             : "This game needs more than pcios sets aside."
-        return "Playport set aside \(size)JIT memory for the game, and \(what) filled it. \(more)"
+        return "pcios set aside \(size)JIT memory for the game, and \(what) filled it. \(more)"
     }
 }

@@ -234,7 +234,7 @@ if [ -n "$IPA" ]; then
     fi
     info=$(ipa_info "$IPA") || die "cannot read the IPA's Info.plist or provisioning profile"
     read -r BID EXPIRY PROFILE LISTED <<< "$info"
-    [[ $BID =~ $BID_RE ]] || die "IPA bundle ID is not XTL-<team>.dev.playport.app"
+    [[ $BID =~ $BID_RE ]] || die "IPA bundle ID is not XTL-<team>.dev.pcios.app"
     [ -z "$INSTALLED" ] || [ "$INSTALLED" = "$BID" ] || die "the phone has Playport under another team's bundle ID"
     left=$(( (EXPIRY - $(date +%s)) / 3600 ))
     [ "$left" -gt 0 ] || die "the IPA's provisioning profile has expired; rebuild (the app stage re-signs)"

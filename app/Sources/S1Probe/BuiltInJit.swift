@@ -82,7 +82,7 @@ enum BuiltInJit {
     /// The pairing file's home: a this-device-only, unsynchronised Keychain item
     /// in the app's own access group. Keychain items outlive the app's
     /// container, so a reinstall under the same team finds it again.
-    private static let store = KeychainSecretStore(service: "dev.playport.app.jit")
+    private static let store = KeychainSecretStore(service: "dev.pcios.app.jit")
     private static let storeKey = "rp-pairing-file"
     private static let storeLock = NSLock()
 

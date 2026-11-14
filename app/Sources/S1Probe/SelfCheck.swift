@@ -41,6 +41,6 @@ enum SelfCheck {
         case "alias": "the JIT memory's writable view does not show in its executable view"
         default: "the JIT memory was placed where the runtime cannot use it"
         }
-        return "Playport's start-up check failed: \(what). The log's selfcheck line has the details."
+        return "pcios's start-up check failed: \(what). The log's selfcheck line has the details."
     }
 }

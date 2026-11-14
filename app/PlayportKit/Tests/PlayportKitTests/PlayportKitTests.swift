@@ -2174,9 +2174,9 @@ final class JitMethodTests: XCTestCase {
     }
 
     func testTheStikDebugRequestNamesTheAppThePIDAndUniversalJS() {
-        let url = JitMethod.stikDebugURL(bundleID: "dev.playport.app", pid: 4321)
+        let url = JitMethod.stikDebugURL(bundleID: "dev.pcios.app", pid: 4321)
         XCTAssertEqual(url?.absoluteString,
-                       "stikdebug://enable-jit?bundle-id=dev.playport.app&pid=4321&script-name=universal.js")
+                       "stikdebug://enable-jit?bundle-id=dev.pcios.app&pid=4321&script-name=universal.js")
     }
 
     func testJitFromAnotherAppNeedsNoPairingAndStopsNoLaunch() {

@@ -27,7 +27,7 @@ public struct LaunchSettings: Codable, Equatable, Sendable {
     /// gives it (per game only), as the player typed them: split by
     /// LaunchSettings.splitArguments. `-DX12`, `-force-d3d12` and the like.
     public var arguments: String
-    /// Playport's Steam client, the Steam API emulator or the game's own
+    /// pcios's Steam client, the Steam API emulator or the game's own
     /// steam_api (per game only); nil inherits the compatibility default, then
     /// every game's `.client` (decision 0153), and is the emulator only when
     /// neither sets one (SteamAPISwap).
@@ -150,7 +150,7 @@ public struct LaunchSettings: Codable, Equatable, Sendable {
     /// as the base under each title's compatibility default (overEveryGame). Each acts only where its
     /// trigger exists: Windows services start the service manager, which runs only the services a
     /// game installed; the launcher's end needs a publisher's launcher (PublisherLauncher.startedBy);
-    /// the Khronos loader loads only the layers a game asks for; Playport's Steam client serves only a
+    /// the Khronos loader loads only the layers a game asks for; pcios's Steam client serves only a
     /// Steam app; `env.PLAYPORT_SC_BLOCK_CRASHPAD=1` refuses only Rockstar's and Chromium's crash
     /// reporters. The backend is GraphicsBackend.default, below Settings' own choice. The runtime keys
     /// merge by key (keyItems), so a game's `env.MADEIRA_FEX_BATCH2=0` turns one off. FEX runs x64

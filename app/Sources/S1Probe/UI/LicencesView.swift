@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Settings › About › Licences, pages shown in place of the About section
-// (AppNavigation.licences; SettingsView.swift). The list: Playport's copyright,
+// (AppNavigation.licences; SettingsView.swift). The list: pcios's copyright,
 // licence, warranty notice and where its source is (the GPL's Appropriate Legal
 // Notices), then every component the app carries with its licence, the credit
 // lines and, until the selection is reviewed, its open questions. A component:
@@ -77,8 +77,8 @@ private struct LicenceParagraph: View {
 private struct LicencesList: View {
     var body: some View {
         VStack(spacing: 8) {
-            SettingsNote(text: "Playport \(BundledLicences.version) · \(BundledLicences.copyright)")
-            LicenceParagraph(id: "playport", text: "Playport is free software: you can redistribute it and/or modify it "
+            SettingsNote(text: "pcios \(BundledLicences.version) · \(BundledLicences.copyright)")
+            LicenceParagraph(id: "playport", text: "pcios is free software: you can redistribute it and/or modify it "
                              + "under the terms of the GNU General Public License as published by the Free Software "
                              + "Foundation, either version 3 of the License, or (at your option) any later version, "
                              + "with the additional permission of its licence exception.")
@@ -92,7 +92,7 @@ private struct LicencesList: View {
             PadSectionHeader(text: "Source code")
             LicenceParagraph(id: "source", text: "The complete source code of this version, with every change pcios "
                              + "makes to the projects it is built from and how to build it, is published free of charge "
-                             + "beside it, on the release it came from, as Playport-\(BundledLicences.version)-source.tar. "
+                             + "beside it, on the release it came from, as pcios-\(BundledLicences.version)-source.tar. "
                              + "You may copy, change and share pcios under these licences.")
             switch BundledLicences.loaded {
             case .success(let licences):

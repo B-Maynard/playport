@@ -35,7 +35,7 @@ xtool auth login                           # from a terminal: it prompts (xtool 
   someone must unlock the phone before it answers again. A launch on a locked
   phone waits for the passcode, and no query tells a locked phone from an
   unlocked one, so `pp ui` fails a launch that has not returned in 20 s.
-- The app is `XTL-<team>.dev.playport.app`; `pp` finds it and
+- The app is `XTL-<team>.dev.pcios.app`; `pp` finds it and
   refuses any other bundle ID. Committed records write the team as `TEAMIDXXXX`.
 
 ### Free-team limits
@@ -48,10 +48,10 @@ nothing, the phone is not registered on the team and signing fails with a 409
 ("no current IOS devices"). xtool registers a phone only when it installs on it, so:
 `./pp build --variant release --unsigned`, then `xtool install --network
 out/…/Playport-26.5-release-unsigned-….ipa` (with `USBMUXD_SOCKET_ADDRESS=UNIX:<socket>`),
-then `./pp install` for the dev build again. That IPA's bundle ID is `dev.playport.app`, so
-xtool signs it as the installed app's `XTL-<team>.dev.playport.app` and upgrades it in
-place. Never hand xtool an IPA `pp build` signed: it already says `XTL-<team>.dev.playport.app`,
-xtool prefixes it again, and the phone gets a second app, `XTL-<team>.XTL-<team>.dev.playport.app`,
+then `./pp install` for the dev build again. That IPA's bundle ID is `dev.pcios.app`, so
+xtool signs it as the installed app's `XTL-<team>.dev.pcios.app` and upgrades it in
+place. Never hand xtool an IPA `pp build` signed: it already says `XTL-<team>.dev.pcios.app`,
+xtool prefixes it again, and the phone gets a second app, `XTL-<team>.XTL-<team>.dev.pcios.app`,
 in a slot of its own (remove only that one, with `pymobiledevice3 apps uninstall` and its exact
 ID). An install is a ~300 MB transfer; one that times out after the
 upload still finishes on the phone, and `pp install` checks for that.
@@ -89,8 +89,8 @@ tunnel connected, and an RP pairing file. pcios cannot carry the tunnel
 itself (a packet tunnel needs the Network Extension entitlement, which a free
 team cannot have), so it turns LocalDevVPN on instead: a Play, the restart
 after a game or Settings' *LocalDevVPN* row (Setup check) that finds no route to
-`10.7.0.1` through a `utun` interface opens `localdevvpn://enable?scheme=playport`,
-and LocalDevVPN connects and opens `playport://`, which brings pcios back
+`10.7.0.1` through a `utun` interface opens `localdevvpn://enable?scheme=pcios`,
+and LocalDevVPN connects and opens `pcios://`, which brings pcios back
 (`app/Sources/S1Probe/LocalDevVPN.swift`, `vpn:` lines in the log). The player
 opens LocalDevVPN once to allow its VPN configuration. On iOS 27, Play and
 the driver's `play:` action both await the root-owned setup flow before the

@@ -2,7 +2,7 @@
 import Foundation
 
 public enum SecretKeys {
-    public static let service = "dev.playport.app.steamclient"
+    public static let service = "dev.pcios.app.steamclient"
     public static let session = "session"
     public static let machineID = "machine-id"
 }

@@ -6,7 +6,7 @@
 //   dev build's `open:settings#NAME` takes for them.
 // - SettingSteps: a value row changed with left and right ("‹ 720p ›"),
 //   whose default is one of its values and reads "Default · 720p"; picking
-//   the default stores nil, so the row follows Playport's default again.
+//   the default stores nil, so the row follows pcios's default again.
 // - DownloadPreferences: the Downloads section's switches, in UserDefaults,
 //   and whether a download may run on the network the phone has now.
 
@@ -79,7 +79,7 @@ public struct SettingSteps<Value: Equatable>: Sendable where Value: Sendable {
         return values.firstIndex(of: v) ?? 0
     }
 
-    /// What to store for the value at `i`: nil for the default, so it follows Playport's.
+    /// What to store for the value at `i`: nil for the default, so it follows pcios's.
     public func stored(at i: Int) -> Value? {
         guard values.indices.contains(i) else { return nil }
         return values[i] == defaultValue ? nil : values[i]

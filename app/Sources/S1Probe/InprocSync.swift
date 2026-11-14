@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// In-process NT synchronisation: Wine's inproc_sync on Playport's ppsync
+// In-process NT synchronisation: Wine's inproc_sync on pcios's ppsync
 // (build/ppsync/README.md, patches/wine-unix 0045, madeira-unix 0220), on by
 // default. ppsync reads PLAYPORT_PPSYNC once per session, so the app sets it
 // before the runtime starts. It is launch environment the app sets, not an
@@ -10,7 +10,7 @@ import Foundation
 
 enum InprocSync {
     #if !PLAYPORT_RELEASE
-    /// Settings › Developer: in-process sync off from Playport's next start, for
+    /// Settings › Developer: in-process sync off from pcios's next start, for
     /// the on/off measurement (`set:dev.inprocSyncOff=true`).
     static let offKey = "dev.inprocSyncOff"
     #endif

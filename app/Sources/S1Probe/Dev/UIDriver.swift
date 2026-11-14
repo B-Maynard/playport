@@ -6,7 +6,7 @@
 // first library scan has finished and the opening animation (UI/AppOpening.swift) is over:
 //
 //   verify:<title id>          Verify files; the next action waits for its result
-//   play:<title id>            Play; the launch ends with its `title-done` event. Playport
+//   play:<title id>            Play; the launch ends with its `title-done` event. pcios
 //                              then restarts itself (AppRestart), and the actions after it
 //                              run in the new process, under this run (DriverContinuation),
 //                              only if no loss/cancel was observed during replacement;
@@ -155,7 +155,7 @@
 //   probe:pairing              Settings' on-device pairing experiment (iOS 27)
 //   probe:pairing-cancel | probe:pairing-use
 //                              Cancel, or use the completed pairing and check readiness
-//   probe:relaunch             Settings' Restart Playport now (AppRestart), with no game: the
+//   probe:relaunch             Settings' Restart pcios now (AppRestart), with no game: the
 //                              run ends with ui-done, then the app asks CoreDevice to replace
 //                              it. Last action
 //   pad:<button>[+<button>...] Presses controller buttons (a b x y lb rb menu view up down left
@@ -164,7 +164,7 @@
 //                              while the controller keyboard or a picker is up they are
 //                              its presses (UI/Pad/PadModal.swift). A press that starts a
 //                              Play (a game page's Play button) holds the run on the game,
-//                              as play: does; actions after it do not run once Playport
+//                              as play: does; actions after it do not run once pcios
 //                              restarts after the game
 //   wait:<seconds>             Waits that long (at most 600): after a play:, the game runs on
 //   tap:<fx>:<fy>              After a play: (it runs while the game runs): a finger's tap at
@@ -218,7 +218,7 @@
 //                              layout editor over the paused game (pad: then drives it as on
 //                              open:<title id>#layout; Done goes back to the panel);
 //                              pad: presses go to the menu too while it is up. menu:quit waits
-//                              for the game's end: Playport restarts, and the actions after it
+//                              for the game's end: pcios restarts, and the actions after it
 //                              run in the new process, as after play:
 //                              menu:text goes back to the game with the text bar open over it
 //                              (UI/TextBarView.swift)
@@ -570,7 +570,7 @@ enum UIDriver {
                             try checkpoint()
                             batch.handoff()
                             RunEvents.emit("ui-action", ["action": action, "result": "ok", "index": done + 1, "restart": true])
-                            log("pad \(id): the game ended; Playport restarts, and the actions after it do not run")
+                            log("pad \(id): the game ended; pcios restarts, and the actions after it do not run")
                             return
                         }
                         try await pause(.milliseconds(1500))   // the alert drawn, for a screenshot
@@ -819,7 +819,7 @@ enum UIDriver {
                             try await pause(.milliseconds(250))
                         }
                         guard OnDevicePairing.shared.code != nil else { return finish("action=\(action) failed: no pairing code") }
-                        // The pairing code window floats over iOS Settings: Playport leaves.
+                        // The pairing code window floats over iOS Settings: pcios leaves.
                         // An intentional handoff ends this batch; it never comes back on its own.
                         OnDevicePairing.shared.openSettings()
                         batch.cancel("intentional handoff to iOS Settings for the pairing code; new session required")
@@ -880,7 +880,7 @@ enum UIDriver {
                         let opened = try await checked({ await UIApplication.shared.open(SettingsLink.probed[n]) })
                         log("settings link \(n) \(SettingsLink.probed[n].absoluteString): opened=\(opened)")
                         guard opened else { return finish("action=\(action) failed: Settings did not open link \(n)") }
-                        // A Settings link leaves Playport: an intentional handoff, not a resumable pause.
+                        // A Settings link leaves pcios: an intentional handoff, not a resumable pause.
                         batch.cancel("intentional handoff to iOS Settings (link \(n)); new session required")
                         return
                     case "native-auth":
@@ -991,7 +991,7 @@ enum UIDriver {
                         }
                         guard started else {
                             if launcher != nil {
-                                return finish("action=\(action) refused: not installed, or a launch is running or Playport needs a restart")
+                                return finish("action=\(action) refused: not installed, or a launch is running or pcios needs a restart")
                             }
                             try checkpoint()
                             // An Xbox copy's licence or sign-in stopped it: the message it shows says which (Dev/XboxPlay.swift).
@@ -1015,7 +1015,7 @@ enum UIDriver {
                                 try await pause(.milliseconds(1000))
                                 return finish("action=\(action) refused: \(PadModal.shared.summary ?? "a picker")")
                             }
-                            return finish("action=\(action) refused: a launch is running or Playport needs a restart")
+                            return finish("action=\(action) refused: a launch is running or pcios needs a restart")
                         }
                         try checkpoint()
                     log("\(parts[0]) \(id): started")
@@ -1057,7 +1057,7 @@ enum UIDriver {
     }
 
     /// After a Play started: unless the next action is for the running game, waits for the game's
-    /// end. True once Playport restarts after it (the ui-action is sent here; the new process runs
+    /// end. True once pcios restarts after it (the ui-action is sent here; the new process runs
     /// the rest), so the caller returns.
     private static func followPlay(_ action: String, _ label: String, index: Int, next: ArraySlice<String>) async throws -> Bool {
         guard let first = next.first, !inGame(first) else { return false }
@@ -1068,7 +1068,7 @@ enum UIDriver {
             batch.handoff()
             // The restarted process runs the rest (DriverContinuation, saved as it asks).
             RunEvents.emit("ui-action", ["action": action, "result": "ok", "index": index + 1, "restart": true])
-            log("\(label): ended; Playport restarts, and the new process goes on")
+            log("\(label): ended; pcios restarts, and the new process goes on")
             return true
         }
         try await pause(.milliseconds(1500))   // the alert drawn, for a screenshot
@@ -1147,7 +1147,7 @@ enum UIDriver {
             try checkpoint()
             batch.handoff()
             RunEvents.emit("ui-action", ["action": action, "result": "ok", "index": index, "restart": true])
-            log("\(action): the game ended; Playport restarts, and the new process goes on")
+            log("\(action): the game ended; pcios restarts, and the new process goes on")
             return nil
         }
         try await pause(.milliseconds(1500))

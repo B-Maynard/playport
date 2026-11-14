@@ -13,7 +13,7 @@
 //                       a capture only in a process that starts with
 //                       MTL_CAPTURE_ENABLED=1, which costs every frame, so it
 //                       is set at start and only while this is on: a change
-//                       takes effect at Playport's next start (after a game it
+//                       takes effect at pcios's next start (after a game it
 //                       restarts by itself, AppRestart).
 //   GPU time per pass   DXMT and KosmicKrisp sample every encoder of two
 //                       frames in every 1200 presents as [pass-prof] lines
@@ -25,7 +25,7 @@
 //                       patches/madeira-unix 0028; `pp perf` writes profile.txt).
 //   Metal validation    (off, api, shaders, stop) Metal's API validation (MTL_DEBUG_LAYER), and with
 //                       shaders also its shader validation (MTL_SHADER_VALIDATION),
-//                       for the whole process: like GPU capture, from Playport's
+//                       for the whole process: like GPU capture, from pcios's
 //                       next start. Metal logs each error to the device log, where
 //                       the phone redacts its text (<private>): pp gpu validate
 //                       counts them. "Stop at the first error"
@@ -36,7 +36,7 @@
 //                       its hot paths: FEX's transition probe, ntdll's lock, wait,
 //                       QPC and alert census and the wineserver request timing,
 //                       which the [xp-api], [sync-census] and [srv] lines read. Off
-//                       sets MADEIRA_NO_COUNTERS from Playport's next start (the
+//                       sets MADEIRA_NO_COUNTERS from pcios's next start (the
 //                       runtime reads it once, in __wine_main), as the release app
 //                       has them off with the samplers too (MADEIRA_NO_DIAGNOSTICS):
 //                       what the counters cost, measured with the samplers kept
@@ -69,7 +69,7 @@ enum GPUCapture {
                                         log: (String) -> Void) -> [String: String] {
         let wanted = UserDefaults.standard.integer(forKey: key)
         guard armed > 0 else {
-            if wanted > 0 { log("gpu capture: frame \(wanted) is set, from Playport's next start") }
+            if wanted > 0 { log("gpu capture: frame \(wanted) is set, from pcios's next start") }
             return [:]
         }
         let ok = MTLCaptureManager.shared().supportsDestination(.gpuTraceDocument)
@@ -113,7 +113,7 @@ enum MetalValidation {
             let what = ["api": "API", "shaders": "API and shaders", "stop": "API, ending at the first error"][armed.rawValue]!
             log("diagnostics: Metal validation (\(what)); device class \(device)")
         }
-        if wanted != armed { log("diagnostics: Metal validation \(wanted.rawValue) from Playport's next start") }
+        if wanted != armed { log("diagnostics: Metal validation \(wanted.rawValue) from pcios's next start") }
     }
 }
 
