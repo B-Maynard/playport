@@ -23,7 +23,13 @@ package="$(CDPATH= cd -P "$(dirname "$0")/../../app" && pwd -P)"
 repo="$(dirname "$package")"
 ld64="${LD64:-${PLAYPORT_BUILD:-$(cd "$(dirname "$0")/../.." && pwd)/.work}/inputs/apple-linker/prefix/bin/arm64-apple-darwin-ld}"
 # xtool puts its Darwin SDK's toolset/bin first on PATH; its ld64.lld is the
-# trampoline that turns the per-target `-r` step into an llvm-lib archive.
+# trampoline that turns the per-target `-r` step into an llvm-lib archive. Where
+# PATH does not have it first (another toolchain's ld64.lld, e.g. Swift's), put
+# the SDK's toolset first here, so the check below sees the trampoline.
+if [ -n "${DARWIN_SDK:-}" ] && [ -x "$DARWIN_SDK/toolset/bin/ld64.lld" ]; then
+    PATH="$DARWIN_SDK/toolset/bin:$PATH"
+    export PATH
+fi
 trampoline="$(command -v ld64.lld)"
 [ -x "$ld64" ] || { echo "swift-build: no ld64 at $ld64 (run build/toolchain/ld64.sh)" >&2; exit 1; }
 case "$trampoline" in

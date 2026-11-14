@@ -67,6 +67,12 @@ MAP="-ffile-prefix-map=$F=fex -ffile-prefix-map=$M=llvm-mingw"
 export SOURCE_DATE_EPOCH=$(git -C "$F" log -1 --format=%ct "$PIN")
 MAP="$MAP -DPLAYPORT_SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH"
 for mode in arm64ec wow64; do
+    # CMake keeps the compiler it probed in its cache; a toolchain at another path (a new
+    # llvm-mingw release) leaves a cache that fails its ABI probe, so that build dir starts over.
+    cache=$F/build-$mode/CMakeCache.txt
+    if [ -f "$cache" ] && ! grep -q "^CMAKE_C_COMPILER:FILEPATH=$M/bin/aarch64-w64-mingw32-clang\$" "$cache"; then
+        rm -rf "$F/build-$mode"
+    fi
     target=arm64ec; dllname=arm64ecfex; machine=ARM64EC; ios_flags=-DFEX_IOS_HOST=1
     # The WoW64 module runs on the iOS host too (fex 0016: JIT pool write
     # offset, the guest window); it links FEX's own CRT, not mingw's (fex 0015).

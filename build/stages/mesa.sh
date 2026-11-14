@@ -136,17 +136,17 @@ vtn_bindgen2 = '$ROOT/host/src/compiler/spirv/vtn_bindgen2'
 kk_clc = '$ROOT/host/src/kosmickrisp/clc/kk_clc'
 EOF
     [ -f "$ROOT/ios/build.ninja" ] ||
-        meson setup "$ROOT/ios" "$ROOT/mesa" --cross-file "$ROOT/ios.cross" \
+        PATH="$HOST_CLANG_BIN:$PATH" meson setup "$ROOT/ios" "$ROOT/mesa" --cross-file "$ROOT/ios.cross" \
             --native-file "$ROOT/host-tools.native" "${MESON_COMMON[@]}" \
             -Dplatforms=macos -Dllvm=disabled -Dexpat=disabled \
             -Dmesa-clc=system -Dprecomp-compiler=system
-    ninja -C "$ROOT/ios" -j "$JOBS" src/kosmickrisp/vulkan/libvulkan_kosmickrisp.dylib
+    PATH="$HOST_CLANG_BIN:$PATH" ninja -C "$ROOT/ios" -j "$JOBS" src/kosmickrisp/vulkan/libvulkan_kosmickrisp.dylib
     mkdir -p "$ROOT/out"
     cp "$ROOT/ios/src/kosmickrisp/vulkan/libvulkan_kosmickrisp.dylib" "$ROOT/out/"
 
     [ -f "$ROOT/ios-gl/build.ninja" ] ||
-        meson setup "$ROOT/ios-gl" "$ROOT/mesa" --cross-file "$ROOT/ios.cross" "${MESON_GL[@]}"
-    ninja -C "$ROOT/ios-gl" -j "$JOBS" src/egl/libEGL.1.dylib src/gallium/targets/dri/libgallium_dri.dylib
+        PATH="$HOST_CLANG_BIN:$PATH" meson setup "$ROOT/ios-gl" "$ROOT/mesa" --cross-file "$ROOT/ios.cross" "${MESON_GL[@]}"
+    PATH="$HOST_CLANG_BIN:$PATH" ninja -C "$ROOT/ios-gl" -j "$JOBS" src/egl/libEGL.1.dylib src/gallium/targets/dri/libgallium_dri.dylib
     cp "$ROOT/ios-gl/src/egl/libEGL.1.dylib" "$ROOT/out/MesaEGL"
     cp "$ROOT/ios-gl/src/gallium/targets/dri/libgallium_dri.dylib" "$ROOT/out/MesaGallium"
     llvm-install-name-tool -id "$EGL_ID" -change @rpath/libgallium_dri.dylib "$GALLIUM_ID" "$ROOT/out/MesaEGL"

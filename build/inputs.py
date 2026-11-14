@@ -8,6 +8,8 @@ build/env.sh sources the same file):
   LLVM_MINGW              llvm-mingw 20260922 UCRT with the arm64ec CRT rebuilt
   DARWIN_SDK              xtool's darwin SDK bundle
   PLAYPORT_USBMUX_SOCKET  netmuxd's socket
+  HOST_CLANG_BIN          the bin directory of the host clang 22.x (clang, ld64.lld)
+  HOST_LLVM15_BIN         the bin directory of prebuilt LLVM 15.0.7 tools (DXMT's air helpers)
 
 An environment variable of the same name wins over the file.
 
@@ -24,7 +26,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 BUILD = Path(os.environ.get("PLAYPORT_BUILD") or REPO / ".work")
 FILE = BUILD / "inputs.local"
-KEYS = ("LLVM_MINGW", "DARWIN_SDK", "PLAYPORT_USBMUX_SOCKET")
+KEYS = ("LLVM_MINGW", "DARWIN_SDK", "PLAYPORT_USBMUX_SOCKET", "HOST_CLANG_BIN", "HOST_LLVM15_BIN")
 
 
 DEVICE_DIR = Path(os.environ.get("PLAYPORT_DEVICE_DIR") or BUILD)

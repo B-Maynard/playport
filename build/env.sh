@@ -29,16 +29,26 @@ PLAYPORT_REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 : "${PLAYPORT_DEVICE_DIR:=$PLAYPORT_BUILD}"
 _inputs_local=$PLAYPORT_BUILD/inputs.local
 if [ -f "$_inputs_local" ]; then
-    _env_llvm=${LLVM_MINGW-} _env_sdk=${DARWIN_SDK-} _env_sock=${PLAYPORT_USBMUX_SOCKET-}
+    _env_llvm=${LLVM_MINGW-} _env_sdk=${DARWIN_SDK-} _env_sock=${PLAYPORT_USBMUX_SOCKET-} _env_clang=${HOST_CLANG_BIN-} _env_l15=${HOST_LLVM15_BIN-}
     # shellcheck disable=SC1090
     . "$_inputs_local"
     LLVM_MINGW=${_env_llvm:-${LLVM_MINGW-}}
     DARWIN_SDK=${_env_sdk:-${DARWIN_SDK-}}
     PLAYPORT_USBMUX_SOCKET=${_env_sock:-${PLAYPORT_USBMUX_SOCKET-}}
-    unset _env_llvm _env_sdk _env_sock
+    HOST_CLANG_BIN=${_env_clang:-${HOST_CLANG_BIN-}}
+    HOST_LLVM15_BIN=${_env_l15:-${HOST_LLVM15_BIN-}}
+    unset _env_llvm _env_sdk _env_sock _env_clang _env_l15
 fi
 unset _inputs_local
 : "${LLVM_MINGW:=}" "${DARWIN_SDK:=}"
+# The directory of the host clang (clang, clang++, ld64.lld; 22.x per docs/BUILDING.md).
+# Recorded by pp setup --host-clang-bin; unset keeps the system clang.
+: "${HOST_CLANG_BIN:=/usr/bin}"
+export HOST_CLANG_BIN
+# The directory of prebuilt LLVM 15.0.7 host tools (llvm-as, llvm-dis, llvm-link, llc, opt) for
+# DXMT's air helpers; recorded by pp setup --host-llvm15-bin. Unset: they are built from source.
+: "${HOST_LLVM15_BIN:=}"
+export HOST_LLVM15_BIN
 : "${LD64:=$PLAYPORT_BUILD/inputs/apple-linker/prefix/bin/arm64-apple-darwin-ld}"
 : "${XTOOL:=$PLAYPORT_BUILD/inputs/xtool-src/.build/release/xtool}"
 : "${RUST_ROOT:=$PLAYPORT_BUILD/inputs/rust}"

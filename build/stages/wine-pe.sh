@@ -140,10 +140,10 @@ configure_tree() {
     fi
     rm -rf "${WINE:?}/${1:?}"; mkdir "$WINE/$1"
     ( cd "$WINE/$1" &&
-      CC="/usr/bin/clang --target=aarch64-apple-darwin -isysroot $MACSDK" \
-      CXX="/usr/bin/clang++ --target=aarch64-apple-darwin -isysroot $MACSDK" \
-      OBJC="/usr/bin/clang -x objective-c --target=aarch64-apple-darwin -isysroot $MACSDK" \
-      AR=/usr/bin/llvm-ar RANLIB=/usr/bin/llvm-ranlib STRIP=/usr/bin/llvm-strip \
+      CC="$HOST_CLANG_BIN/clang --target=aarch64-apple-darwin -isysroot $MACSDK" \
+      CXX="$HOST_CLANG_BIN/clang++ --target=aarch64-apple-darwin -isysroot $MACSDK" \
+      OBJC="$HOST_CLANG_BIN/clang -x objective-c --target=aarch64-apple-darwin -isysroot $MACSDK" \
+      AR=$HOST_CLANG_BIN/llvm-ar RANLIB=$HOST_CLANG_BIN/llvm-ranlib STRIP=$HOST_CLANG_BIN/llvm-strip \
       LDFLAGS="-fuse-ld=lld" CROSSLDFLAGS="-Wl,-Brepro" \
       GSTREAMER_CFLAGS="-I$OUT/gst-macos -I$GST/Headers" GSTREAMER_LIBS="-Wl,-undefined,dynamic_lookup" \
       CROSSCFLAGS="-g -O2 -ffile-prefix-map=$WINE=wine -ffile-prefix-map=$M=llvm-mingw -I$OUT/nghttp2-include -ffile-prefix-map=$OUT/nghttp2-include=nghttp2-include" \

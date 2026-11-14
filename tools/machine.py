@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """pp setup: record where this machine's system tools are, once.
 
-  pp setup [--llvm-mingw DIR] [--darwin-sdk DIR] [--usbmux-socket PATH] [--check]
+  pp setup [--llvm-mingw DIR] [--darwin-sdk DIR] [--usbmux-socket PATH] [--host-clang-bin DIR] [--check]
 
 The repository names no path outside itself. Each input below is found, checked
 and written to $PLAYPORT_BUILD/inputs.local (gitignored), which build/env.sh
@@ -11,6 +11,9 @@ else the file already written, else what the tool itself reports:
   LLVM_MINGW              the llvm-mingw whose aarch64-w64-mingw32-clang is on PATH
   DARWIN_SDK              the bundle `swift sdk configure --show-configuration darwin` names
   PLAYPORT_USBMUX_SOCKET  the --socket-path of the running netmuxd user unit
+  HOST_CLANG_BIN          /usr/lib/llvm-22/bin when it has clang 22 and ld64.lld; the
+                          macOS-target shims use it instead of /usr/bin, so no
+                          system default changes (tools/workstation/setup.sh)
 
 --check reports what is recorded and whether it is usable, and writes nothing.
 The tools themselves stay installed where they are (AGENTS.md, Disk).
@@ -28,7 +31,8 @@ import inputs  # noqa: E402
 import phonelib  # noqa: E402
 
 IOS_SDK = "Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk"
-OPTIONS = {"--llvm-mingw": "LLVM_MINGW", "--darwin-sdk": "DARWIN_SDK", "--usbmux-socket": "PLAYPORT_USBMUX_SOCKET"}
+OPTIONS = {"--llvm-mingw": "LLVM_MINGW", "--darwin-sdk": "DARWIN_SDK", "--usbmux-socket": "PLAYPORT_USBMUX_SOCKET",
+           "--host-clang-bin": "HOST_CLANG_BIN", "--host-llvm15-bin": "HOST_LLVM15_BIN"}
 
 
 def out(cmd):
@@ -53,7 +57,13 @@ def find_socket():
     return phonelib.netmuxd_unit_socket()
 
 
-FIND = {"LLVM_MINGW": find_llvm_mingw, "DARWIN_SDK": find_darwin_sdk, "PLAYPORT_USBMUX_SOCKET": find_socket}
+def find_host_clang_bin():
+    d = "/usr/lib/llvm-22/bin"
+    return d if os.path.isfile(os.path.join(d, "clang")) else None
+
+
+FIND = {"LLVM_MINGW": find_llvm_mingw, "DARWIN_SDK": find_darwin_sdk, "PLAYPORT_USBMUX_SOCKET": find_socket,
+        "HOST_CLANG_BIN": find_host_clang_bin, "HOST_LLVM15_BIN": lambda: None}
 
 
 def problem(key, v):
@@ -68,6 +78,20 @@ def problem(key, v):
     elif key == "DARWIN_SDK":
         if not os.path.isdir(os.path.join(v, IOS_SDK)):
             return f"no {os.path.basename(IOS_SDK)} (xtool sdk install; docs/BUILDING.md)"
+    elif key == "HOST_LLVM15_BIN":
+        for tool in ("llvm-as", "llvm-dis", "llvm-link", "llc", "opt"):
+            if not os.access(os.path.join(v, tool), os.X_OK):
+                return f"no {tool} (LLVM 15.0.7: tools/workstation/setup.sh install)"
+        ver = out([os.path.join(v, "llvm-as"), "--version"])
+        if not re.search(r"LLVM version 15\.0\.7", ver):
+            return "llvm-as here is not LLVM 15.0.7"
+    elif key == "HOST_CLANG_BIN":
+        for tool in ("clang", "clang++", "ld64.lld"):
+            if not os.access(os.path.join(v, tool), os.X_OK):
+                return f"no {tool} (LLVM 22.x: docs/BUILDING.md)"
+        ver = out([os.path.join(v, "clang"), "--version"]).splitlines()
+        if not ver or not re.search(r"version 22\.", ver[0]):
+            return "clang here is not 22.x"
     elif key == "PLAYPORT_USBMUX_SOCKET":
         try:
             if not stat.S_ISSOCK(os.stat(v).st_mode):

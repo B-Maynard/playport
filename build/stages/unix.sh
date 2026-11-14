@@ -75,17 +75,18 @@ stage_shims() {
     # compiler (configure's CC_FOR_BUILD, which the scripts derive from `xcrun -f clang`).
     # The Apple-target compile maps ROOT and the SDK out of the debug info and
     # __FILE__, so the app binary names no workstation path (verify-ipa.py).
+    # HOST_CLANG_BIN (build/env.sh; pp setup --host-clang-bin) picks the host clang's directory.
     cat > "$SHIMS/clang" <<EOF
 #!/bin/sh
 case " \$* " in
 *" -arch arm64 "*|*" -miphoneos-version-min="*|*"iPhoneOS"*)
-    exec /usr/bin/clang --target=arm64-apple-ios17.0 -fuse-ld=lld \\
+    exec $HOST_CLANG_BIN/clang --target=arm64-apple-ios17.0 -fuse-ld=lld \\
         -Wno-unused-command-line-argument \\
         '-ffile-prefix-map=$ROOT=unix' '-ffile-prefix-map=$DARWIN_SDK=darwin-sdk' "\$@" ;;
 esac
-exec /usr/bin/clang "\$@"
+exec $HOST_CLANG_BIN/clang "\$@"
 EOF
-    sed 's|/usr/bin/clang |/usr/bin/clang++ |g' "$SHIMS/clang" > "$SHIMS/clang++"
+    sed "s|$HOST_CLANG_BIN/clang |$HOST_CLANG_BIN/clang++ |g" "$SHIMS/clang" > "$SHIMS/clang++"
     ln -sf clang "$SHIMS/cc"; ln -sf clang++ "$SHIMS/c++"   # CMake's default compiler names
     cat > "$SHIMS/xcrun" <<EOF
 #!/bin/sh
@@ -100,18 +101,21 @@ while [ \$# -gt 0 ]; do
     esac
 done
 EOF
-    printf '#!/bin/sh\nexec /usr/bin/llvm-ar "$@"\n' > "$SHIMS/ar"
-    printf '#!/bin/sh\nexec /usr/bin/llvm-ranlib "$@"\n' > "$SHIMS/ranlib"
-    printf '#!/bin/sh\nexec /usr/bin/llvm-nm "$@"\n' > "$SHIMS/nm"
-    printf '#!/bin/sh\nexec /usr/bin/llvm-strip "$@"\n' > "$SHIMS/strip"
-    printf '#!/bin/sh\nexec /usr/bin/llvm-lipo "$@"\n' > "$SHIMS/lipo"
-    printf '#!/bin/sh\nexec /usr/bin/llvm-libtool-darwin "$@"\n' > "$SHIMS/libtool"
+    # The host LLVM tools come from HOST_CLANG_BIN too (see the clang shim above).
+    printf '#!/bin/sh\nexec %s/llvm-ar "$@"\n' "$HOST_CLANG_BIN" > "$SHIMS/ar"
+    printf '#!/bin/sh\nexec %s/llvm-ranlib "$@"\n' "$HOST_CLANG_BIN" > "$SHIMS/ranlib"
+    printf '#!/bin/sh\nexec %s/llvm-nm "$@"\n' "$HOST_CLANG_BIN" > "$SHIMS/nm"
+    printf '#!/bin/sh\nexec %s/llvm-strip "$@"\n' "$HOST_CLANG_BIN" > "$SHIMS/strip"
+    printf '#!/bin/sh\nexec %s/llvm-lipo "$@"\n' "$HOST_CLANG_BIN" > "$SHIMS/lipo"
+    printf '#!/bin/sh\nexec %s/llvm-libtool-darwin "$@"\n' "$HOST_CLANG_BIN" > "$SHIMS/libtool"
     printf '#!/bin/sh\n[ "$*" = "-n hw.ncpu" ] && exec nproc\nexec /usr/bin/sysctl "$@"\n' > "$SHIMS/sysctl"
     chmod +x "$SHIMS"/*
 }
 
 # Every Madeira script runs with the shims first on PATH.
-run() { env PATH="$SHIMS:$PATH" LC_ALL=C "$@"; }   # C collation: gen_gnutls_symtab.sh sorts
+# The host clang's directory comes before the rest of PATH too: clang finds the macOS linker
+# (ld64.lld) on PATH, and another toolchain's lld cannot link for macOS.
+run() { env PATH="$SHIMS:$HOST_CLANG_BIN:$PATH" LC_ALL=C "$@"; }   # C collation: gen_gnutls_symtab.sh sorts
 
 stage_configure() {
     # A darwin cross-configure of the wine tree: a host-native makedep, then
@@ -123,6 +127,7 @@ stage_configure() {
           tools/makedep.c -o "$tools/tools/makedep" )
     rm -rf "$W/build-macos"; mkdir "$W/build-macos"
     ( cd "$W/build-macos" &&
+      PATH="$HOST_CLANG_BIN:$PATH" \
       CC="clang --target=aarch64-apple-darwin -isysroot $MACSDK" \
       CXX="clang++ --target=aarch64-apple-darwin -isysroot $MACSDK" \
       OBJC="clang -x objective-c --target=aarch64-apple-darwin -isysroot $MACSDK" \

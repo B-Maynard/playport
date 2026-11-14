@@ -322,7 +322,8 @@ stage_dxmt() {
     run dxmt env DXMT_BUILD_ROOT="$RUN/dxmt-run" bash "$HERE/air-helpers/air-helper-port.sh" "$AIR" llvm air
     run dxmt env DXMT_BUILD_ROOT="$RUN/dxmt-run" SHADER_HEADERS="$AIR/shader-headers" WINE="$RUN/pe/wine" \
         bash "$HERE/stages/dxmt-patched.sh" "$RUN/dxmt-patched"
-    run dxmt env DXMT_UNIX="$RUN/dxmt-patched" TBLGEN="$AIR/llvm15/bin/llvm-tblgen" \
+    # PATH: the host clang first, so `clang++` here is the host's (its libstdc++ check needs it).
+    run dxmt env PATH="$HOST_CLANG_BIN:$PATH" DXMT_UNIX="$RUN/dxmt-patched" TBLGEN="${HOST_LLVM15_BIN:-$AIR/llvm15/bin}/llvm-tblgen" \
         bash "$HERE/stages/dxmt-combined.sh" "$RUN/dxmt-combined"
     say "  $(sha256sum "$RUN/dxmt-combined/libdxmt_combined.a" | cut -c1-16)  libdxmt_combined.a"
 }

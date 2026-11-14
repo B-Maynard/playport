@@ -28,7 +28,9 @@ HERE=$(dirname "$(realpath "$0")")
 PROBE=$HERE/probe
 . "$HERE/../lib.sh"
 DXB=${DXMT_BUILD_ROOT:-$ROOT/dxmt-build}
-B=$ROOT/llvm15/bin
+# The LLVM 15.0.7 host tools: the prebuilt set recorded as HOST_LLVM15_BIN (Ubuntu's llvm-15
+# packages, the same version), or ROOT/llvm15/bin when built from source below.
+B=${HOST_LLVM15_BIN:-$ROOT/llvm15/bin}
 HELPERS="air_msad air_samplepos air_tessellation"
 mkdir -p "$ROOT"
 cd "$ROOT"
@@ -46,7 +48,15 @@ stage_llvm() {
     # checks what they produce (air.sha256): a complete set is used as it is.
     local t ok=1
     for t in llvm-as llvm-dis llvm-link llc opt; do [ -x "$B/$t" ] || ok=; done
-    if [ -n "$ok" ]; then echo "llvm15: tools present, not reconfigured"; return 0; fi
+    if [ -n "$ok" ]; then
+        # Prebuilt or already built: check the version the helpers are pinned to.
+        "$B/llvm-as" --version | grep -q 'LLVM version 15\.0\.7' ||
+            { echo "llvm15: $B is not LLVM 15.0.7" >&2; return 1; }
+        echo "llvm15: tools present in $B, not reconfigured"; return 0
+    fi
+    if [ -n "${HOST_LLVM15_BIN:-}" ]; then
+        echo "llvm15: HOST_LLVM15_BIN=$HOST_LLVM15_BIN has no complete tool set" >&2; return 1
+    fi
     need_dxb
     cmake -G Ninja -B "$ROOT/llvm15" -S "$DXB/llvm-project/llvm" -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="-include cstdint" \
