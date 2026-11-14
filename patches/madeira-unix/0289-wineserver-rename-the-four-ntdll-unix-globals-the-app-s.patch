@@ -1,0 +1,35 @@
+From 4909719f19dc82ce2ff6e5ee08ccdb15879c58ee Mon Sep 17 00:00:00 2001
+From: The Playport authors <dev@playport.dev>
+Date: Sat, 14 Nov 2026 12:33:21 -0500
+Subject: [PATCH] wineserver: rename the four ntdll-unix globals the app's link
+ collides on
+
+server_ios.c in ntdll-unix defines server_start_time, supported_machines,
+supported_machines_count and native_machine, and wineserver's request_ios.o
+and registry.o define the same four. The single-process app link rejects the
+duplicates, so the rename sweep takes them too.
+
+Class: ios-port
+Evidence: docs/evidence/2026-11-14-madeira-link-collisions.md
+Offered-upstream: no
+---
+ build/wineserver/build.sh | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/build/wineserver/build.sh b/build/wineserver/build.sh
+index 6dbde035..5f511cf4 100755
+--- a/build/wineserver/build.sh
++++ b/build/wineserver/build.sh
+@@ -221,6 +221,9 @@ COLLISIONS=(
+     # every process hung in server_init_process() the moment a client
+     # connected -- guest ntdll init is exactly when the pointer was stolen.
+     user_shared_data
++    # the four globals ntdll-unix's server_ios.c defines and request_ios.o / registry.o
++    # define too: a single-process link (the app) rejects the duplicates
++    server_start_time supported_machines supported_machines_count native_machine
+ )
+ RENAME_ARGS=()
+ for s in "${COLLISIONS[@]}"; do
+-- 
+2.43.0
+
