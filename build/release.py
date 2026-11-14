@@ -153,7 +153,7 @@ def find_output(out, head, missing_ok=False):
     out = no_links(out)
     if missing_ok and not out.exists():
         return None
-    candidates = list(out.glob("*/Playport-*-release-unsigned-*.ipa"))
+    candidates = list(out.glob("*/pcios-*-release-unsigned-*.ipa"))
     for p in candidates:
         regular(p)
         regular(p.parent / "provenance.txt")
@@ -338,7 +338,7 @@ def release(version, repo=REPO, build_dir=None, build="auto", github=True, run=s
                                   "--unsigned", "--sha256", ipa_sha])):
         if invoke(cmd).returncode:
             raise Stop(f"{name} failed")
-    ipa_name, source_name = f"Playport-{version}.ipa", f"Playport-{version}-source.tar"
+    ipa_name, source_name = f"pcios-{version}.ipa", f"pcios-{version}-source.tar"
     part = no_links(dest.with_name(f".{dest.name}.partial-{os.getpid()}"))
     if part.exists():
         raise Stop("partial output already exists; refusing to remove it")

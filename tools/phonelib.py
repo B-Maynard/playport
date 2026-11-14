@@ -308,7 +308,7 @@ def same_checkout(rec, path=REPO):
 def newest_ipa(variant="dev"):
     """This checkout's newest verified IPA of the variant, or None."""
     out = os.environ.get("PLAYPORT_OUT") or os.path.join(BUILD, "out")
-    ipas = [p for p in glob.glob(os.path.join(out, "*", "Playport-*.ipa"))
+    ipas = [p for p in glob.glob(os.path.join(out, "*", "pcios-*.ipa"))
             if ("-release-" in os.path.basename(p)) == (variant == "release")]
     return max(ipas, key=os.path.getmtime) if ipas else None
 

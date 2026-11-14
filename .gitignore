@@ -10,3 +10,6 @@
 
 __pycache__/
 .DS_Store
+
+# The signed IPA for the owner's phone: local only, never committed
+/*.ipa

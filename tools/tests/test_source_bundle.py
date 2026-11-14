@@ -111,9 +111,9 @@ class Fixture:
         d = self.root / f"out-{len(list(self.root.glob('out-*')))}"
         d.mkdir()
         head = head or self.head
-        (d / "Playport-26.5-release-unsigned-abcd.ipa").write_bytes(b"ipa")
+        (d / "pcios-26.5-release-unsigned-abcd.ipa").write_bytes(b"ipa")
         sha = hashlib.sha256(b"ipa").hexdigest()
-        (d / "SHA256SUMS").write_text(f"{sha}  Playport-26.5-release-unsigned-abcd.ipa\n")
+        (d / "SHA256SUMS").write_text(f"{sha}  pcios-26.5-release-unsigned-abcd.ipa\n")
         (d / "pins.lock").write_bytes(subprocess.run(["git", "-C", str(self.repo), "show", f"{head}:pins.lock"],
                                                      capture_output=True, check=True).stdout)
         digest = series or {"wine": hashlib.sha256(b"patch a\n").hexdigest()[:16],
@@ -437,7 +437,7 @@ class SourceBundle(unittest.TestCase):
         m = self.f.bundle(self.out, build=self.f.build_output())
         self.assertEqual(m["playport"], self.f.head)
         self.assertEqual(m["build"]["ipa_sha256"], hashlib.sha256(b"ipa").hexdigest())
-        self.assertIn("Playport-26.5-release-unsigned-abcd.ipa", (self.out / "README.md").read_text())
+        self.assertIn("pcios-26.5-release-unsigned-abcd.ipa", (self.out / "README.md").read_text())
 
     def test_build_series_export_matches_committed_bytes_in_every_available_locale(self):
         # Punctuation collates differently in en_US: these reproduce wine-valve's
@@ -478,7 +478,7 @@ class SourceBundle(unittest.TestCase):
         (d / "pins.lock").write_text("other\n")
         self.assertStops("is not .*'s pins.lock", build=d)
         d = self.f.build_output()
-        (d / "Playport-26.5-release-unsigned-abcd.ipa").write_bytes(b"changed")
+        (d / "pcios-26.5-release-unsigned-abcd.ipa").write_bytes(b"changed")
         self.assertStops("does not match its SHA256SUMS", build=d)
 
     def test_an_existing_output_is_not_touched(self):

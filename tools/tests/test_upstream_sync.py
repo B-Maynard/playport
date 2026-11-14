@@ -273,7 +273,7 @@ class UpstreamSync(unittest.TestCase):
         write(pp, ".gitignore", "__pycache__/\n")   # as the real one: sync.py imports its modules
         write(pp, "pp", "#!/bin/sh\n[ \"$1\" = names ] && echo 'pp names: clean'\n")
         write(pp, "build/pipeline", "#!/bin/sh\nmkdir -p \"$PLAYPORT_RUN/logs\" \"$PLAYPORT_OUT/x\"\n"
-              "echo partial > \"$PLAYPORT_OUT/x/Playport-26.5-0.ipa\"\n"
+              "echo partial > \"$PLAYPORT_OUT/x/pcios-26.5-0.ipa\"\n"
               "echo 'x.c:1:1: error: upstream broke this' > \"$PLAYPORT_RUN/logs/unix.log\"\n"
               "echo \"FAILED: bash unix (log: $PLAYPORT_RUN/logs/unix.log)\"\nexit 1\n")
         os.chmod(f"{pp}/build/pipeline", 0o755)
@@ -663,8 +663,8 @@ class UpstreamSync(unittest.TestCase):
         pp, build = self.playport("pp-paused")
         write(pp, "build/pipeline", "#!/bin/sh\nset -e\nmkdir -p \"$PLAYPORT_OUT/x\" \"$PLAYPORT_RUN/logs\"\n"
               "echo linked > \"$PLAYPORT_RUN/logs/app.log\"\n"
-              "echo ipa > \"$PLAYPORT_OUT/x/Playport-26.5-0.ipa\"\necho rebuilt > app/artifacts.tsv\n"
-              "echo \"12:00:00  IPA $PLAYPORT_OUT/x/Playport-26.5-0.ipa\"\n"
+              "echo ipa > \"$PLAYPORT_OUT/x/pcios-26.5-0.ipa\"\necho rebuilt > app/artifacts.tsv\n"
+              "echo \"12:00:00  IPA $PLAYPORT_OUT/x/pcios-26.5-0.ipa\"\n"
               "echo \"12:00:00  sha256 $(printf '0%.0s' $(seq 64))\"\n")
         for d in ("app/HostIOKit", "app/ContentKit", "app/GOGClient", "app/EpicClient", "app/XboxClient", "app/SteamClient", "app/BattleNetClient",
                   "app/PlayportKit", "build/generated"):

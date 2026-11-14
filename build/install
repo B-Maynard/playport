@@ -215,12 +215,12 @@ elif [ "$BUILD" = 0 ] && [ -z "$IPA" ]; then
         flock -s 7
     fi
     flock -u 7; exec 7>&-
-    # Release IPAs are Playport-<sdk>-release-<sha8>.ipa, dev ones Playport-<sdk>-<sha8>.ipa;
-    # an unsigned one (Playport-<sdk>-release-unsigned-<sha8>.ipa, for a published release) cannot install.
+    # Release IPAs are pcios-<sdk>-release-<sha8>.ipa, dev ones pcios-<sdk>-<sha8>.ipa;
+    # an unsigned one (pcios-<sdk>-release-unsigned-<sha8>.ipa, for a published release) cannot install.
     if [ "$VARIANT" = release ]; then
-        IPA=$(ls -t "$OUT"/*/Playport-*-release-*.ipa 2>/dev/null | grep -v -- '-unsigned-' | head -1 || true)
+        IPA=$(ls -t "$OUT"/*/pcios-*-release-*.ipa 2>/dev/null | grep -v -- '-unsigned-' | head -1 || true)
     else
-        IPA=$(ls -t "$OUT"/*/Playport-*.ipa 2>/dev/null | grep -v -- '-release-' | head -1 || true)
+        IPA=$(ls -t "$OUT"/*/pcios-*.ipa 2>/dev/null | grep -v -- '-release-' | head -1 || true)
     fi
 fi
 

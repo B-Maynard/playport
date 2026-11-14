@@ -242,7 +242,7 @@ class PhonelibTest(unittest.TestCase):
         self.assertIn("no record", why)
         self.assertTrue(pl.installed_check(any_build=True)[0])
         sha = "ab" * 32
-        self.write_state(ipa="/x/Playport-26.5-abababab.ipa", ipa_sha256=sha, variant="dev",
+        self.write_state(ipa="/x/pcios-26.5-abababab.ipa", ipa_sha256=sha, variant="dev",
                          checkout="/elsewhere/checkout", head="1234567", installed_at="t")
         ok, why, rec = pl.installed_check()
         self.assertFalse(ok)
@@ -267,7 +267,7 @@ class PhonelibTest(unittest.TestCase):
         self.write_state(ipa="/old.ipa", ipa_sha256="ab" * 32, variant="dev", checkout=REPO)
         d = os.path.join(self.tmp, "out", "20990101-000000-cdcdcdcd")
         os.makedirs(d)
-        newest = os.path.join(d, "Playport-26.5-cdcdcdcd.ipa")
+        newest = os.path.join(d, "pcios-26.5-cdcdcdcd.ipa")
         open(newest, "w").close()
         os.utime(pl.STATE, (time.time() - 60,) * 2)
         ev = pl.Events(self.tmp, echo=False)

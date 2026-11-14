@@ -182,7 +182,7 @@ class Release(unittest.TestCase):
     def output(self, head, extra="", name="20260930-120000-release-unsigned-abcd1234"):
         d = self.build / "out" / name
         d.mkdir(parents=True)
-        with zipfile.ZipFile(d / "Playport-26.5-release-unsigned-abcd1234.ipa", "w") as z:
+        with zipfile.ZipFile(d / "pcios-26.5-release-unsigned-abcd1234.ipa", "w") as z:
             z.writestr("Payload/Playport.app/Licenses/notice.txt", "fixture notice " + head)
         (d / "artifacts.tsv").write_text("# records\n")
         (d / "provenance.txt").write_text(f"variant release unsigned\nsuperproject {head}{extra}\n")
@@ -269,20 +269,20 @@ class Release(unittest.TestCase):
     def test_a_clean_release_assembles_every_file_and_builds_clean_unsigned(self):
         dest = self.release(build="clean")
         self.assertEqual(sorted(p.name for p in dest.iterdir()),
-                         ["INSTALL-REBUILD.tar", "NOTICES.tar", "Playport-0.1.0-source.tar", "Playport-0.1.0.ipa",
-                          "RELEASE-MANIFEST.json", "RELEASE-NOTES.md", "SHA256SUMS", "artifacts.tsv", "provenance.txt"])
+                         ["INSTALL-REBUILD.tar", "NOTICES.tar", "RELEASE-MANIFEST.json", "RELEASE-NOTES.md",
+                          "SHA256SUMS", "artifacts.tsv", "pcios-0.1.0-source.tar", "pcios-0.1.0.ipa", "provenance.txt"])
         source_cmd = next(c for c in self.calls if c[1].endswith("source-bundle.py"))
         self.assertEqual(source_cmd[3:], ["--build", str(next((self.build / "out").iterdir()))])
-        with tarfile.open(dest / "Playport-0.1.0-source.tar") as t:
-            self.assertEqual(t.getnames(), ["Playport-0.1.0-source/README.md", "Playport-0.1.0-source/SHA256SUMS",
-                                            "Playport-0.1.0-source/SOURCE-MANIFEST.json",
-                                            "Playport-0.1.0-source/playport.tar.gz"])
+        with tarfile.open(dest / "pcios-0.1.0-source.tar") as t:
+            self.assertEqual(t.getnames(), ["pcios-0.1.0-source/README.md", "pcios-0.1.0-source/SHA256SUMS",
+                                            "pcios-0.1.0-source/SOURCE-MANIFEST.json",
+                                            "pcios-0.1.0-source/playport.tar.gz"])
         build = self.calls[0]
         self.assertEqual(build[1:], ["--variant", "release", "--unsigned", "--clean"])
         verify_cmd = next(c for c in self.calls if c[1].endswith("verify-ipa.py"))
-        sha = hashlib.sha256((dest / "Playport-0.1.0.ipa").read_bytes()).hexdigest()
+        sha = hashlib.sha256((dest / "pcios-0.1.0.ipa").read_bytes()).hexdigest()
         self.assertEqual(verify_cmd[3:], ["--variant", "release", "--unsigned", "--sha256", sha])
-        self.assertIn(f"{sha}  Playport-0.1.0.ipa\n", (dest / "SHA256SUMS").read_text())
+        self.assertIn(f"{sha}  pcios-0.1.0.ipa\n", (dest / "SHA256SUMS").read_text())
         self.assertEqual((dest / "RELEASE-NOTES.md").read_text(), self.notes)
         sums = release.checksums(dest)
         self.assertIn("RELEASE-NOTES.md", sums)
@@ -313,7 +313,7 @@ class Release(unittest.TestCase):
         self.assertIn("--notices", distribution)
         for name in ("NOTICES.tar", "INSTALL-REBUILD.tar", "RELEASE-MANIFEST.json", "RELEASE-NOTES.md"):
             self.assertTrue(any(c.endswith("/" + name) for c in create))
-        with tarfile.open(dest / "NOTICES.tar") as t, zipfile.ZipFile(dest / "Playport-0.1.0.ipa") as z:
+        with tarfile.open(dest / "NOTICES.tar") as t, zipfile.ZipFile(dest / "pcios-0.1.0.ipa") as z:
             self.assertEqual(t.extractfile("Licenses/notice.txt").read(),
                              z.read("Payload/Playport.app/Licenses/notice.txt"))
         with tarfile.open(dest / "INSTALL-REBUILD.tar") as t:
@@ -361,7 +361,7 @@ class Release(unittest.TestCase):
     def test_by_default_an_output_of_head_is_reused_without_building(self):
         dest = self.release()
         self.assertFalse(any(c[0].endswith("pipeline") for c in self.calls))
-        self.assertTrue((dest / "Playport-0.1.0.ipa").exists())
+        self.assertTrue((dest / "pcios-0.1.0.ipa").exists())
 
     def test_by_default_a_missing_output_is_built_incrementally(self):
         built = self.root / "built"
@@ -378,7 +378,7 @@ class Release(unittest.TestCase):
         build = next(c for c in self.calls if c[0].endswith("pipeline"))
         self.assertEqual(build[1:], ["--variant", "release", "--unsigned"])
         self.assertEqual(len(made), 1)
-        self.assertTrue((dest / "Playport-0.1.0.ipa").exists())
+        self.assertTrue((dest / "pcios-0.1.0.ipa").exists())
 
     def test_by_default_an_output_with_local_changes_is_not_reused(self):
         other = self.root / "dirty"
