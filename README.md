@@ -5,7 +5,7 @@
 
 **PC games on your iPhone. Natively, no streaming.**
 
-[Architecture](docs/ARCHITECTURE.md) · [Building](docs/BUILDING.md) · [The phone](docs/DEVICE.md)
+[Compatibility](https://playport.dev/compatibility/) · [Report a game](https://github.com/playportdev/playport/issues/new?template=problem.yml) · [Architecture](docs/ARCHITECTURE.md) · [Building](docs/BUILDING.md) · [The phone](docs/DEVICE.md)
 
 [![Checks](https://img.shields.io/github/actions/workflow/status/B-Maynard/pcios/checks.yml?branch=main&style=flat-square&label=checks&labelColor=151A21)](https://github.com/B-Maynard/pcios/actions/workflows/checks.yml)
 [![Licence: GPL-3.0-or-later](https://img.shields.io/badge/licence-GPL--3.0--or--later-F5B544?style=flat-square&labelColor=151A21)](LICENSE)

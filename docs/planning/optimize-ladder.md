@@ -3,7 +3,7 @@
 **Status:** plan only. No code. Revisit on a Mac with a Swift toolchain, Xcode and an iPhone.
 **Scope:** an opt-in way for pcios to try launch settings on a game, measure the result on the
 player's own phone, and keep or revert each step.
-**Source of ideas:** GameNative's `app/src/main/java/app/gamenative/optimize/` (GPL-3.0). We take
+**Source of ideas:** the Android launcher's `(source path omitted)` (GPL-3.0). We take
 the concept and the judging shape. We don't take its server, its Android-specific levers, or its
 file-editing levers.
 
@@ -190,7 +190,7 @@ UI, not that a rung helps. Every "helped" verdict in the first version has to co
 1. Is the ladder opt-in per game only, or is there a global switch too?
 2. Which rungs go in the first version? The plan proposes frame limit, screen size and backend.
 3. Are advisory verdicts ("seemed faster") acceptable to show players, given the scene limit in 4.4?
-4. What minimum gameplay time makes a trial comparable? The plan starts from GameNative's
+4. What minimum gameplay time makes a trial comparable? The plan starts from the Android launcher's
    setting and tunes on phone runs.
 5. Does a kept rung survive a game update, or does a new build reset the state?
 6. Should a crash-marked rung stay bad forever, or expire with a new app version?
