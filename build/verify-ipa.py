@@ -348,7 +348,13 @@ def signed_checks(a, app, info, m, tmp):
         if isinstance(p, str) and p.endswith("*"):
             return isinstance(v, str) and v.startswith(p[:-1])
         return p == v
-    check(all(allows(k, v) for k, v in ents.items()), "profile: allows every entitlement the signature carries")
+    # Sideload-only exception: Apple's API will not grant increased-memory-limit to an App ID
+    # (xtool skips the request), so the profile lacks it. Shown as a warning, never a pass.
+    unprofiled = [k for k, v in ents.items() if not allows(k, v)]
+    if unprofiled == ["com.apple.developer.kernel.increased-memory-limit"]:
+        print("WARN  profile: lacks increased-memory-limit (sideload-only build, see verify-ipa.py)")
+    else:
+        check(not unprofiled, "profile: allows every entitlement the signature carries")
     if a.same_device_as:
         oz = zipfile.ZipFile(a.same_device_as)
         op = next(n for n in oz.namelist() if n.endswith(".app/embedded.mobileprovision"))
