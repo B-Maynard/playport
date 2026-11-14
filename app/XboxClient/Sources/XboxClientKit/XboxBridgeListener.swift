@@ -110,17 +110,18 @@ public final class XboxBridgeListener: @unchecked Sendable {
         let (fds, handler): ([Int32], UInt64?) = lock.withLock {
             guard !stopped else { return ([], nil) }
             stopped = true
-            let fds = [listenFD] + Array(connections)
+            var fds: [Int32] = [listenFD]
+            fds.append(contentsOf: connections)
             for fd in fds where fd >= 0 { shutdown(fd, Int32(SHUT_RDWR)) }
             defer { signOutHandler = nil }
             return (fds, signOutHandler)
         }
         guard !fds.isEmpty else { return }
-        let service = self.service, log = self.log, connections = lock.withLock { accepted }
+        let service = self.service, log = self.log, acceptedCount = lock.withLock { accepted }
         Task.detached {
             if let handler { await service.account.removeSignOutHandler(handler) }
             let summary = await service.summary
-            log.info("xbox", "bridge: stopped; \(connections) connection(s) in the play; \(summary)")
+            log.info("xbox", "bridge: stopped; \(acceptedCount) connection(s) in the play; \(summary)")
         }
     }
 

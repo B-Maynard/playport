@@ -185,15 +185,17 @@ stage_inputs() {
         bash "$HERE/toolchain/rust.sh" > "$RUN/logs/rust.log" 2>&1 || { say "build/toolchain/rust.sh failed"; missing=1; }
     fi
     [ "$missing" = 0 ] || exit 1
-    # The Swift frontend needs the host's clang resource headers inside the SDK. The
-    # toolchain's packages put them under lib/ or usr/lib/.
-    for d in /usr/lib/swift/lib/clang/*/include /usr/lib/swift/usr/lib/clang/*/include; do
-        [ -d "$d" ] || continue
-        v=$(basename "$(dirname "$d")")
-        inc=$DARWIN_SDK/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/$v/include
-        [ -f "$inc/arm_neon.h" ] ||
-            { say "copying clang $v resource headers into the SDK"; mkdir -p "$inc"; rsync -a --delete "$d/" "$inc/"; }
-    done
+    # The SDK's usr/lib/swift/clang/include (xtool copies the host clang's built-in headers
+    # there when it installs the SDK) must be the headers of the clang this build compiles
+    # with, or the iOS SDK's modules reject them as incompatible search-path headers
+    # (DarwinFoundation1.modulemap, _c_standard_library_obsolete). Replace it when they differ.
+    rdir=$(clang -print-resource-dir)/include
+    sdkinc=$DARWIN_SDK/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/clang/include
+    if [ ! -f "$sdkinc/float.h" ] || ! cmp -s "$rdir/float.h" "$sdkinc/float.h" ||
+       [ "$(ls "$sdkinc" | wc -l)" != "$(ls "$rdir" | wc -l)" ]; then
+        say "replacing the SDK's clang headers with clang $(basename "$(dirname "$rdir")") ($rdir)"
+        mkdir -p "$sdkinc"; rsync -a --delete "$rdir/" "$sdkinc/"
+    fi
     grep -q INCREASED_MEMORY_LIMIT "$XTOOL" ||
         { say "XTOOL lacks the increased-memory-limit patch (build/toolchain/xtool.sh)"; exit 1; }
     {

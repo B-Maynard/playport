@@ -1,5 +1,5 @@
 diff --git a/Sources/XKit/DeveloperServices/App IDs/Entitlements/DeveloperServicesCapability.swift b/Sources/XKit/DeveloperServices/App IDs/Entitlements/DeveloperServicesCapability.swift
-index 2dca463..bff7b72 100644
+index 2dca463..1ff49bb 100644
 --- a/Sources/XKit/DeveloperServices/App IDs/Entitlements/DeveloperServicesCapability.swift	
 +++ b/Sources/XKit/DeveloperServices/App IDs/Entitlements/DeveloperServicesCapability.swift	
 @@ -139,6 +139,13 @@ extension WirelessAccessoryEntitlement: EntitlementWithCapability {
