@@ -17,7 +17,7 @@ extensions:
     resources:
       - PlayportJIT/playport-universal.js
 infoPath: Info.plist
-# The home-screen icon (app/Icon/AppIcon.svg, rendered by app/Icon/render.sh):
+# The home-screen icon (app/Icon/AppIcon-source.png, rendered by app/Icon/render.py):
 # xtool copies it to the app root and names it CFBundleIconFile. The dev app's
 # carries a DEV tab; the release package's xtool.yml names Icon/AppIcon.png.
 iconPath: Icon/AppIcon-dev.png

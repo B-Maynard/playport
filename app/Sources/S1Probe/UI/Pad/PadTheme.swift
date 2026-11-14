@@ -8,19 +8,19 @@ import SwiftUI
 import UIKit
 
 enum PP {
-    static let background = Color(hex: 0x0B0E13)
-    static let surface = Color(hex: 0x151A21)
-    static let raised = Color(hex: 0x1D242E)
-    static let line = Color(hex: 0x2A3340)
-    static let text = Color(hex: 0xEEF1F5)
-    static let soft = Color(hex: 0xC9D1DC)
-    static let muted = Color(hex: 0x9AA5B4)
-    static let accent = Color(hex: 0xF5B544)
-    static let onAccent = Color(hex: 0x1A1204)
+    static let background = Color(hex: 0x061E49)
+    static let surface = Color(hex: 0x0A2757)
+    static let raised = Color(hex: 0x12326B)
+    static let line = Color(hex: 0x1F3F7A)
+    static let text = Color(hex: 0xEEF4FB)
+    static let soft = Color(hex: 0xC7DBF2)
+    static let muted = Color(hex: 0x9AB4D6)
+    static let accent = Color(hex: 0x92CDFC)
+    static let onAccent = Color(hex: 0x061E49)
     static let progress = Color(hex: 0x6CA8FF)
     static let ok = Color(hex: 0x6FCF7F)
     /// Art tiles without store art, in the design's colours, picked by name.
-    static let tiles: [Color] = [0x24324A, 0x5B3A8C, 0x3E6A3A, 0x6E2B2B, 0x2F5A66, 0x6A5326].map { Color(hex: $0) }
+    static let tiles: [Color] = [0x163A6E, 0x5B3A8C, 0x3E6A3A, 0x6E2B2B, 0x2F5A66, 0x6A5326].map { Color(hex: $0) }
 
     static func tile(for name: String) -> Color {
         tiles[Int(name.unicodeScalars.reduce(0) { ($0 &* 31 &+ Int($1.value)) & 0xFFFF }) % tiles.count]

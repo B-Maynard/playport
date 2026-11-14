@@ -110,6 +110,10 @@ struct AppShell: View {
             #endif
         }
         .padFocusRoot()
+        // A controller-driven landscape screen has no use for the status bar: hidden, as the game
+        // screens hide it, so the top bar takes the top edge rather than a black strip (Duo's screens).
+        .statusBarHidden()
+        .persistentSystemOverlays(.hidden)
         .onReceive(PadRouter.shared.presses) { press($0) }
         // Choosing a pairing file (the checklist's step on iOS 26, Setup check's import), or a
         // game to import (Library › Add a game): touch only, as Files is. One picker for both:

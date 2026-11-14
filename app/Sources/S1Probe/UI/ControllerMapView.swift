@@ -262,7 +262,7 @@ struct ControllerMapView: View {
         let custom = map.mode == .custom
         let changed = custom && ControllerMapEdit.differs(row, in: table)
         let content = HStack(spacing: 6) {
-            Text(row.title).font(.system(size: 11.5)).foregroundStyle(selected ? Color(hex: 0x3A4452) : PP.muted)
+            Text(row.title).font(.system(size: 11.5)).foregroundStyle(selected ? Color(hex: 0x1F3F7A) : PP.muted)
                 .frame(width: 44, alignment: .leading).lineLimit(1)
             if map.mode == .controller {
                 // The game sees the pad as it is.
@@ -274,7 +274,7 @@ struct ControllerMapView: View {
                         .padding(.horizontal, 5).frame(minWidth: 18, minHeight: 18)
                         .foregroundStyle(selected ? PP.background : PP.text)
                         .background(selected ? Color(hex: 0xD7DDE6) : PP.raised, in: RoundedRectangle(cornerRadius: 5))
-                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(selected ? Color(hex: 0x9AA5B4) : PP.line, lineWidth: 1))
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(selected ? Color(hex: 0x9AB4D6) : PP.line, lineWidth: 1))
                 }
             }
             Spacer(minLength: 0)
@@ -301,7 +301,7 @@ struct ControllerMapView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text("Look speed").font(.system(size: 13, weight: .medium)).lineLimit(1)
                 Text("Mouse look" + (own || target == .defaults ? "" : " · Default")).font(.system(size: 10))
-                    .foregroundStyle(selected ? Color(hex: 0x3A4452) : PP.muted).lineLimit(1)
+                    .foregroundStyle(selected ? Color(hex: 0x1F3F7A) : PP.muted).lineLimit(1)
             }
             .fixedSize()
             Spacer(minLength: 4)
@@ -507,7 +507,7 @@ struct PadPicture: View {
             let s = min(size.width / 304, size.height / 200)
             ctx.translateBy(x: (size.width - 304 * s) / 2 + 2 * s, y: (size.height - 200 * s) / 2)
             ctx.scaleBy(x: s, y: s)
-            let line = Color(hex: 0x3A4452), fill = Color(hex: 0x1D242E), edge = Color(hex: 0x4A5566)
+            let line = Color(hex: 0x1F3F7A), fill = Color(hex: 0x12326B), edge = Color(hex: 0x2C4F86)
             func on(_ r: ControllerMapRow) -> Bool { lit == r }
             func rect(_ r: CGRect, _ row: ControllerMapRow, radius: CGFloat = 6) {
                 let p = Path(roundedRect: r, cornerRadius: radius)

@@ -17,7 +17,7 @@ struct OpeningView: View {
             let drawing = OpeningDrawing(t: t, l: l, cards: opening.cards, reduceMotion: opening.reduceMotion)
             ZStack {
                 PP.background
-                EllipticalGradient(stops: [.init(color: Color(hex: 0x18202A), location: 0),
+                EllipticalGradient(stops: [.init(color: Color(hex: 0x0E2C60), location: 0),
                                            .init(color: PP.background, location: 0.85)])
                     .opacity(OpeningTime.progress(t, 0, 0.5))
                 Canvas { ctx, size in drawing.draw(&ctx, size) }
@@ -45,13 +45,13 @@ private struct OpeningDrawing {
 
     private typealias T = OpeningTime
     private static let hold = AppOpening.introSeconds
-    private static let accent = Color(hex: 0xF5B544)
-    private static let tint = Color(hex: 0xFFD08A)
-    private static let lip = Color(hex: 0xB7822A)
-    private static let glass = Color(hex: 0x1D242E)
-    private static let deepSea = Color(hex: 0x24324A)
-    private static let nearSea = Color(hex: 0x151A21)
-    private static let line = Color(hex: 0x2A3340)
+    private static let accent = Color(hex: 0x92CDFC)
+    private static let tint = Color(hex: 0xC6E6FF)
+    private static let lip = Color(hex: 0x4F7FB8)
+    private static let glass = Color(hex: 0x12326B)
+    private static let deepSea = Color(hex: 0x163A6E)
+    private static let nearSea = Color(hex: 0x0A2757)
+    private static let line = Color(hex: 0x1F3F7A)
     private static let iconCentre = CGPoint(x: 512, y: 512)
     /// The play button's box centre, for its pop.
     private static let playCentre = CGPoint(x: 531, y: 512)
@@ -104,9 +104,9 @@ private struct OpeningDrawing {
             c.scaleBy(x: scale, y: scale)
             let r = CGRect(x: -f.width / 2, y: -f.height / 2, width: f.width, height: f.height)
             let shape = Path(roundedRect: r, cornerRadius: card.corner, style: .continuous)
-            c.fill(shape, with: .linearGradient(Gradient(colors: [Color(hex: 0x1A2029), Color(hex: 0x141920)]),
+            c.fill(shape, with: .linearGradient(Gradient(colors: [Color(hex: 0x0E2C60), Color(hex: 0x0A2452)]),
                                                 startPoint: CGPoint(x: r.minX, y: r.minY), endPoint: CGPoint(x: r.maxX, y: r.maxY)))
-            c.stroke(shape, with: .color(Color(hex: 0x232B36)), lineWidth: 1)
+            c.stroke(shape, with: .color(Color(hex: 0x1F3F7A)), lineWidth: 1)
         }
     }
 
