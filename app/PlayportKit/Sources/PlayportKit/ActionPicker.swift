@@ -217,18 +217,23 @@ public struct ActionPicker: Sendable {
     // MARK: the tabs' choices
 
     /// The keyboard (ActionPicker.dc.html, with an F-key row and `- =` added), by VK and width.
+    /// One key: VK, label, width. The helpers keep each row's type checkable (the literal
+    /// tuples with mixed Int/Double and `.map` closures in one expression time out).
+    private static func key(_ vk: UInt8, _ label: String, _ width: Double = 1) -> (UInt8, String, Double) {
+        (vk, label, width)
+    }
+    private static func letters(_ s: String) -> [(UInt8, String, Double)] {
+        s.map { key(UInt8($0.asciiValue!), String($0)) }
+    }
+    private static let fKeys: [(UInt8, String, Double)] = (0..<12).map { key(UInt8(0x70 + $0), "F\($0 + 1)") }
     static let keyboard: [[(UInt8, String, Double)]] = [
-        [(0x1B, "Esc", 1.2)] + (0..<12).map { (UInt8(0x70 + $0), "F\($0 + 1)", 1) },
-        [(0xC0, "`", 1)] + Array("1234567890").map { (UInt8($0.asciiValue!), String($0), 1) }
-            + [(0xBD, "-", 1), (0xBB, "=", 1), (0x08, "⌫", 1.4)],
-        [(0x09, "Tab", 1.4)] + Array("QWERTYUIOP").map { (UInt8($0.asciiValue!), String($0), 1) }
-            + [(0xDB, "[", 1), (0xDD, "]", 1), (0xDC, "\\", 1)],
-        [(0x14, "Caps", 1.6)] + Array("ASDFGHJKL").map { (UInt8($0.asciiValue!), String($0), 1) }
-            + [(0xBA, ";", 1), (0xDE, "'", 1), (0x0D, "Enter", 1.6)],
-        [(0xA0, "Shift", 2)] + Array("ZXCVBNM").map { (UInt8($0.asciiValue!), String($0), 1) }
-            + [(0xBC, ",", 1), (0xBE, ".", 1), (0xBF, "/", 1), (0xA1, "Shift", 1.6)],
-        [(0xA2, "Ctrl", 1.3), (0xA4, "Alt", 1.2), (0x20, "Space", 6), (0xA5, "Alt", 1.2),
-         (0x25, "←", 1), (0x26, "↑", 1), (0x28, "↓", 1), (0x27, "→", 1)],
+        [key(0x1B, "Esc", 1.2)] + fKeys,
+        [key(0xC0, "`")] + letters("1234567890") + [key(0xBD, "-"), key(0xBB, "="), key(0x08, "⌫", 1.4)],
+        [key(0x09, "Tab", 1.4)] + letters("QWERTYUIOP") + [key(0xDB, "["), key(0xDD, "]"), key(0xDC, "\\")],
+        [key(0x14, "Caps", 1.6)] + letters("ASDFGHJKL") + [key(0xBA, ";"), key(0xDE, "'"), key(0x0D, "Enter", 1.6)],
+        [key(0xA0, "Shift", 2)] + letters("ZXCVBNM") + [key(0xBC, ","), key(0xBE, "."), key(0xBF, "/"), key(0xA1, "Shift", 1.6)],
+        [key(0xA2, "Ctrl", 1.3), key(0xA4, "Alt", 1.2), key(0x20, "Space", 6), key(0xA5, "Alt", 1.2),
+         key(0x25, "←"), key(0x26, "↑"), key(0x28, "↓"), key(0x27, "→")],
     ]
 
     static func choices(for tab: ActionPickerTab, _ accepts: Accepts) -> [[ActionPickerCell]] {

@@ -85,7 +85,7 @@ public struct InstalledTitle: Codable, Equatable, Identifiable, Sendable {
         get { storeRaw ?? (appID == nil ? .local : .steam) }
         set { storeRaw = newValue }
     }
-    private var storeRaw: Store? = nil
+    var storeRaw: Store? = nil
     /// The store's ID for the game (Steam: the app ID; GOG: the product ID; Epic:
     /// the app name; local: the folder, lowercased).
     public var storeID: String? = nil
