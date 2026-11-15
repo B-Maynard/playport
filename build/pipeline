@@ -405,13 +405,13 @@ stage_verify() {
     [ "$UNSIGNED" = 1 ] && args+=(--unsigned)
     sha=$(sha256sum "$IPA" | cut -d' ' -f1); short=${sha:0:8}
     # The phone's profile is compared with the newest signed IPA; an unsigned one has none.
-    prev=$(ls -t "$OUT"/*/Playport-*.ipa "$PLAYPORT_BUILD"/out/*/Playport-*.ipa 2>/dev/null | grep -v -- '-unsigned-' | head -1 || true)
+    prev=$(ls -t "$OUT"/*/pcios-*.ipa "$PLAYPORT_BUILD"/out/*/pcios-*.ipa 2>/dev/null | grep -v -- '-unsigned-' | head -1 || true)
     [ -n "$prev" ] && [ "$UNSIGNED" = 0 ] && args+=(--same-device-as "$prev")
     mkdir -p "$RUN/tmp"
     run verify env TMPDIR="$RUN/tmp" python3 "$HERE/verify-ipa.py" "$IPA" --variant "$VARIANT" --sha256 "$sha" \
         --dxmt-pe "$RUN/dxmt-patched/pe" --notices "$APP/Staged/Licenses" "${args[@]}"
     dest=$OUT/$(date +%Y%m%d-%H%M%S)-$IPA_TAG$short
-    name=Playport-26.5-$IPA_TAG$short.ipa
+    name=pcios-26.5-$IPA_TAG$short.ipa
     mkdir -p "$dest"
     cp "$IPA" "$dest/$name"
     cp "$APP/artifacts.tsv" "$PLAYPORT_REPO/pins.lock" "$dest/"

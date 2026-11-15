@@ -11,9 +11,9 @@ else the file already written, else what the tool itself reports:
   LLVM_MINGW              the llvm-mingw whose aarch64-w64-mingw32-clang is on PATH
   DARWIN_SDK              the bundle `swift sdk configure --show-configuration darwin` names
   PLAYPORT_USBMUX_SOCKET  the --socket-path of the running netmuxd user unit
-  HOST_CLANG_BIN          /usr/lib/llvm-22/bin when it has clang 22 and ld64.lld; the
-                          macOS-target shims use it instead of /usr/bin, so no
-                          system default changes (tools/workstation/setup.sh)
+  HOST_CLANG_BIN          a bin directory with clang 23.x and ld64.lld (LLVM 23 reads the
+                          iOS 27.2 SDK's stubs; system LLVM 22 does not). The macOS-target
+                          shims use it instead of /usr/bin, so no system default changes
 
 --check reports what is recorded and whether it is usable, and writes nothing.
 The tools themselves stay installed where they are (AGENTS.md, Disk).
@@ -30,7 +30,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(
 import inputs  # noqa: E402
 import phonelib  # noqa: E402
 
-IOS_SDK = "Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk"
+IOS_SDK = "Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk"
 OPTIONS = {"--llvm-mingw": "LLVM_MINGW", "--darwin-sdk": "DARWIN_SDK", "--usbmux-socket": "PLAYPORT_USBMUX_SOCKET",
            "--host-clang-bin": "HOST_CLANG_BIN", "--host-llvm15-bin": "HOST_LLVM15_BIN"}
 
@@ -88,10 +88,11 @@ def problem(key, v):
     elif key == "HOST_CLANG_BIN":
         for tool in ("clang", "clang++", "ld64.lld"):
             if not os.access(os.path.join(v, tool), os.X_OK):
-                return f"no {tool} (LLVM 22.x: docs/BUILDING.md)"
+                return f"no {tool} (LLVM 23.x: docs/BUILDING.md, host LLVM)"
         ver = out([os.path.join(v, "clang"), "--version"]).splitlines()
-        if not ver or not re.search(r"version 22\.", ver[0]):
-            return "clang here is not 22.x"
+        # LLVM 23 or later: its ld64.lld reads the iOS 27.2 SDK's stubs (tbd v4, arm64e.x1); 22 does not.
+        if not ver or not re.search(r"version 23\.", ver[0]):
+            return "clang here is not 23.x"
     elif key == "PLAYPORT_USBMUX_SOCKET":
         try:
             if not stat.S_ISSOCK(os.stat(v).st_mode):

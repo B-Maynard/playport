@@ -28,7 +28,7 @@ socket, in `$PLAYPORT_BUILD/inputs.local` (gitignored; `build/env.sh` and
 | Variable | What | How to produce it |
 | --- | --- | --- |
 | `LLVM_MINGW` | llvm-mingw 20260922 UCRT, with its aarch64 CRT rebuilt for arm64ec | below |
-| `DARWIN_SDK` | xtool's SDK bundle (`iPhoneOS26.5.sdk`, `MacOSX26.5.sdk`) | `xtool sdk install <Xcode 26.6 .xip> --slim` |
+| `DARWIN_SDK` | xtool's SDK bundle (`iPhoneOS27.2.sdk`, `MacOSX27.2.sdk`) | `xtool sdk install <Xcode 26.6 .xip> --slim` |
 | `LD64` | Apple ld64-956.6 for Linux | `build/toolchain/ld64.sh` ("Linking") |
 | `XTOOL` | xtool 1.20.1 with the increased-memory-limit patch | `build/toolchain/xtool.sh` ("Signing") |
 | `RUST_ROOT` | the `pins.lock` `rust` release with the `aarch64-apple-ios` standard library, through rustup (`rustup-init` checked by sha256), with its crate cache | `build/toolchain/rust.sh` (the `idevice` stage) |

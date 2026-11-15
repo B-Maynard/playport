@@ -111,7 +111,7 @@ final class SuggestedLayout {
         showing = true
         view?.show()
         hide?.cancel()
-        let work = DispatchWorkItem { MainActor.assumeIsolated { SuggestedLayout.shared.answer(accept: false, by: "15 s untouched") } }
+        let work = DispatchWorkItem { @Sendable in Task { @MainActor in SuggestedLayout.shared.answer(accept: false, by: "15 s untouched") } }
         hide = work
         DispatchQueue.main.asyncAfter(deadline: .now() + Self.seconds, execute: work)
     }
@@ -214,13 +214,14 @@ final class LayoutSuggestionToast: UIView {
     func show() {
         card.isHidden = false
         setNeedsLayout()
-        UIView.animate(withDuration: 0.25) { self.card.alpha = 1 }
+        ViewFade.fade(card, to: 1, duration: 0.25)
     }
 
     func hide() {
-        UIView.animate(withDuration: 0.25, animations: { self.card.alpha = 0 }) { _ in
-            MainActor.assumeIsolated { if !SuggestedLayout.shared.showing { self.card.isHidden = true } }
-        }
+        let card = self.card
+        ViewFade.fade(card, to: 0, duration: 0.25, completion: {
+            Task { @MainActor in if !SuggestedLayout.shared.showing { card.isHidden = true } }
+        })
     }
 }
 #endif

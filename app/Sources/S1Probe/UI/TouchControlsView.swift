@@ -1095,10 +1095,10 @@ private final class GyroChipView: UIView {
     /// Fades in, stays `seconds`, fades out.
     func show(seconds: Double) {
         hide?.cancel()
-        UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState) { self.alpha = 1 }
+        ViewFade.fade(self, to: 1, duration: 0.25)
         let work = DispatchWorkItem { [weak self] in
             MainActor.assumeIsolated {
-                UIView.animate(withDuration: 0.5, delay: 0, options: .beginFromCurrentState) { self?.alpha = 0 }
+                if let view = self { ViewFade.fade(view, to: 0, duration: 0.5) }
             }
         }
         hide = work
@@ -1152,10 +1152,10 @@ private final class ToastView: UIView {
     func show(_ text: String, seconds: Double) {
         label.text = text
         place(in: area)
-        UIView.animate(withDuration: 0.25) { self.alpha = 1 }
+        ViewFade.fade(self, to: 1, duration: 0.25)
         hide?.cancel()
         let work = DispatchWorkItem { [weak self] in
-            MainActor.assumeIsolated { UIView.animate(withDuration: 0.4) { self?.alpha = 0 } }
+            MainActor.assumeIsolated { if let view = self { ViewFade.fade(view, to: 0, duration: 0.4) } }
         }
         hide = work
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: work)

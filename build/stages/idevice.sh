@@ -70,7 +70,7 @@ export SDKROOT=$IOSSDK IPHONEOS_DEPLOYMENT_TARGET=17.0
 export CC_aarch64_apple_ios=clang AR_aarch64_apple_ios=llvm-ar
 export CFLAGS_aarch64_apple_ios="-target arm64-apple-ios17.0 -isysroot $IOSSDK -ffile-prefix-map=$src=idevice -ffile-prefix-map=$CARGO_HOME=cargo -ffile-prefix-map=$DARWIN_SDK=darwin-sdk"
 # plist_ffi, a dependency, also builds a cdylib: cargo needs a linker for the target.
-export CARGO_TARGET_AARCH64_APPLE_IOS_LINKER=clang
+export CARGO_TARGET_AARCH64_APPLE_IOS_LINKER="$HOST_CLANG_BIN/clang"   # its own ld64.lld: the SDK stubs need LLVM 23
 export CARGO_TARGET_AARCH64_APPLE_IOS_RUSTFLAGS="-C link-arg=-target -C link-arg=arm64-apple-ios17.0 -C link-arg=-isysroot -C link-arg=$IOSSDK -C link-arg=-fuse-ld=lld --remap-path-prefix=$CARGO_HOME=cargo --remap-path-prefix=$RUSTUP_HOME=rustup --remap-path-prefix=$src=idevice"
 export CARGO_TARGET_DIR=$OUT/target
 (cd "$src/ffi" && cargo fetch --locked -q &&
@@ -91,9 +91,9 @@ mkdir -p "$obj/members"
 mapfile -t members < <(llvm-ar t "$lib")
 [ "${#members[@]}" = "$(find "$obj/members" -type f | wc -l)" ] ||
     { echo "idevice: the archive has members with the same name" >&2; exit 1; }
-"$LD64" -r -arch arm64 -platform_version ios 17.0 26.5 -syslibroot "$IOSSDK" \
+"$LD64" -r -arch arm64 -platform_version ios 17.0 27.2 -syslibroot "$IOSSDK" \
     -o "$obj/prelinked.o" "${members[@]/#/$obj/members/}"
-"$LD64" -r -S -arch arm64 -platform_version ios 17.0 26.5 -syslibroot "$IOSSDK" "${exports[@]}" \
+"$LD64" -r -S -arch arm64 -platform_version ios 17.0 27.2 -syslibroot "$IOSSDK" "${exports[@]}" \
     -o "$obj/idevice_ffi.o" "$obj/prelinked.o"
 rm -rf "$obj/prelinked.o" "$obj/members" "$OUT/libidevice_ffi.a"
 llvm-ar rcsD "$OUT/libidevice_ffi.a" "$obj/idevice_ffi.o"

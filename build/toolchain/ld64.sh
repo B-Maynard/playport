@@ -6,7 +6,7 @@
 #
 #   build/toolchain/ld64.sh [ROOT]    ROOT defaults to $PLAYPORT_BUILD/inputs/apple-linker
 #
-# Result: ROOT/prefix/bin/arm64-apple-darwin-ld (ld64-956.6, TAPI 1600.0.11.8).
+# Result: ROOT/prefix/bin/arm64-apple-darwin-ld (ld64-956.6, TAPI at the 2026-11-08 upstream HEAD).
 # Nothing is installed system-wide; the binary finds its libraries through
 # its rpath into ROOT/prefix/lib.
 set -euo pipefail
@@ -18,7 +18,7 @@ JOBS="${JOBS:-$(nproc)}"
 # name, url, commit (the branch each repository had as default on 2026-09-23)
 REPOS=(
     "cctools-port https://github.com/tpoechtrager/cctools-port.git 904de2a71d4da6a9b30d2efaf912a10ddc7d9ddb"         # 1030.6.3-ld64-956.6
-    "apple-libtapi https://github.com/tpoechtrager/apple-libtapi.git fa9443738c1a18accef4244732ec6d6ee97a8133"       # 1600.0.11.8
+    "apple-libtapi https://github.com/tpoechtrager/apple-libtapi.git 2a5705470a92691520fa2ff589482ea6c4039740"       # upstream HEAD 2026-11-08: arm64e.x1 (the 27.2 SDK's stubs)
     "apple-libdispatch https://github.com/tpoechtrager/apple-libdispatch.git 323b9b4e0ca05d6c56a0c2f2d7d8d47363e612b7"
 )
 
@@ -26,10 +26,12 @@ mkdir -p "$ROOT"
 for row in "${REPOS[@]}"; do
     read -r name url commit <<<"$row"
     [ -d "$ROOT/$name" ] || git clone -q "$url" "$ROOT/$name"
+    git -C "$ROOT/$name" cat-file -e "$commit^{commit}" 2>/dev/null || git -C "$ROOT/$name" fetch -q origin
     git -C "$ROOT/$name" checkout -q "$commit"
 done
 
 echo "== libdispatch + BlocksRuntime"
+rm -rf "$ROOT/apple-libdispatch/build"   # a cache from an older prefix would keep it
 cmake -S "$ROOT/apple-libdispatch" -B "$ROOT/apple-libdispatch/build" -G Ninja \
     -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$PREFIX" >/dev/null

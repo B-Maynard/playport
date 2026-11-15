@@ -32,8 +32,8 @@ DARWIN_BUNDLE=$HOME/.swiftpm/swift-sdks/darwin.artifactbundle
 export PATH="$WS/bison-flex/usr/bin:$PATH"
 
 # ---- pins -------------------------------------------------------------------
-SWIFT_VERSION=6.3
-SWIFT_URL=https://download.swift.org/swift-6.3-release/ubuntu2404/swift-6.3-RELEASE/swift-6.3-RELEASE-ubuntu24.04.tar.gz
+SWIFT_VERSION=6.4.2
+SWIFT_URL=https://download.swift.org/swift-6.4.2-release/ubuntu2404/swift-6.4.2-RELEASE/swift-6.4.2-RELEASE-ubuntu24.04.tar.gz
 LLVM_MINGW_URL=https://github.com/mstorsjo/llvm-mingw/releases/download/20260922/llvm-mingw-20260922-ucrt-ubuntu-22.04-x86_64.tar.xz
 LLVM_MINGW_SHA256=bb7bb7654b33d5aa8712acb837c963b2e0c56352560c76105270a3268c665c21
 MINGW_W64_URL=https://git.code.sf.net/p/mingw-w64/mingw-w64

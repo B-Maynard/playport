@@ -3,13 +3,18 @@
 // gives way to Home. AppOpening owns readiness, the clock and Home's reveal.
 
 import SwiftUI
+import UIKit
 
 struct OpeningView: View {
     @ObservedObject private var opening = AppOpening.shared
 
     // xtool ships this PNG at the bundle root for both variants. Use the same
-    // artwork as the Home Screen rather than maintaining another drawn logo.
-    private let iconName = Bundle.main.object(forInfoDictionaryKey: "CFBundleIconFile") as? String ?? "AppIcon"
+    // artwork as the Home Screen rather than maintaining another drawn logo. Read
+    // from its file: Image(name) draws nothing when the name lookup misses.
+    private let icon: UIImage? = {
+        let name = Bundle.main.object(forInfoDictionaryKey: "CFBundleIconFile") as? String ?? "AppIcon"
+        return Bundle.main.url(forResource: name, withExtension: "png").flatMap { UIImage(contentsOfFile: $0.path) }
+    }()
 
     var body: some View {
         TimelineView(.animation(paused: opening.phase == .done || (opening.reduceMotion && opening.phase != .leaving))) { tl in
@@ -62,10 +67,10 @@ struct OpeningView: View {
                 .scaleEffect(1 + breath * 0.035)
                 .opacity(appear)
 
-            Image(iconName)
-                .resizable()
-                .interpolation(.high)
-                .frame(width: side, height: side)
+            Group {
+                if let icon { Image(uiImage: icon).resizable().interpolation(.high) }
+            }
+            .frame(width: side, height: side)
                 .clipShape(shape)
                 .overlay {
                     shape.strokeBorder(LinearGradient(colors: [PP.accent.opacity(0.45), PP.accent.opacity(0.04)],

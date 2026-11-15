@@ -21,7 +21,7 @@
 #        then Zink and EGL on the same mock (zink-host-test.c: GL context,
 #        fixed-function and GLSL 1.20 draws, a blit). No GPU runs.
 # ios    libvulkan_kosmickrisp.dylib for arm64-apple-ios26.0 (Metal 4 needs iOS 26),
-#        against the darwin SDK's iPhoneOS26.5.sdk, with those tools; and in a
+#        against the darwin SDK's iPhoneOS27.2.sdk, with those tools; and in a
 #        second build directory (ROOT/ios-gl) libEGL and libgallium_dri (Zink
 #        only, the OpenGL frontend, no GLES/GLX/GBM), renamed MesaEGL and
 #        MesaGallium with their framework install names
@@ -149,8 +149,8 @@ EOF
     PATH="$HOST_CLANG_BIN:$PATH" ninja -C "$ROOT/ios-gl" -j "$JOBS" src/egl/libEGL.1.dylib src/gallium/targets/dri/libgallium_dri.dylib
     cp "$ROOT/ios-gl/src/egl/libEGL.1.dylib" "$ROOT/out/MesaEGL"
     cp "$ROOT/ios-gl/src/gallium/targets/dri/libgallium_dri.dylib" "$ROOT/out/MesaGallium"
-    llvm-install-name-tool -id "$EGL_ID" -change @rpath/libgallium_dri.dylib "$GALLIUM_ID" "$ROOT/out/MesaEGL"
-    llvm-install-name-tool -id "$GALLIUM_ID" "$ROOT/out/MesaGallium"
+    "$HOST_CLANG_BIN/llvm-install-name-tool" -id "$EGL_ID" -change @rpath/libgallium_dri.dylib "$GALLIUM_ID" "$ROOT/out/MesaEGL"
+    "$HOST_CLANG_BIN/llvm-install-name-tool" -id "$GALLIUM_ID" "$ROOT/out/MesaGallium"
 }
 
 stage_check() {
@@ -174,7 +174,7 @@ stage_xcframework() {
     rm -rf "$xc"
     mkdir -p "$fw/Headers" "$fw/Modules"
     cp "$binary" "$fw/$name"
-    llvm-install-name-tool -id "@rpath/$name.framework/$name" "$fw/$name"
+    "$HOST_CLANG_BIN/llvm-install-name-tool" -id "@rpath/$name.framework/$name" "$fw/$name"
     # SwiftPM wants a module for a binary target; nothing imports it.
     printf '/* %s, not imported. */\n' "$what" > "$fw/Headers/$name.h"
     printf 'framework module %s {\n  umbrella header "%s.h"\n  export *\n}\n' "$name" "$name" \
